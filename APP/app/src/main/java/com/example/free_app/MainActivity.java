@@ -1,6 +1,7 @@
 package com.example.free_app;
 
 import androidx.annotation.DrawableRes;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -9,13 +10,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 
 import com.bumptech.glide.Glide;
-import com.example.appkmpg.R;
 import com.example.free_app.CardnewsActivity;
 import com.example.free_app.RecycleActivity;
 
@@ -36,9 +37,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         scrollView = (HorizontalScrollView) findViewById(R.id.scroll);
         cardnews = (ImageButton) findViewById(R.id.cardnews);
-        cardnews.setImageResource(R.drawable.cardnews2);
+
+        cardnews.setImageResource(R.drawable.cardnews);
         scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View view, int i, int i1, int i2, int i3) {
@@ -54,35 +59,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        /*new Thread(new Runnable() {
-            Bitmap resizebitmap = null;
-            Bitmap bitmapCard = null;
-            @Override
-            public void run() {
-                try{
-                    bitmapCard = UrltoBitmap(cardnewsstring);
-                    resizebitmap = Bitmap.createScaledBitmap(bitmapCard,950,950,true);
-                }catch (Exception e){
-
-                }finally {
-                    if(resizebitmap != null ){
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                cardnews.setImageBitmap(resizebitmap);
-                            }
-                        });
-                    }
-                }
-            }
-        }).start();*/
 
         cardnews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent_cardnews = new Intent(getApplicationContext(), CardnewsActivity.class);
                 startActivity(intent_cardnews);
-
             }
         });
 
@@ -97,31 +79,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-    private Bitmap UrltoBitmap(String url){
-        URL imgurl = null;
-        HttpURLConnection connection = null;
-        InputStream inputStream = null;
-        Bitmap bitmap = null;
-
-        try{
-            imgurl = new URL(url);
-            connection = (HttpURLConnection) imgurl.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            inputStream = connection.getInputStream();
-            bitmap = BitmapFactory.decodeStream(inputStream);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-        finally {
-            if(connection != null){
-                connection.disconnect();
-            }
-            return bitmap;
-        }
     }
 
 }

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button;
 
-import com.example.appkmpg.R;
+import com.example.free_app.R;
 
 public class RecycleActivity extends Activity{
     Button recycle_1, recycle_2, recycle_3;
