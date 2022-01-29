@@ -3,6 +3,8 @@ package com.example.free_app;
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,13 +26,15 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import me.relex.circleindicator.CircleIndicator3;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button recycle;
-    private ImageButton cardnews;
-    HorizontalScrollView scrollView;
-    boolean scroll_flag = true;
-    public Integer cardnews_num = 1;
+    private ViewPager2 viewPager2;
+    private FragmentStateAdapter fragmentStateAdapter;
+    private int page = 2;
+    private CircleIndicator3 circleIndicator3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,33 +44,34 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        scrollView = (HorizontalScrollView) findViewById(R.id.scroll);
-        cardnews = (ImageButton) findViewById(R.id.cardnews);
+        viewPager2 = findViewById(R.id.viewpager);
+        fragmentStateAdapter = new CustomAdapter(MainActivity.this, page);
+        viewPager2.setAdapter(fragmentStateAdapter);
+        circleIndicator3 = findViewById(R.id.indicator);
+        circleIndicator3.setViewPager(viewPager2);
+        circleIndicator3.createIndicators(page,0);
+        viewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
 
-        cardnews.setImageResource(R.drawable.cardnews);
-        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+        viewPager2.setCurrentItem(1000);
+        viewPager2.setOffscreenPageLimit(2);
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
-            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-                if(scroll_flag){
-                    if((!view.canScrollHorizontally(1))){
-                        cardnews.setImageResource(R.drawable.cardnews2);
-                        cardnews_num = 2;
-                    }
-                    else if((!view.canScrollHorizontally(-1))){
-                        cardnews.setImageResource(R.drawable.cardnews);
-                        cardnews_num = 1;
-                    }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                if(positionOffsetPixels == 0){
+                    viewPager2.setCurrentItem(position);
                 }
             }
-        });
 
-        cardnews.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent_cardnews = new Intent(getApplicationContext(), CardnewsActivity.class);
-                startActivity(intent_cardnews);
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                circleIndicator3.animatePageSelected(position%page);
             }
         });
+
+
+
 
 
         recycle = (Button) findViewById(R.id.recycle);

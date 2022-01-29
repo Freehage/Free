@@ -26,35 +26,36 @@
         app:iconifiedByDefault="false"
         app:queryHint="제품명을 입력하세요" />
 
-    <HorizontalScrollView
+    <FrameLayout
         android:id="@+id/scroll"
-        android:layout_width="370dp"
+        android:layout_width="400dp"
         android:layout_height="350dp"
         android:layout_below="@+id/icon"
         android:layout_centerInParent="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp">
 
-        <LinearLayout
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_gravity="center"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:layout_marginBottom="10dp"/>
 
-            <ImageButton
-                android:id="@+id/cardnews"
-                android:layout_width="370dp"
-                android:layout_height="350dp"
-                android:scaleType="fitCenter"
-                android:background="@color/white"
-                android:src="@drawable/cardnews"/>
+        <me.relex.circleindicator.CircleIndicator3
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="bottom"/>
 
 
-        </LinearLayout>
 
-
-    </HorizontalScrollView>
+    </FrameLayout>
     <Button
         android:id="@+id/photo"
         android:layout_width="wrap_content"
