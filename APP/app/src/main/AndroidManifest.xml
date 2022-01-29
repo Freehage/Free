@@ -24,6 +24,8 @@
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".Recycle1Activity"
             android:parentActivityName=".RecycleActivity"/>
+        <activity android:name=".Recycle3Activity"
+            android:parentActivityName=".RecycleActivity"/>
     </application>
 
 

@@ -30,8 +30,18 @@ public class RecycleActivity extends AppCompatActivity {
 
             }
         });
+
         recycle_2 = findViewById(R.id.recycle_2);
+
         recycle_3 = findViewById(R.id.recycle_3);
+        recycle_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),Recycle3Activity.class);
+                startActivity(intent);
+
+            }
+        });
 
     }
 }
