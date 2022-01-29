@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Free_APP</string>
+    <string name="recycle1_name">재활용 방법 알아보기</string>
+    <string name="recycle2_name">재활용 팁 알아보기</string>
+    <string name="recycle3_name">제로웨이스트 매장 알아보기</string>
+    <string name="recycle1_1_name">제품명을 검색하세요</string>
+    <string name="camera">촬영</string>
+    <string name="paper">종이</string>
+    <string name="paper2">종이팩</string>
+    <string name="glass">유리</string>
+    <string name="pet">페트</string>
+    <string name="can">캔류/알미늄</string>
+    <string name="can2">캔류/철</string>
+    <string name="vinyl">비닐</string>
+    <string name="plastic">플라스틱</string>
 </resources>
