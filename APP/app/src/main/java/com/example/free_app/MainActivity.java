@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         circleIndicator3.createIndicators(page,0);
         viewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
 
-        viewPager2.setCurrentItem(1000);
+        viewPager2.setCurrentItem(0);
         viewPager2.setOffscreenPageLimit(2);
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
