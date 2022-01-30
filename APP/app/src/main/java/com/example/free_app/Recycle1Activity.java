@@ -22,7 +22,6 @@ public class Recycle1Activity extends AppCompatActivity {
         recycle_camera = findViewById(R.id.recycle_camera);
 
         paper = findViewById(R.id.paper);
-
         paper2 = findViewById(R.id.paper2);
         glass = findViewById(R.id.glass);
         pet = findViewById(R.id.pet);
