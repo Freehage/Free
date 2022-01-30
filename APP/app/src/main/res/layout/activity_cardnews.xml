@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="400dp"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
     <LinearLayout
         android:id="@+id/linear_card"
@@ -17,7 +18,9 @@
             android:layout_width="350dp"
             android:layout_height="match_parent"
             android:src="@drawable/cardnews"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"/>
 
 
 
