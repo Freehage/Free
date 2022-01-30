@@ -30,6 +30,9 @@ import me.relex.circleindicator.CircleIndicator3;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static Context main_context;
+    public int card_num = 0;
+
     private Button recycle;
     private ViewPager2 viewPager2;
     private FragmentStateAdapter fragmentStateAdapter;
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        main_context = MainActivity.this;
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
