@@ -3,7 +3,6 @@ package com.example.free_app;
 import android.app.FragmentManager;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -33,7 +32,7 @@ public class Recycle3Activity extends AppCompatActivity implements OnMapReadyCal
     }
 
     @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
+    public void onMapReady(GoogleMap googleMap) {
         //마커 생성, 알맹상점 리스테이션
         LatLng location = new LatLng(37.55589221981869, 126.96953356507146);
         MarkerOptions markerOptions = new MarkerOptions();
