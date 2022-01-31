@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/ic_launcher"/>
+    <LinearLayout
+        android:id="@+id/linear_card"
+        android:orientation="horizontal"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/card_detail"
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/cardnews"
+            android:scaleType="fitCenter"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"/>
+
+
+
+    </LinearLayout>
+
+
+
+</HorizontalScrollView>
