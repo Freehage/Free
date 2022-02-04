@@ -35,6 +35,8 @@
             android:parentActivityName=".RecycleActivity"/>
         <activity android:name=".Recycle3Activity"
             android:parentActivityName=".RecycleActivity"/>
+        <activity android:name=".RecycleTip"
+            android:parentActivityName=".RecycleActivity"/>
     </application>
 
 

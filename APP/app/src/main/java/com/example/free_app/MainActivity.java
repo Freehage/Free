@@ -19,8 +19,6 @@ import android.widget.ImageButton;
 import android.widget.ScrollView;
 
 import com.bumptech.glide.Glide;
-import com.example.free_app.CardnewsActivity;
-import com.example.free_app.RecycleActivity;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
