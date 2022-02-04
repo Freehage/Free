@@ -1,11 +1,18 @@
 package com.example.free_app;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class TipData {
     private String Title;
     private String detail;
-    private int img_url;
+    private String img_url;
 
-    public TipData(String Title, String detail, int img_url){
+    public TipData(String Title, String detail, String img_url){
         this.Title = Title;
         this.detail = detail;
         this.img_url = img_url;
@@ -17,7 +24,7 @@ public class TipData {
     public String getDetail(){
         return detail;
     }
-    public int getImg_url(){
+    public String getImg_url() {
         return img_url;
     }
     public void setTitle(String Title){
@@ -28,7 +35,8 @@ public class TipData {
         this.detail = detail;
     }
 
-    public void setImg_url(int img_url) {
+    public void setImg_url(String img_url) {
         this.img_url = img_url;
     }
+
 }
