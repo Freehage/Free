@@ -32,7 +32,14 @@
         <activity android:name=".CardnewsActivity"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".Recycle1Activity"
-            android:parentActivityName=".RecycleActivity"/>
+            android:parentActivityName=".RecycleActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".Recycle3Activity"
             android:parentActivityName=".RecycleActivity"/>
         <activity android:name=".RecycleTip"
