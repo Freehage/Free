@@ -2,6 +2,8 @@ package com.example.free_app;
 
 import android.app.Person;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +22,11 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder>
 
     private ArrayList<TipData> dataArrayList = null;
     OnPersonItemClickListener listener;
+    private Context mcontext;
 
-    public TipAdapter(ArrayList<TipData> dataList){
+    public TipAdapter(ArrayList<TipData> dataList, Context context){
+
+        this.mcontext = context;
         dataArrayList = dataList;
     }
     @Override
@@ -40,6 +45,17 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder>
         holder.detail.setText(dataArrayList.get(position).getDetail());
         String url = dataArrayList.get(position).getImg_url();
         Glide.with(holder.itemView.getContext()).load(url).into(holder.imgurl);
+
+        String page_url = dataArrayList.get(position).getPage_url();
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(page_url));
+                mcontext.startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -62,6 +78,7 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder>
         TextView Title;
         TextView detail;
         ImageView imgurl;
+        String page_url;
 
         public ViewHolder(@NonNull View itemView,final OnPersonItemClickListener listener) {
             super(itemView);
@@ -69,15 +86,17 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder>
             detail = itemView.findViewById(R.id.detail);
             imgurl = itemView.findViewById(R.id.imgurl);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            /*itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     if (listener != null){
                         listener.onItemClick(ViewHolder.this,view,position);
+
+
                     }
                 }
-            });
+            });*/
         }
     }
 
