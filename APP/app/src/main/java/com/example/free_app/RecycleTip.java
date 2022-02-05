@@ -1,7 +1,11 @@
 package com.example.free_app;
 
+import android.app.Person;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +16,7 @@ import java.util.ArrayList;
 
 public class RecycleTip extends AppCompatActivity {
     private ArrayList<TipData> arrayList;
+    private TipAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -21,7 +26,19 @@ public class RecycleTip extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new TipAdapter(arrayList));
+
+        adapter = new TipAdapter(arrayList);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClicklistener(new OnPersonItemClickListener() {
+            @Override
+            public void onItemClick(TipAdapter.ViewHolder holder, View view, int position) {
+                TipData item = adapter.getItem(position);
+                Toast.makeText(getApplicationContext(),"ddddddd"+item.getTitle(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void Initialize() {
