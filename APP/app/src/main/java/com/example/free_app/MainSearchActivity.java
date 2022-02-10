@@ -12,9 +12,9 @@ import com.example.free_app.model.Product;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class MainSearchActivity extends AppCompatActivity {
-    private TextView search_obj, search_case, search_company;
     public List<Product> productslists;
 
     @Override
@@ -32,9 +32,9 @@ public class MainSearchActivity extends AppCompatActivity {
 
         String search_name = intent.getStringExtra("search_name");
 
-        search_case = (TextView) findViewById(R.id.search_case);
-        search_obj = (TextView) findViewById(R.id.search_obj);
-        search_company = (TextView) findViewById(R.id.search_company);
+        TextView search_case = (TextView) findViewById(R.id.search_case);
+        TextView search_obj = (TextView) findViewById(R.id.search_obj);
+        TextView search_company = (TextView) findViewById(R.id.search_company);
 
         Product item = search(search_name,productslists);
 
@@ -58,7 +58,7 @@ public class MainSearchActivity extends AppCompatActivity {
         while (iterator.hasNext()) {
             Product item = iterator.next();
             String searchs = item.getObject();
-            if (searchs.equals(search_name)) {
+            if (Objects.equals(searchs,search_name)) {
                 return item;
             }
         }
