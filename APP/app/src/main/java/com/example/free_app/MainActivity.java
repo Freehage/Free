@@ -11,19 +11,24 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
+import androidx.appcompat.widget.SearchView;
 
 import com.bumptech.glide.Glide;
 import com.example.free_app.cardnews.CustomAdapter;
+import com.example.free_app.database.DatabaseHelper;
+import com.example.free_app.model.Product;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator3;
 
@@ -37,12 +42,15 @@ public class MainActivity extends AppCompatActivity {
     private FragmentStateAdapter fragmentStateAdapter;
     private int page = 2;
     private CircleIndicator3 circleIndicator3;
+    private SearchView searchView;
+    public List<Product> productlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         main_context = MainActivity.this;
+        initLoadDB();
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -73,6 +81,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //search
+        searchView = (SearchView) findViewById(R.id.search_bar);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Intent intent_mainsearch = new Intent(getApplicationContext(),MainSearchActivity.class);
+                intent_mainsearch.putExtra("search_name",s);
+                startActivity(intent_mainsearch);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
 
 
 
@@ -86,6 +111,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void initLoadDB(){
+
+        DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
+        databaseHelper.openDB();
+
+        productlist = databaseHelper.getTableData();
+        Log.e("TEST",String.valueOf(productlist.size()));
+        databaseHelper.close();
 
     }
 

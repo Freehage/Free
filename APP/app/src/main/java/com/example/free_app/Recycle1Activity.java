@@ -1,5 +1,6 @@
 package com.example.free_app;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +21,7 @@ import java.util.List;
 public class Recycle1Activity extends AppCompatActivity {
 
     Button recycle_camera, paper, paper2, glass, pet, can, can2, vinyl, plastic;
-    public List<Product> productlist;
+
     public TextView textView;
     SearchView recycle_search_view;;
 
@@ -45,32 +46,7 @@ public class Recycle1Activity extends AppCompatActivity {
 
         //rest_name = findViewById(R.id.rest_name);
 
-        initLoadDB();
-
-
-        textView = (TextView) findViewById(R.id.textview);
-        initLoadDB();
-
-        String text = productlist.get(0).getCompany();
-        String text2 = productlist.get(0).getObrecy();
-
-        textView.setText(text+text2);
-
-
     }
-
-    private void initLoadDB(){
-
-        DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
-        databaseHelper.openDB();
-
-        productlist = databaseHelper.getTableData();
-        Log.e("TEST",String.valueOf(productlist.size()));
-        databaseHelper.close();
-
-    }
-
-
 
 
 
