@@ -11,14 +11,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.free_app.database.DatabaseHelper;
+import com.example.free_app.model.Product;
+
 import java.util.HashMap;
 import java.util.List;
 
 public class Recycle1Activity extends AppCompatActivity {
 
     Button recycle_camera, paper, paper2, glass, pet, can, can2, vinyl, plastic;
-    SearchView recycle_search_view;
-    //TextView rest_name;
+    public List<Product> productlist;
+    public TextView textView;
+    SearchView recycle_search_view;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,31 +45,29 @@ public class Recycle1Activity extends AppCompatActivity {
 
         //rest_name = findViewById(R.id.rest_name);
 
-        List<User> mList = initLoadDatabase();
+        initLoadDB();
 
-        initLoadDatabase();
 
-        if (mList.get(0).getLevel() == 1){
+        textView = (TextView) findViewById(R.id.textview);
+        initLoadDB();
 
-            Toast.makeText(getApplicationContext(),"sssss",Toast.LENGTH_LONG).show();
-        }
-        else {
-            Toast.makeText(getApplicationContext(),"xxxxxxxxxxxx",Toast.LENGTH_LONG).show();
-        }
+        String text = productlist.get(0).getCompany();
+        String text2 = productlist.get(0).getObrecy();
+
+        textView.setText(text+text2);
 
 
     }
 
-    public List<User> initLoadDatabase() {
+    private void initLoadDB(){
 
         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
-        databaseHelper.OpenDatabaseFile();
-        List<User> mList = databaseHelper.getTableData();
-        mList = databaseHelper.getTableData();
-        Log.e("test", String.valueOf(mList.size()));
+        databaseHelper.openDB();
 
+        productlist = databaseHelper.getTableData();
+        Log.e("TEST",String.valueOf(productlist.size()));
         databaseHelper.close();
-        return mList;
+
     }
 
 
