@@ -1,4 +1,4 @@
-package com.example.free_app;
+package com.example.free_app.cardnews;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

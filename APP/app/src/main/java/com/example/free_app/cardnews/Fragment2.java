@@ -1,4 +1,4 @@
-package com.example.free_app;
+package com.example.free_app.cardnews;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.free_app.MainActivity;
+import com.example.free_app.R;
 
 public class Fragment2 extends Fragment {
     private ImageButton cardnews2;

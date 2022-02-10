@@ -42,7 +42,7 @@
         </activity>
         <activity android:name=".Recycle3Activity"
             android:parentActivityName=".RecycleActivity"/>
-        <activity android:name=".RecycleTip"
+        <activity android:name=".recycleTip.RecycleTip"
             android:parentActivityName=".RecycleActivity"/>
     </application>
 

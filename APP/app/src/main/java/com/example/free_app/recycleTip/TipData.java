@@ -1,4 +1,4 @@
-package com.example.free_app;
+package com.example.free_app.recycleTip;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -1,6 +1,5 @@
 package com.example.free_app;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +7,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.free_app.R;
+import com.example.free_app.recycleTip.RecycleTip;
 
 public class RecycleActivity extends AppCompatActivity {
     Button recycle_1, recycle_2, recycle_3;
@@ -35,7 +34,7 @@ public class RecycleActivity extends AppCompatActivity {
         recycle_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),RecycleTip.class);
+                Intent intent = new Intent(getApplicationContext(), RecycleTip.class);
                 startActivity(intent);
 
             }

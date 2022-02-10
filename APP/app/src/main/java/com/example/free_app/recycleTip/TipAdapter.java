@@ -1,6 +1,5 @@
-package com.example.free_app;
+package com.example.free_app.recycleTip;
 
-import android.app.Person;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.free_app.R;
 
 import java.util.ArrayList;
 

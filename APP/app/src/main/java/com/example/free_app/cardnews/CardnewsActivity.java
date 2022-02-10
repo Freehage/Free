@@ -1,16 +1,15 @@
-package com.example.free_app;
+package com.example.free_app.cardnews;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.free_app.MainActivity;
+import com.example.free_app.R;
 
 
 public class CardnewsActivity extends AppCompatActivity {

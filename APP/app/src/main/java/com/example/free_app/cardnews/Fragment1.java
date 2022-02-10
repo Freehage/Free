@@ -1,4 +1,4 @@
-package com.example.free_app;
+package com.example.free_app.cardnews;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.free_app.MainActivity;
+import com.example.free_app.R;
 
 public class Fragment1 extends Fragment {
 
