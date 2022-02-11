@@ -1,6 +1,7 @@
 package com.example.free_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +35,6 @@ public class Recycle1Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recycle_camera = findViewById(R.id.recycle_camera);
-
         paper = findViewById(R.id.paper);
         paper2 = findViewById(R.id.paper2);
         glass = findViewById(R.id.glass);
@@ -46,8 +46,17 @@ public class Recycle1Activity extends AppCompatActivity {
 
         //rest_name = findViewById(R.id.rest_name);
 
+
+        // 촬영 버튼을 클릭했을 경우.
+        recycle_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RecycleCamera.class);
+                startActivity(intent);
+            }
+        });
+
+
+
     }
-
-
-
 }

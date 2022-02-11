@@ -45,6 +45,8 @@
             android:parentActivityName=".RecycleActivity"/>
         <activity android:name=".recycleTip.RecycleTip"
             android:parentActivityName=".RecycleActivity"/>
+        <activity android:name=".RecycleCamera"
+            android:parentActivityName=".Recycle1Activity"/>
     </application>
 
 
