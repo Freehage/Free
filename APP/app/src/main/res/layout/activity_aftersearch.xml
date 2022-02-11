@@ -26,6 +26,7 @@
                 android:layout_weight="1"/>
 
             <RelativeLayout
+                android:id="@+id/relativeaftersearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -34,14 +35,12 @@
                     android:text="test"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginStart="20dp"/>
                 <TextView
                     android:id="@+id/search_company"
-                    android:text="test"
+                    android:text="test2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginStart="20dp"
                     android:layout_below="@+id/search_obj"/>
 
