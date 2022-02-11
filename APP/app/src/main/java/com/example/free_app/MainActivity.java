@@ -97,9 +97,9 @@ public class MainActivity extends AppCompatActivity {
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent_searchob = new Intent(getApplicationContext(), AfterDetectActivity.class);
-//                startActivity(intent_searchob);
-                takePicture();
+                Intent intent_searchob = new Intent(getApplicationContext(), AfterDetectActivity.class);
+                startActivity(intent_searchob);
+//                takePicture();
             }
         });
 
