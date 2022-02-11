@@ -14,8 +14,8 @@
     <string name="vinyl">비닐</string>
     <string name="plastic">플라스틱</string>
 
-    <string-array name="market1">
-        <item>베러얼스 제로웨이스트샵,37.4715500649869,126.982394511096,서울특별시 관악구 홈플러스 남현점 지하1층 제로마켓 </item>
-    </string-array>
+    <string name="search_title">재활용 방법 알아보기</string>
+    <string name="search_hint">제품명을 입력하세요</string>
+
     
 </resources>

@@ -1,12 +1,16 @@
 package com.example.free_app;
 
+import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SearchView;
+import androidx.appcompat.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +26,7 @@ public class Recycle1Activity extends AppCompatActivity {
 
     Button recycle_camera, paper, paper2, glass, pet, can, can2, vinyl, plastic;
 
-    public TextView textView;
-    SearchView recycle_search_view;;
+    private SearchView recycle_search_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +47,27 @@ public class Recycle1Activity extends AppCompatActivity {
         vinyl = findViewById(R.id.vinyl);
         plastic = findViewById(R.id.plastic);
 
-        //rest_name = findViewById(R.id.rest_name);
+
+        recycle_search_view = (SearchView) findViewById(R.id.recycle_search_view);
+        recycle_search_view.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Intent intent_recycle_search = new Intent(getApplicationContext(),RecycleSearchActivity.class);
+                intent_recycle_search.putExtra("re_search_name",s);
+                startActivity(intent_recycle_search);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+
 
     }
+
 
 
 
