@@ -40,7 +40,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".Recycle3Activity"
             android:parentActivityName=".RecycleActivity"/>
