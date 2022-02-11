@@ -56,19 +56,20 @@
 
 
     </FrameLayout>
+
     <Button
         android:id="@+id/photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/scroll"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/white"
         android:drawableTop="@drawable/main_camera"
         android:src="@mipmap/ic_launcher"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@+id/scroll"
         android:text="제품촬영"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/white"/>
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/recycle"
