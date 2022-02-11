@@ -58,8 +58,6 @@
             android:parentActivityName=".Recycle1Activity"/>
         <activity android:name="RecycleResult_bottle"
             android:parentActivityName=".RecycleCamera"/>
-        <activity android:name=".SearchObjectActivity"
-            android:parentActivityName=".MainActivity"/>
     </application>
 
 

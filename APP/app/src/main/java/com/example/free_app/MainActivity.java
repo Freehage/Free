@@ -92,13 +92,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 재품 촬영 버튼 클릭.
+        // 제품 촬영 버튼 클릭.
         photo = (Button) findViewById(R.id.photo);
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent_searchob = new Intent(getApplicationContext(), SearchObjectActivity.class);
-                startActivity(intent_searchob);
+//                Intent intent_searchob = new Intent(getApplicationContext(), AfterDetectActivity.class);
+//                startActivity(intent_searchob);
                 takePicture();
             }
         });
