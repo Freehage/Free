@@ -8,11 +8,10 @@
     <string name="paper">종이</string>
     <string name="paper2">종이팩</string>
     <string name="glass">유리</string>
-    <string name="pet">페트</string>
-    <string name="can">캔류/알미늄</string>
-    <string name="can2">캔류/철</string>
+    <string name="pet_plastic">페트, 플라스틱</string>
+    <string name="can">캔류</string>
     <string name="vinyl">비닐</string>
-    <string name="plastic">플라스틱</string>
+
 
     <string name="search_title">재활용 방법 알아보기</string>
     <string name="search_hint">제품명을 입력하세요</string>

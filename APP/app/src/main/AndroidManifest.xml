@@ -31,29 +31,28 @@
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".MainSearchActivity"
             android:parentActivityName=".MainActivity"/>
-        <activity android:name=".CardnewsActivity"
+        <activity android:name=".cardnews.CardnewsActivity"
             android:parentActivityName=".MainActivity"/>
 
+
         <activity android:name=".Recycle1Activity"
-            android:parentActivityName=".RecycleActivity"
-                android:exported="true">
+            android:parentActivityName=".RecycleActivity"/>
 
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
 
-            <!--<intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>-->
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-
-        <activity android:name=".RecycleSearchActivity"
+        <activity android:name=".Recycle_Method.CanActivity"
             android:parentActivityName=".Recycle1Activity"/>
+        <activity android:name=".Recycle_Method.GlassActivity"
+            android:parentActivityName=".Recycle1Activity"/>
+        <activity android:name=".Recycle_Method.PaperActivity"
+            android:parentActivityName=".Recycle1Activity"/>
+        <activity android:name=".Recycle_Method.Paper2Activity"
+            android:parentActivityName=".Recycle1Activity"/>
+        <activity android:name=".Recycle_Method.PlasticActivity"
+            android:parentActivityName=".Recycle1Activity"/>
+        <activity android:name=".Recycle_Method.VinylActivity"
+            android:parentActivityName=".Recycle1Activity"/>
+
+
 
 
         <activity android:name=".Recycle3Activity"
