@@ -37,13 +37,11 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="20dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
+        android:id="@+id/recomment_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_gotorecycle"
-        android:orientation="vertical"
-        android:id="@+id/result_recommend"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_below="@+id/btn_gotorecycle" />
+
 
 </RelativeLayout>
