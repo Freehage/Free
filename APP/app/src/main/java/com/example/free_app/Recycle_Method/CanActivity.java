@@ -1,6 +1,7 @@
 package com.example.free_app.Recycle_Method;
 
 import android.os.Bundle;
+import android.text.Html;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +14,8 @@ public class CanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.can);
 
-        getSupportActionBar().setTitle("캔 재활용 방법");
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_space);
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>캔 재활용 방법 </font>"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }

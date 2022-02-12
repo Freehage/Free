@@ -2,6 +2,7 @@ package com.example.free_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,7 +18,8 @@ public class RecycleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycle);
 
-        getSupportActionBar().setTitle("재활용 실천하기");
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_space);
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>재활용 실천하기 </font>"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recycle_1 = findViewById(R.id.recycle_1);

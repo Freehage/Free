@@ -1,87 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="45dp"
-        android:layout_height="60dp"
-        android:src="@drawable/icon"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="71dp"
+            android:layout_height="57dp"
+            app:srcCompat="@drawable/icon"
+            tools:layout_editor_absoluteX="106dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="ReBon"
+            tools:layout_editor_absoluteX="185dp"
+            tools:layout_editor_absoluteY="40dp" />
+
+
+    </LinearLayout>
+
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
         android:layout_toEndOf = "@+id/icon"
         android:background="@drawable/background"
         app:iconifiedByDefault="false"
+        android:layout_gravity="center"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         app:queryHint="제품명을 입력하세요" />
 
     <FrameLayout
         android:id="@+id/scroll"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_below="@+id/icon"
         android:layout_centerInParent="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginEnd="20dp">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:clipToPadding="false"
+            android:layout_marginBottom="10dp"
             android:clipChildren="false"
-            android:layout_marginBottom="10dp"/>
+            android:clipToPadding="false" />
 
         <me.relex.circleindicator.CircleIndicator3
             android:id="@+id/indicator"
             android:layout_width="match_parent"
             android:layout_height="36dp"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="bottom"/>
-
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp" />
 
 
     </FrameLayout>
-    <Button
-        android:id="@+id/photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableTop="@drawable/main_camera"
-        android:src="@mipmap/ic_launcher"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@+id/scroll"
-        android:text="제품촬영"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/white"/>
 
-    <Button
-        android:id="@+id/recycle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableTop="@drawable/main_recycle"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="25dp"
-        android:layout_below="@+id/scroll"
-        android:layout_alignParentEnd="true"
-        android:text="재활용"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/white"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-</RelativeLayout>
+
+        <Button
+            android:id="@+id/photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:text="제품촬영"
+            android:src="@mipmap/ic_launcher"
+            android:drawableTop="@drawable/imagecamera"
+            android:textColor="@color/black"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <Button
+            android:id="@+id/recycle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:drawableTop="@drawable/recycle_sign"
+            android:text="재활용"
+            android:textColor="@color/black"
+            style="?android:attr/borderlessButtonStyle"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

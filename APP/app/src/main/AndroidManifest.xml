@@ -36,7 +36,13 @@
 
 
         <activity android:name=".Recycle1Activity"
-            android:parentActivityName=".RecycleActivity"/>
+            android:parentActivityName=".RecycleActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
 
         <activity android:name=".Recycle_Method.CanActivity"
@@ -50,6 +56,9 @@
         <activity android:name=".Recycle_Method.PlasticActivity"
             android:parentActivityName=".Recycle1Activity"/>
         <activity android:name=".Recycle_Method.VinylActivity"
+            android:parentActivityName=".Recycle1Activity"/>
+
+        <activity android:name=".RecycleSearch2Activity"
             android:parentActivityName=".Recycle1Activity"/>
 
 

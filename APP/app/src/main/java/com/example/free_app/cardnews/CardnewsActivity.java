@@ -1,6 +1,7 @@
 package com.example.free_app.cardnews;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,7 +23,8 @@ public class CardnewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cardnews);
 
-        getSupportActionBar().setTitle("카드뉴스");
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_space);
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>카드뉴스 </font>"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         layout = (LinearLayout) findViewById(R.id.linear_card);

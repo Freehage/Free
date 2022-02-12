@@ -147,6 +147,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public List getSpecificData(String s){
+        try {
+            List slist = new ArrayList();
+
+            String row = "%s%";
+            String row2 = "WHERE OBJECT LIKE" + row;
+
+            String sql = "SELECT * FROM " + tableName ;
+
+            String sql2 = sql + row2;
+
+            Cursor cursor = mDatabase.rawQuery(sql2,null);
+
+            if(cursor != null){
+                while(cursor.moveToNext()){
+                    Product product = new Product();
+                    product.setId(cursor.getInt(0));
+                    product.setObject(cursor.getString(1));
+                    product.setCompany(cursor.getString(2));
+                    product.setObline(cursor.getString(3));
+                    product.setObrecy(cursor.getString(4));
+                    product.setOblevel(cursor.getInt(5));
+                    product.setOboutC(cursor.getString(6));
+                    product.setObendday(cursor.getString(7));
+
+                    slist.add(product);
+                }
+            }
+            return slist;
+        }catch (SQLException sqlException){
+            Log.e(TAG,sqlException.toString());
+            throw sqlException;
+        }
+    }
 
 
 

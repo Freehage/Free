@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,7 +33,8 @@ public class Recycle3Activity extends AppCompatActivity implements OnMapReadyCal
         // Set the layout file as the content view.
         setContentView(R.layout.activity_recycle3);
 
-        getSupportActionBar().setTitle("제로웨이스트샵 찾아보기");
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_space);
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>제로웨이스트샵 찾아보기 </font>"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Get a handle to the fragment and register the callback.
