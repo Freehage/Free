@@ -78,13 +78,11 @@ public class AfterDetectActivity extends AppCompatActivity {
             tflite = new Interpreter(loadmodelfile(this,MODEL_NAME));
         }catch (Exception e) {
             e.printStackTrace();
-            Log.e("여기1","?");
         }
     }
 
     // yolo 객체 인식을 위해 이미지 load 하기.
     private TensorImage loadImage(final Bitmap bitmap) {
-        Log.e("여기1","loadImage");
         // Loads bitmap into a TensorImage.
         inputImageBuffer.load(bitmap);
 
@@ -128,7 +126,6 @@ public class AfterDetectActivity extends AppCompatActivity {
 
     // yolo model result 출력.
     private void showresult() {
-        Log.e("여기1","showresult");
         try{
             labels = FileUtil.loadLabels(this,"classes.txt");
             Map<String, Float> labeledProbability =
