@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.free_app.model.Product;
+
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.common.FileUtil;
 import org.tensorflow.lite.support.common.TensorOperator;
@@ -34,6 +36,9 @@ import java.util.List;
 import java.util.Map;
 
 public class AfterDetectActivity extends AppCompatActivity {
+
+    // db table
+    public List<Product> productslists;
 
     // camera
     private static final int REQUEST_IMAGE_CODE = 101;
@@ -61,6 +66,9 @@ public class AfterDetectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_afterdetect);
 
+        // db table
+        productslists = ((MainActivity)MainActivity.main_context).productlist;
+
         // yolo model
         imageView=(ImageView)findViewById(R.id.result_img);
         result_detail=(TextView)findViewById(R.id.result_detail);
@@ -71,8 +79,17 @@ public class AfterDetectActivity extends AppCompatActivity {
         openOrCreateDatabase("FreeAppDB.db", MODE_PRIVATE, null);
         // db.close() -- DO NOT USE THIS
 
-        //getTfliteInterpreter();
+        try{
+            tflite=new Interpreter(loadmodelfile(this));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
+
+
+
+
 
     // yolo 객체 인식을 위해 이미지 load 하기.
     private TensorImage loadImage(final Bitmap bitmap) {
@@ -109,9 +126,7 @@ public class AfterDetectActivity extends AppCompatActivity {
 
     // db에서 인식된 상품과 같은 제품군 찾기.
     private void findObLine() {
-
-        result_detail.getText(); // class name
-
+        String search_name = result_detail.getText().toString();
     }
 
     // yolo model result 출력.
@@ -130,9 +145,10 @@ public class AfterDetectActivity extends AppCompatActivity {
         for (Map.Entry<String, Float> entry : labeledProbability.entrySet()) {
             if (entry.getValue()==maxValueInMap) {
                 Log.e("llllllllllllllllllllllog", entry.getKey());
-                //result_detail.setText(entry.getKey());
+                result_detail.setText(entry.getKey());
                 // * 추후 class명으로 수정.
-                result_detail.setText("chilsung");
+                String search_name = result_detail.getText().toString();
+                //result_detail.setText("chilsung");
             }
         }
     }
@@ -181,8 +197,6 @@ public class AfterDetectActivity extends AppCompatActivity {
 
             tflite.run(inputImageBuffer.getBuffer(),outputProbabilityBuffer.getBuffer().rewind());
             showresult();
-
-
         }
     }
 }
