@@ -3,6 +3,7 @@ package com.example.free_app;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,6 +13,9 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+//import androidx.room.jarjarred.org.stringtemplate.v4.Interpreter;
+
+import com.bumptech.glide.util.Util;
 
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.common.FileUtil;
@@ -24,9 +28,11 @@ import org.tensorflow.lite.support.image.ops.ResizeOp;
 import org.tensorflow.lite.support.image.ops.ResizeWithCropOrPadOp;
 import org.tensorflow.lite.support.label.TensorLabel;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
-
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.Collections;
@@ -39,6 +45,7 @@ public class AfterDetectActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CODE = 101;
 
     // tflite model
+    public String MODEL_NAME = "recyclemodel.tflite";
     protected Interpreter tflite;
     private MappedByteBuffer tfliteModel;
     private TensorImage inputImageBuffer;
@@ -72,9 +79,13 @@ public class AfterDetectActivity extends AppCompatActivity {
         // db.close() -- DO NOT USE THIS
 
         try{
-            tflite=new Interpreter(loadmodelfile(this));
+            //tflite=new Interpreter();
+            //InputStream fileDescriptor = getAssets().open("classes.txt");
+            //Log.e("살려줘", String.valueOf(fileDescriptor));
+            tflite = new Interpreter(loadmodelfile(this,MODEL_NAME));
         }catch (Exception e) {
             e.printStackTrace();
+            Log.e("DDDDDDDDDDDDDDD","here");
         }
     }
 
@@ -94,15 +105,24 @@ public class AfterDetectActivity extends AppCompatActivity {
         return imageProcessor.process(inputImageBuffer);
     }
 
+
     // yolo 모델 load 하기.
-    private MappedByteBuffer loadmodelfile(Activity activity) throws IOException {
-        AssetFileDescriptor fileDescriptor=activity.getAssets().openFd("recycle_model.tflite");
+    private MappedByteBuffer loadmodelfile(Activity activity, String modelFilename) throws IOException {
+        AssetFileDescriptor fileDescriptor = activity.getAssets().openFd(modelFilename);
+        Log.e("HHHHHHHHHHHHHHHHHHHHHHHH", String.valueOf(fileDescriptor));
         FileInputStream inputStream=new FileInputStream(fileDescriptor.getFileDescriptor());
         FileChannel fileChannel=inputStream.getChannel();
         long startoffset = fileDescriptor.getStartOffset();
         long declaredLength=fileDescriptor.getDeclaredLength();
         return fileChannel.map(FileChannel.MapMode.READ_ONLY,startoffset,declaredLength);
     }
+
+    /*private static MappedByteBuffer loadModelFile(AssetManager assetManager, String modelFilename)
+            throws IOException{
+        AssetFileDescriptor fileDescriptor = assetManager.openFd(modelFilename);
+        FileInputStream fileInputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
+
+    }*/
 
     private TensorOperator getPreprocessNormalizeOp() {
         return new NormalizeOp(IMAGE_MEAN, IMAGE_STD);
