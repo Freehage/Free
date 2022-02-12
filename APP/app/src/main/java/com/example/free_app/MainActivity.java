@@ -46,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
         main_context = MainActivity.this;
         initLoadDB();
 
+        openOrCreateDatabase("FreeAppDB.db", MODE_PRIVATE, null);
+        // db.close() -- DO NOT USE THIS
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
