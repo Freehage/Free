@@ -96,7 +96,7 @@ public class AfterDetectActivity extends AppCompatActivity {
 
     // yolo 모델 load 하기.
     private MappedByteBuffer loadmodelfile(Activity activity) throws IOException {
-        AssetFileDescriptor fileDescriptor=activity.getAssets().openFd("recycle_model.tflite");
+        AssetFileDescriptor fileDescriptor=activity.getAssets().openFd("model.tflite");
         FileInputStream inputStream=new FileInputStream(fileDescriptor.getFileDescriptor());
         FileChannel fileChannel=inputStream.getChannel();
         long startoffset = fileDescriptor.getStartOffset();
@@ -122,7 +122,7 @@ public class AfterDetectActivity extends AppCompatActivity {
     private void showresult() {
 
         try{
-            labels = FileUtil.loadLabels(this,"classes.txt");
+            labels = FileUtil.loadLabels(this,"dict.txt");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -133,10 +133,10 @@ public class AfterDetectActivity extends AppCompatActivity {
 
         for (Map.Entry<String, Float> entry : labeledProbability.entrySet()) {
             if (entry.getValue()==maxValueInMap) {
-                Log.e("GGGGG",entry.getKey());
-                result_detail.setText(entry.getKey());
+                Log.e("llllllllllllllllllllllog", entry.getKey());
+                //result_detail.setText(entry.getKey());
                 // * 추후 class명으로 수정.
-                //result_detail.setText("chilsung");
+                result_detail.setText("chilsung");
             }
         }
     }
