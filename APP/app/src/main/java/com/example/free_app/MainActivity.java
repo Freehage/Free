@@ -1,6 +1,5 @@
 package com.example.free_app;
 
-import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -8,26 +7,18 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageButton;
-import android.widget.ScrollView;
+
 import androidx.appcompat.widget.SearchView;
 
-import com.bumptech.glide.Glide;
+import com.example.free_app.after_search.MainSearchActivity;
 import com.example.free_app.cardnews.CustomAdapter;
 import com.example.free_app.database.DatabaseHelper;
 import com.example.free_app.model.Product;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator3;
@@ -86,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Intent intent_mainsearch = new Intent(getApplicationContext(),MainSearchActivity.class);
+                Intent intent_mainsearch = new Intent(getApplicationContext(), MainSearchActivity.class);
                 intent_mainsearch.putExtra("search_name",s);
                 startActivity(intent_mainsearch);
                 return true;
