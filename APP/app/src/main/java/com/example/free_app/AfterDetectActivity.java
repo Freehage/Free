@@ -13,10 +13,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-//import androidx.room.jarjarred.org.stringtemplate.v4.Interpreter;
-
-import com.bumptech.glide.util.Util;
-
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.common.FileUtil;
 import org.tensorflow.lite.support.common.TensorOperator;
@@ -79,18 +75,16 @@ public class AfterDetectActivity extends AppCompatActivity {
         // db.close() -- DO NOT USE THIS
 
         try{
-            //tflite=new Interpreter();
-            //InputStream fileDescriptor = getAssets().open("classes.txt");
-            //Log.e("살려줘", String.valueOf(fileDescriptor));
             tflite = new Interpreter(loadmodelfile(this,MODEL_NAME));
         }catch (Exception e) {
             e.printStackTrace();
-            Log.e("DDDDDDDDDDDDDDD","here");
+            Log.e("여기1","?");
         }
     }
 
     // yolo 객체 인식을 위해 이미지 load 하기.
     private TensorImage loadImage(final Bitmap bitmap) {
+        Log.e("여기1","loadImage");
         // Loads bitmap into a TensorImage.
         inputImageBuffer.load(bitmap);
 
@@ -109,7 +103,6 @@ public class AfterDetectActivity extends AppCompatActivity {
     // yolo 모델 load 하기.
     private MappedByteBuffer loadmodelfile(Activity activity, String modelFilename) throws IOException {
         AssetFileDescriptor fileDescriptor = activity.getAssets().openFd(modelFilename);
-        Log.e("HHHHHHHHHHHHHHHHHHHHHHHH", String.valueOf(fileDescriptor));
         FileInputStream inputStream=new FileInputStream(fileDescriptor.getFileDescriptor());
         FileChannel fileChannel=inputStream.getChannel();
         long startoffset = fileDescriptor.getStartOffset();
@@ -117,12 +110,7 @@ public class AfterDetectActivity extends AppCompatActivity {
         return fileChannel.map(FileChannel.MapMode.READ_ONLY,startoffset,declaredLength);
     }
 
-    /*private static MappedByteBuffer loadModelFile(AssetManager assetManager, String modelFilename)
-            throws IOException{
-        AssetFileDescriptor fileDescriptor = assetManager.openFd(modelFilename);
-        FileInputStream fileInputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
 
-    }*/
 
     private TensorOperator getPreprocessNormalizeOp() {
         return new NormalizeOp(IMAGE_MEAN, IMAGE_STD);
@@ -140,25 +128,28 @@ public class AfterDetectActivity extends AppCompatActivity {
 
     // yolo model result 출력.
     private void showresult() {
-
+        Log.e("여기1","showresult");
         try{
             labels = FileUtil.loadLabels(this,"classes.txt");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        Map<String, Float> labeledProbability =
-                new TensorLabel(labels, probabilityProcessor.process(outputProbabilityBuffer))
-                        .getMapWithFloatValue();
-        float maxValueInMap =(Collections.max(labeledProbability.values()));
+            Map<String, Float> labeledProbability =
+                    new TensorLabel(labels, probabilityProcessor.process(outputProbabilityBuffer))
+                            .getMapWithFloatValue();
 
-        for (Map.Entry<String, Float> entry : labeledProbability.entrySet()) {
-            if (entry.getValue()==maxValueInMap) {
-                Log.e("GGGGG",entry.getKey());
-                result_detail.setText(entry.getKey());
-                // * 추후 class명으로 수정.
-                //result_detail.setText("chilsung");
+            float maxValueInMap =(Collections.max(labeledProbability.values()));
+
+            for (Map.Entry<String, Float> entry : labeledProbability.entrySet()) {
+                if (entry.getValue()==maxValueInMap) {
+                    result_detail.setText(entry.getKey());
+                    // * 추후 class명으로 수정.
+                    //result_detail.setText("chilsung");
+                }
             }
+        }catch (Exception e){
+            //e.printStackTrace();
+            result_detail.setText("아직...");
         }
+
+
     }
 
     // camera 사진 찍기.

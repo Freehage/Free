@@ -35,7 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/result_detail"
         android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:text="BUTTON"/>
 
     <ListView
         android:id="@+id/recomment_result"
