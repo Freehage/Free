@@ -71,11 +71,7 @@ public class AfterDetectActivity extends AppCompatActivity {
         openOrCreateDatabase("FreeAppDB.db", MODE_PRIVATE, null);
         // db.close() -- DO NOT USE THIS
 
-        try{
-            tflite=new Interpreter(loadmodelfile(this));
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+        //getTfliteInterpreter();
     }
 
     // yolo 객체 인식을 위해 이미지 load 하기.
