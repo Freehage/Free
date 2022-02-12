@@ -78,7 +78,6 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder>
         TextView Title;
         TextView detail;
         ImageView imgurl;
-        String page_url;
 
         public ViewHolder(@NonNull View itemView,final OnPersonItemClickListener listener) {
             super(itemView);
@@ -86,17 +85,6 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder>
             detail = itemView.findViewById(R.id.detail);
             imgurl = itemView.findViewById(R.id.imgurl);
 
-            /*itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if (listener != null){
-                        listener.onItemClick(ViewHolder.this,view,position);
-
-
-                    }
-                }
-            });*/
         }
     }
 

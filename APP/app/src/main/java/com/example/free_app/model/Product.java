@@ -11,16 +11,6 @@ public class Product {
     private String oboutC;
     private String obendday;
 
-    /*public Product(int id, String object, String company, String obline, String obrecy, int oblevel, String oboutC, String obendday) {
-        this.id = id;
-        this.object = object;
-        this.company = company;
-        this.obline = obline;
-        this.obrecy = obrecy;
-        this.oblevel = oblevel;
-        this.oboutC = oboutC;
-        this.obendday = obendday;
-    }*/
 
     public int getId() {
         return id;
