@@ -50,8 +50,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(SearchAdapter.ViewHolder holder, int position) {
-        holder.object1.setText(productArrayList.get(position).getObject());
-        holder.level1.setText("탄소 중립 LEVEL: " + Integer.toString(productArrayList.get(position).getOblevel()));
+        String company = productArrayList.get(position).getCompany();
+        String object = productArrayList.get(position).getObject();
+        String level = Integer.toString(productArrayList.get(position).getOblevel());
+        String end_date = productArrayList.get(position).getObendday();
+
+        holder.object1.setText(object);
+        holder.level1.setText("탄소 중립 LEVEL: " + level);
         //String company_level = mDBHelper.getLevel(productArrayList.get(position).getObject());
         //holder.level1.setText("탄소 중립 레벨: " + company_level);
         holder.img1.setImageResource(R.mipmap.ic_launcher);
@@ -60,6 +65,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mcontext, SearchResultActivity.class);
+                intent.putExtra("company",company);
+                intent.putExtra("object",object);
+                intent.putExtra("level",level);
+                intent.putExtra("end_date",end_date);
                 mcontext.startActivity(intent);
             }
         });

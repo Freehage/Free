@@ -23,7 +23,7 @@ public class RecycleSearch2Activity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recycleaftersearch);
+        /*setContentView(R.layout.activity_recycleaftersearch);
 
         editSearch = (EditText) findViewById(R.id.editSearch);
         listView = (ListView) findViewById(R.id.listView);
@@ -46,7 +46,7 @@ public class RecycleSearch2Activity extends AppCompatActivity {
         }
 
         listView = (ListView) findViewById(R.id.listView);
-
+*/
 
 
 
