@@ -77,6 +77,7 @@ public class MainSearchActivity extends AppCompatActivity {
         });
 
 
+
         int spanCount = 2; // 3 columns
         int spacing = 100; // 50px
         boolean includeEdge = false;

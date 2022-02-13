@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private Button recycle;
     private ViewPager2 viewPager2;
     private FragmentStateAdapter fragmentStateAdapter;
-    private int page = 2;
+    private int page = 4;
     private CircleIndicator3 circleIndicator3;
     private SearchView searchView;
     public List<Product> productlist;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
 
         viewPager2.setCurrentItem(0);
-        viewPager2.setOffscreenPageLimit(2);
+        viewPager2.setOffscreenPageLimit(4);
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

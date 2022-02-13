@@ -6,11 +6,13 @@
     android:layout_gravity="center">
 
     <ImageButton
-        android:id="@+id/cardnews"
+        android:id="@+id/cardnews4"
         android:layout_width="match_parent"
         android:layout_height="360dp"
         android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:padding="0sp"
         android:background="@color/white"
-        android:src="@drawable/zero"/>
+        android:src="@drawable/cup1"/>
 
 </LinearLayout>

@@ -21,14 +21,20 @@ public class CustomAdapter extends FragmentStateAdapter {
         if(index==0){
             return new Fragment1();
         }
-        else{
+        else if(index==1){
             return new Fragment2();
+        }
+        else if(index==2){
+            return new Fragment3();
+        }
+        else{
+            return new Fragment4();
         }
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 4;
     }
 
     public int getRealPosition(int position) {
