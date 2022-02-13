@@ -34,7 +34,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         productArrayList = dataList;
 
         mDBHelper = new DatabaseHelper(context);
-        Log.e("LLL",productArrayList.toString());
     }
 
 

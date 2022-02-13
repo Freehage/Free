@@ -1,6 +1,8 @@
 package com.example.free_app.after_search;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.free_app.R;
@@ -22,12 +25,13 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
     private ArrayList productArrayList;
     private Context mcontext;
     private DatabaseHelper mDBHelper;
+    private ArrayList<String> backdatalist;
 
-    public RecommendAdapter(ArrayList<Product> dataList, Context context){
+    public RecommendAdapter(ArrayList<Product> dataList, ArrayList<String> backlist, Context context){
 
         this.mcontext = context;
         productArrayList = dataList;
-
+        backdatalist = backlist;
         mDBHelper = new DatabaseHelper(context);
 
 
@@ -41,7 +45,6 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull RecommendAdapter.ViewHolder holder, int position) {
-
         String object = productArrayList.get(position).toString();
         holder.recom_Title1.setText(object);
         //탄소중립 레벨
@@ -53,6 +56,23 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
         //String company_level = mDBHelper.getLevel(productArrayList.get(position).getObject());
         //holder.level1.setText("탄소 중립 레벨: " + company_level);
         holder.recom_img1.setImageResource(R.mipmap.ic_launcher);
+        String company = mDBHelper.getCompanyResult(object);
+        String end_date = mDBHelper.getEndDate(object);
+        String recycle = mDBHelper.getRecycle(object);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mcontext, ClickRecommend.class);
+                intent.putExtra("company",company);
+                intent.putExtra("object",object);
+                intent.putExtra("level",level);
+                intent.putExtra("end_date",end_date);
+                intent.putExtra("recycle_category",recycle);
+                intent.putExtra("backlist",backdatalist);
+                mcontext.startActivity(intent);
+            }
+        });
 
     }
 

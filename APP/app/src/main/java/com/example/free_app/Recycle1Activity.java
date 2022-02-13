@@ -27,6 +27,8 @@ import com.example.free_app.Recycle_Method.Paper2Activity;
 import com.example.free_app.Recycle_Method.PaperActivity;
 import com.example.free_app.Recycle_Method.PlasticActivity;
 import com.example.free_app.Recycle_Method.VinylActivity;
+import com.example.free_app.after_recycle_search.RecycleSearchActivity;
+import com.example.free_app.after_search.MainSearchActivity;
 import com.example.free_app.database.DatabaseHelper;
 import com.example.free_app.model.Product;
 
@@ -66,6 +68,22 @@ public class Recycle1Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        //search
+        recycle_search_view = (SearchView) findViewById(R.id.recycle_search_view);
+        recycle_search_view.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Intent intent_recyclesearch = new Intent(getApplicationContext(), RecycleSearchActivity.class);
+                intent_recyclesearch.putExtra("recycle_search_name",s);
+                startActivity(intent_recyclesearch);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
 
         recycle_camera = findViewById(R.id.recycle_camera);
 

@@ -1,39 +1,35 @@
-package com.example.free_app.after_search;
+package com.example.free_app.after_recycle_search;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.free_app.MainActivity;
 import com.example.free_app.R;
+import com.example.free_app.after_search.MainSearchActivity;
+import com.example.free_app.after_search.SearchAdapter;
 import com.example.free_app.database.DatabaseHelper;
 import com.example.free_app.model.Product;
-import com.example.free_app.recycleTip.TipAdapter;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class MainSearchActivity extends AppCompatActivity {
+public class RecycleSearchActivity extends AppCompatActivity {
     public List<Product> productslists;
     private SearchView searchView;
-    private SearchAdapter adapter;
+    private RecycleSearchAdapter adapter;
     private DatabaseHelper mDBHelper;
     private List result_name;
-    public static Context search_context;
+    public static Context recycle_search_context;
     public String search_name;
 
     @Override
@@ -48,16 +44,11 @@ public class MainSearchActivity extends AppCompatActivity {
         productslists = ((MainActivity)MainActivity.main_context).productlist;
 
         Intent intent = getIntent();
-        search_name = intent.getStringExtra("search_name");
+        search_name = intent.getStringExtra("recycle_search_name");
 
         mDBHelper = new DatabaseHelper(this);
-        //출력값:: 이름들 list
-
-        //ArrayList item_list = mDBHelper.getObjectResult(search_name);
-
 
         ArrayList<Product> item_list = search(search_name,productslists);
-
 
 
         searchView = (SearchView) findViewById(R.id.after_search_bar);
@@ -66,9 +57,9 @@ public class MainSearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.setQueryHint("");
-                Intent intent_mainsearch = new Intent(getApplicationContext(), MainSearchActivity.class);
-                intent_mainsearch.putExtra("search_name",query);
-                startActivity(intent_mainsearch);
+                Intent intent_recyclesearch = new Intent(getApplicationContext(), RecycleSearchActivity.class);
+                intent_recyclesearch.putExtra("recycle_search_name",query);
+                startActivity(intent_recyclesearch);
                 return true;
             }
 
@@ -89,7 +80,7 @@ public class MainSearchActivity extends AppCompatActivity {
         //recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        adapter = new SearchAdapter(item_list,this);
+        adapter = new RecycleSearchAdapter(item_list,this);
         recyclerView.setAdapter(adapter);
 
 
@@ -108,3 +99,4 @@ public class MainSearchActivity extends AppCompatActivity {
         return return_value;
     }
 }
+

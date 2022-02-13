@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.free_app.MainActivity;
 import com.example.free_app.R;
 import com.example.free_app.database.DatabaseHelper;
 import com.example.free_app.model.Product;
@@ -43,6 +44,7 @@ public class SearchResultActivity  extends AppCompatActivity {
         String level = intent.getStringExtra("level");
         String end_date = intent.getStringExtra("end_date");
 
+
         txt_com = findViewById(R.id.txt_company);
         txt_obj = findViewById(R.id.txt_objname);
         txt_level = findViewById(R.id.txt_level);
@@ -52,6 +54,12 @@ public class SearchResultActivity  extends AppCompatActivity {
         txt_obj.setText(object);
         txt_level.setText("탄소 중립 LEVEL: " + level);
         txt_end.setText(end_date);
+
+        ArrayList<String> arrayList_back = new ArrayList();
+        arrayList_back.add(company);
+        arrayList_back.add(object);
+        arrayList_back.add(level);
+        arrayList_back.add(end_date);
 
         //hs
         mDBHelper = new DatabaseHelper(this);
@@ -64,7 +72,7 @@ public class SearchResultActivity  extends AppCompatActivity {
         //recyclerView.setLayoutManager(gridLayoutManager);
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
-        adapter = new RecommendAdapter(arrayList_OB,this);
+        adapter = new RecommendAdapter(arrayList_OB,arrayList_back,this);
         recyclerView.setAdapter(adapter);
 
     }
