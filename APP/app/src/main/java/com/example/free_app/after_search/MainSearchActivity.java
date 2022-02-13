@@ -59,6 +59,22 @@ public class MainSearchActivity extends AppCompatActivity {
 
         searchView = (SearchView) findViewById(R.id.after_search_bar);
         searchView.setQueryHint(search_name);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchView.setQueryHint("");
+                Intent intent_mainsearch = new Intent(getApplicationContext(), MainSearchActivity.class);
+                intent_mainsearch.putExtra("search_name",query);
+                startActivity(intent_mainsearch);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchView.setQueryHint("");
+                return true;
+            }
+        });
 
 
         int spanCount = 2; // 3 columns
@@ -66,7 +82,7 @@ public class MainSearchActivity extends AppCompatActivity {
         boolean includeEdge = false;
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView_forsearch);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
+        //recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(gridLayoutManager);
         adapter = new SearchAdapter(item_list,this);
