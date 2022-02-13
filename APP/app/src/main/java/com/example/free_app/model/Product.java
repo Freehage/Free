@@ -4,6 +4,12 @@ public class Product {
 
     private int id;
     private String object;
+    private String obclass;
+
+    public String getObclass() {return obclass;}
+
+    public void setObclass(String obclass) {this.obclass = obclass; }
+
     private String company;
     private String obline;
     private String obrecy;
@@ -75,4 +81,6 @@ public class Product {
     public void setObendday(String obendday) {
         this.obendday = obendday;
     }
+
+
 }

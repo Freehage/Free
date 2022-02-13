@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.free_app.MainActivity;
 import com.example.free_app.R;
+import com.example.free_app.database.DatabaseHelper;
 import com.example.free_app.model.Product;
 
 import java.util.ArrayList;
@@ -22,15 +23,21 @@ import java.util.ArrayList;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder>
         implements OnPersonItemClickListener2 {
     private ArrayList<Product> productArrayList;
+    private ArrayList<Product> product_COMArrayList;
     OnPersonItemClickListener2 listener;
     private Context mcontext;
+    private DatabaseHelper mDBHelper;
 
     public SearchAdapter(ArrayList<Product> dataList, Context context){
 
         this.mcontext = context;
         productArrayList = dataList;
+
+        mDBHelper = new DatabaseHelper(context);
         Log.e("LLL",productArrayList.toString());
     }
+
+
     @Override
     public SearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -45,6 +52,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public void onBindViewHolder(SearchAdapter.ViewHolder holder, int position) {
         holder.object1.setText(productArrayList.get(position).getObject());
         holder.level1.setText("탄소 중립 LEVEL: " + Integer.toString(productArrayList.get(position).getOblevel()));
+        //String company_level = mDBHelper.getLevel(productArrayList.get(position).getObject());
+        //holder.level1.setText("탄소 중립 레벨: " + company_level);
         holder.img1.setImageResource(R.mipmap.ic_launcher);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

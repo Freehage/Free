@@ -129,12 +129,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     Product product = new Product();
                     product.setId(cursor.getInt(0));
                     product.setObject(cursor.getString(1));
-                    product.setCompany(cursor.getString(2));
-                    product.setObline(cursor.getString(3));
-                    product.setObrecy(cursor.getString(4));
-                    product.setOblevel(cursor.getInt(5));
-                    product.setOboutC(cursor.getString(6));
-                    product.setObendday(cursor.getString(7));
+                    product.setObclass(cursor.getString(2));
+                    product.setCompany(cursor.getString(3));
+                    product.setObline(cursor.getString(4));
+                    product.setObrecy(cursor.getString(5));
+                    product.setOblevel(cursor.getInt(6));
+                    product.setOboutC(cursor.getString(7));
+                    product.setObendday(cursor.getString(8));
 
                     mlist.add(product);
                 }
@@ -147,41 +148,77 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public List getSpecificData(String s){
-        try {
-            List slist = new ArrayList();
-
-            String row = "%s%";
-            String row2 = "WHERE OBJECT LIKE" + row;
-
-            String sql = "SELECT * FROM " + tableName ;
-
-            String sql2 = sql + row2;
-
-            Cursor cursor = mDatabase.rawQuery(sql2,null);
-
-            if(cursor != null){
-                while(cursor.moveToNext()){
-                    Product product = new Product();
-                    product.setId(cursor.getInt(0));
-                    product.setObject(cursor.getString(1));
-                    product.setCompany(cursor.getString(2));
-                    product.setObline(cursor.getString(3));
-                    product.setObrecy(cursor.getString(4));
-                    product.setOblevel(cursor.getInt(5));
-                    product.setOboutC(cursor.getString(6));
-                    product.setObendday(cursor.getString(7));
-
-                    slist.add(product);
-                }
-            }
-            return slist;
-        }catch (SQLException sqlException){
-            Log.e(TAG,sqlException.toString());
-            throw sqlException;
+    public ArrayList getObjectResult(String search) {
+        // 읽기가 가능하게 DB 열기
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList arrayList_OB = new ArrayList();
+        //String result = "";
+        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
+        //Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE %'" + search + "'%", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
+        while (cursor.moveToNext()) {
+            arrayList_OB.add(cursor.getInt(0));
         }
+        return arrayList_OB;
     }
 
+    public String getCompanyResult(String search) {
+        // 읽기가 가능하게 DB 열기
+        SQLiteDatabase db = getReadableDatabase();
+        String company = "";
+        //String result = "";
+        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력 "UPDATE TodoList SET title='"+_search+"'
+        //Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '"+search+"' ", null);
+        while (cursor.moveToNext()) {
+            company = cursor.getString(3);
+        }
+        return company;
+    }
+
+    public String getLevel(String search) {
+        // 읽기가 가능하게 DB 열기
+        SQLiteDatabase db = getReadableDatabase();
+        String level= "";
+        //String result = "";
+        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력 "UPDATE TodoList SET title='"+_search+"'
+        //Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '"+search+"' ", null);
+        while (cursor.moveToNext()) {
+            level = Integer.toString(cursor.getInt(6));
+        }
+        return level;
+    }
+
+
+
+    /*public ArrayList getCompanyResult(String search) {
+        // 읽기가 가능하게 DB 열기
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList arrayList_COM = new ArrayList();
+        //String result = "";
+        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
+        //Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE %'" + search + "'%", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
+        while (cursor.moveToNext()) {
+            arrayList_COM.add( cursor.getString(2));
+        }
+        return arrayList_COM;
+    }*/
+
+
+    public String getLevelResult(String object) {
+        // 읽기가 가능하게 DB 열기
+        SQLiteDatabase db = getReadableDatabase();
+        String result = "";
+        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT = '" + object + "'", null);
+        while (cursor.moveToNext()) {
+            result += "탄소 중립 LEVEL: "
+                    + cursor.getInt(5)
+                    + "\n"; }
+        return result;
+    }
 
 
 }
