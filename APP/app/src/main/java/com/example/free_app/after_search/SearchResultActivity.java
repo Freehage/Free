@@ -7,8 +7,14 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.free_app.R;
+import com.example.free_app.database.DatabaseHelper;
+import com.example.free_app.model.Product;
+
+import java.util.ArrayList;
 
 public class SearchResultActivity  extends AppCompatActivity {
 
@@ -16,6 +22,11 @@ public class SearchResultActivity  extends AppCompatActivity {
     private TextView txt_obj;
     private TextView txt_level;
     private TextView txt_end;
+    private RecommendAdapter adapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    //hs
+    private DatabaseHelper mDBHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +53,19 @@ public class SearchResultActivity  extends AppCompatActivity {
         txt_level.setText("탄소 중립 LEVEL: " + level);
         txt_end.setText(end_date);
 
+        //hs
+        mDBHelper = new DatabaseHelper(this);
+        String categoryResult = mDBHelper.getCategory(object);
+        ArrayList arrayList_OB = new ArrayList();
+        arrayList_OB = mDBHelper.getObjectsResult(categoryResult);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recommend);
+        //recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
+        //recyclerView.setLayoutManager(gridLayoutManager);
+        mLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLayoutManager);
+        adapter = new RecommendAdapter(arrayList_OB,this);
+        recyclerView.setAdapter(adapter);
 
     }
 }

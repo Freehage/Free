@@ -29,28 +29,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private final Context mContext;
 
     public DatabaseHelper(@Nullable Context context) {
-        super(context, DB_NAME,null,1);
-        if(android.os.Build.VERSION.SDK_INT >= 17){
+        super(context, DB_NAME, null, 1);
+        if (android.os.Build.VERSION.SDK_INT >= 17) {
             DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
-        }
-        else
-        {
+        } else {
             DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
         }
         this.mContext = context;
     }
 
-    public void createDatabase() throws SQLException{
+    public void createDatabase() throws SQLException {
 
         boolean isDBExist = checkDB();
-        if(!isDBExist){
+        if (!isDBExist) {
             this.getReadableDatabase();
             this.close();
-            try{
+            try {
                 copyDB();
-                Log.e(TAG,"createDatabase 생성");
-            }
-            catch (IOException e){
+                Log.e(TAG, "createDatabase 생성");
+            } catch (IOException e) {
                 throw new Error("ErrorCopyingDB!!!!!!!");
             }
         }
@@ -63,8 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         OutputStream mOutput = new FileOutputStream(outFileName);
         byte[] mBuffer = new byte[1024];
         int mLength;
-        while ((mLength = mInput.read(mBuffer))>0)
-        {
+        while ((mLength = mInput.read(mBuffer)) > 0) {
             mOutput.write(mBuffer, 0, mLength);
         }
         mOutput.flush();
@@ -78,25 +74,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         File DBFile = new File(DB_PATH + DB_NAME);
         Boolean b;
         b = DBFile.exists();
-        Log.e(TAG,b.toString());
+        Log.e(TAG, b.toString());
         return DBFile.exists();
     }
 
     public boolean openDB() throws SQLException {
-        if(!checkDB()){
+        if (!checkDB()) {
             createDatabase();
         }
         String path = DB_PATH + DB_NAME;
-        try{
-            mDatabase = SQLiteDatabase.openDatabase(path,null,SQLiteDatabase.CREATE_IF_NECESSARY);
-        }catch (SQLException sqlException){
-            Log.e(TAG,"can't open db");
+        try {
+            mDatabase = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.CREATE_IF_NECESSARY);
+        } catch (SQLException sqlException) {
+            Log.e(TAG, "can't open db");
         }
         return mDatabase != null;
     }
 
-    public synchronized void close(){
-        if(mDatabase != null){
+    public synchronized void close() {
+        if (mDatabase != null) {
             mDatabase.close();
         }
         super.close();
@@ -113,19 +109,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
-
-
-    public List getTableData(){
+    public List getTableData() {
         try {
             List mlist = new ArrayList();
 
             String sql = "SELECT * FROM " + tableName;
 
-            Cursor cursor = mDatabase.rawQuery(sql,null);
+            Cursor cursor = mDatabase.rawQuery(sql, null);
 
-            if(cursor != null){
-                while(cursor.moveToNext()){
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
                     Product product = new Product();
                     product.setId(cursor.getInt(0));
                     product.setObject(cursor.getString(1));
@@ -141,8 +134,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
             }
             return mlist;
-        }catch (SQLException sqlException){
-            Log.e(TAG,sqlException.toString());
+        } catch (SQLException sqlException) {
+            Log.e(TAG, sqlException.toString());
             throw sqlException;
         }
     }
@@ -155,7 +148,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //String result = "";
         // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
         //Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE %'" + search + "'%", null);
-        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%" + search + "%\"", null);
         while (cursor.moveToNext()) {
             arrayList_OB.add(cursor.getInt(0));
         }
@@ -169,56 +162,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //String result = "";
         // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력 "UPDATE TodoList SET title='"+_search+"'
         //Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
-        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '"+search+"' ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             company = cursor.getString(3);
         }
         return company;
     }
 
+
+    //추천알고리즘
+    public String getCategory(String search) {
+        SQLiteDatabase db = getReadableDatabase();
+        String category = "";
+        //이름이 ! 일 떄 해당 상품의 카테고리 얻음
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '" + search + "' ", null);
+        while (cursor.moveToNext()) {
+            category = cursor.getString(4); //OBLINE얻음
+        }
+        return category;
+    }
+
+    public ArrayList getObjectsResult(String search) {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList arrayList_OB = new ArrayList();
+        //OBLINE이 ~인 상품 중에 탄소배출량이 적은 제품 순서대로 3개 나열
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBLINE = '" + search + "' ORDER BY OBOUTC DESC LIMIT 3 ", null);
+        while (cursor.moveToNext()) {
+            arrayList_OB.add(cursor.getString(1)); // 상품명 Append
+        }
+        return arrayList_OB;
+    }
+
+
     public String getLevel(String search) {
         // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
-        String level= "";
+        String level = "";
         //String result = "";
         // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력 "UPDATE TodoList SET title='"+_search+"'
         //Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
-        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '"+search+"' ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             level = Integer.toString(cursor.getInt(6));
         }
         return level;
     }
 
-
-
-    /*public ArrayList getCompanyResult(String search) {
-        // 읽기가 가능하게 DB 열기
+    //이름 알 때 탄소배출량 알기
+    public String getCarbon(String search) {
         SQLiteDatabase db = getReadableDatabase();
-        ArrayList arrayList_COM = new ArrayList();
-        //String result = "";
-        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
-        //Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE %'" + search + "'%", null);
-        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
+        String amount = "";
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
-            arrayList_COM.add( cursor.getString(2));
+            amount = Integer.toString(cursor.getInt(7)); //탄소배출량
         }
-        return arrayList_COM;
-    }*/
-
-
-    public String getLevelResult(String object) {
-        // 읽기가 가능하게 DB 열기
-        SQLiteDatabase db = getReadableDatabase();
-        String result = "";
-        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
-        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT = '" + object + "'", null);
-        while (cursor.moveToNext()) {
-            result += "탄소 중립 LEVEL: "
-                    + cursor.getInt(5)
-                    + "\n"; }
-        return result;
+        return amount;
     }
-
-
 }
