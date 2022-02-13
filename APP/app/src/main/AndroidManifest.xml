@@ -31,6 +31,8 @@
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".after_search.MainSearchActivity"
             android:parentActivityName=".MainActivity"/>
+        <activity android:name=".after_search.SearchResultActivity"
+            android:parentActivityName="MainActivity"/>
         <activity android:name=".cardnews.CardnewsActivity"
             android:parentActivityName=".MainActivity"/>
 

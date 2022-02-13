@@ -59,7 +59,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mcontext, MainActivity.class);
+                Intent intent = new Intent(mcontext, SearchResultActivity.class);
                 mcontext.startActivity(intent);
             }
         });
