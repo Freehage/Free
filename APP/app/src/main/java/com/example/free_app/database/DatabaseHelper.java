@@ -186,7 +186,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
         //OBLINE이 ~인 상품 중에 탄소배출량이 적은 제품 순서대로 3개 나열
-        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBLINE = '" + search + "' ORDER BY OBOUTC DESC LIMIT 3 ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBLINE = '" + search + "' ORDER BY OBOUTC ASC LIMIT 3 ", null);
         while (cursor.moveToNext()) {
             arrayList_OB.add(cursor.getString(1)); // 상품명 Append
         }

@@ -50,8 +50,6 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
         //탄소 배출량 : getOBOUTC
         String amount = mDBHelper.getCarbon(object);
         holder.recom_detail2.setText("탄소 배출량: " + amount);
-        //String company_level = mDBHelper.getLevel(productArrayList.get(position).getObject());
-        //holder.level1.setText("탄소 중립 레벨: " + company_level);
         holder.recom_img1.setImageResource(R.mipmap.ic_launcher);
 
     }

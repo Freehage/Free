@@ -27,6 +27,7 @@ import com.example.free_app.Recycle_Method.Paper2Activity;
 import com.example.free_app.Recycle_Method.PaperActivity;
 import com.example.free_app.Recycle_Method.PlasticActivity;
 import com.example.free_app.Recycle_Method.VinylActivity;
+import com.example.free_app.after_search.MainSearchActivity;
 import com.example.free_app.database.DatabaseHelper;
 import com.example.free_app.model.Product;
 
@@ -136,7 +137,7 @@ public class Recycle1Activity extends AppCompatActivity {
 
 
 
-        //recycle_search_view = (SearchView) findViewById(R.id.recycle_search_view);
+        
 
 
     }
