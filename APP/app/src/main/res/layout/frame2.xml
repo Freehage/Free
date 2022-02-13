@@ -13,6 +13,6 @@
         android:adjustViewBounds="true"
         android:padding="0sp"
         android:background="@color/white"
-        android:src="@drawable/cardnews2"/>
+        android:src="@drawable/esg1"/>
 
 </LinearLayout>
