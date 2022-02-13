@@ -34,7 +34,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         productArrayList = dataList;
 
         mDBHelper = new DatabaseHelper(context);
-        Log.e("LLL",productArrayList.toString());
     }
 
 
@@ -54,6 +53,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         String object = productArrayList.get(position).getObject();
         String level = Integer.toString(productArrayList.get(position).getOblevel());
         String end_date = productArrayList.get(position).getObendday();
+        String recycle = productArrayList.get(position).getObrecy();
 
         holder.object1.setText(object);
         holder.level1.setText("탄소 중립 LEVEL: " + level);
@@ -69,6 +69,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 intent.putExtra("object",object);
                 intent.putExtra("level",level);
                 intent.putExtra("end_date",end_date);
+                intent.putExtra("recycle_category",recycle);
                 mcontext.startActivity(intent);
             }
         });

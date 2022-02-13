@@ -1,5 +1,6 @@
 package com.example.free_app.Recycle_Method;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 
