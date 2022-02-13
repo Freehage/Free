@@ -3,7 +3,6 @@ package com.example.free_app.after_search;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.free_app.R;
 import com.example.free_app.Recycle1Activity;
 
-public class RecommendRecycle extends AppCompatActivity {
+public class SearchRecycle extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

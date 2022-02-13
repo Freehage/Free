@@ -66,6 +66,14 @@
                 android:layout_margin="5dp"
                 android:textSize="14sp"/>
 
+            <TextView
+                android:id="@+id/txt_recycle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="object recycle"
+                android:layout_margin="5dp"
+                android:textSize="14sp"/>
+
         </LinearLayout>
 
     </LinearLayout>

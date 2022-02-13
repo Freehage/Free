@@ -19,6 +19,7 @@ public class ClickRecommend extends AppCompatActivity {
     public String recycle_category;
     public static Context recommend_context;
     public ArrayList<String> arrayList;
+    public String company,objects,end_date,level;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,17 +33,23 @@ public class ClickRecommend extends AppCompatActivity {
         TextView txt_obj = findViewById(R.id.txt_objname);
         TextView txt_level = findViewById(R.id.txt_level);
         TextView txt_end = findViewById(R.id.txt_enddate);
+        TextView txt_rec = findViewById(R.id.txt_recycle2);
         Button recycle_btn = findViewById(R.id.recycle_btn);
 
         Intent intent = getIntent();
         arrayList = intent.getStringArrayListExtra("backlist");
 
         if(intent != null){
-            txt_com.setText(intent.getStringExtra("company"));
-            txt_end.setText(intent.getStringExtra("end_date"));
-            txt_level.setText("탄소 중립 LEVEL: " + intent.getStringExtra("level"));
-            txt_obj.setText(intent.getStringExtra("object"));
+            company = intent.getStringExtra("company");
+            txt_com.setText(company);
+            end_date = intent.getStringExtra("end_date");
+            txt_end.setText(end_date);
+            level = intent.getStringExtra("level");
+            txt_level.setText("탄소 중립 LEVEL: " + level);
+            objects = intent.getStringExtra("object");
+            txt_obj.setText(objects);
             recycle_category = intent.getStringExtra("recycle_category");
+            txt_rec.setText(recycle_category);
         }
 
         recycle_btn.setOnClickListener(new View.OnClickListener() {

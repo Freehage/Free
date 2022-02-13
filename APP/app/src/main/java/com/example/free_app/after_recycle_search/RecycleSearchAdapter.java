@@ -58,7 +58,7 @@ public class RecycleSearchAdapter extends RecyclerView.Adapter<RecycleSearchAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (recycle_category == "종이"){
+                if (recycle_category.equals("종이")){
                     Intent intent = new Intent(mcontext, AfterRecycleSearch.class);
                     intent.putExtra("recycle_category",recycle_category);
                     mcontext.startActivity(intent);

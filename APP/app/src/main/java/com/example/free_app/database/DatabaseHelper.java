@@ -202,7 +202,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
         Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
-            recycle = Integer.toString(cursor.getInt(5));
+            recycle = cursor.getString(5);
         }
         return recycle;
     }
