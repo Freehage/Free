@@ -185,21 +185,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ArrayList getObjectsResult(String search) {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
-        //OBLINE이 ~인 상품 중에 탄소배출량이 적은 제품 순서대로 3개 나열
-        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBLINE = '" + search + "' ORDER BY OBOUTC ASC LIMIT 3 ", null);
+        //OBLINE이 ~인 상품 중에 탄소배출량이 적은 제품 순서대로 3개 나열 + 같은 제품은 제외
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBLINE = '" + search + "' AND OBJECT != '" + search + "'" +
+                "ORDER BY OBOUTC ASC LIMIT 3 ", null);
         while (cursor.moveToNext()) {
+
             arrayList_OB.add(cursor.getString(1)); // 상품명 Append
         }
         return arrayList_OB;
     }
 
+    //제품명 알 때 재활용 분류 파악
     public String getRecycle(String search) {
-        // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
         String recycle = "";
-        //String result = "";
-        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력 "UPDATE TodoList SET title='"+_search+"'
-        //Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
         Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             recycle = cursor.getString(5);
@@ -207,14 +206,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return recycle;
     }
 
-
+    //제품명 알 때 탄소중립마크 레벨 파악
     public String getLevel(String search) {
-        // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
         String level = "";
-        //String result = "";
-        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력 "UPDATE TodoList SET title='"+_search+"'
-        //Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
         Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             level = Integer.toString(cursor.getInt(6));
@@ -222,13 +217,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return level;
     }
 
+    //제품명 알 때 재활용 분류 파악
     public String getEndDate(String search) {
-        // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
         String end_date = "";
-        //String result = "";
-        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력 "UPDATE TodoList SET title='"+_search+"'
-        //Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
         Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             end_date = Integer.toString(cursor.getInt(8));
@@ -236,7 +228,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return end_date;
     }
 
-    //이름 알 때 탄소배출량 알기
+    //제품명 알 때 탄소배출량 파악
     public String getCarbon(String search) {
         SQLiteDatabase db = getReadableDatabase();
         String amount = "";

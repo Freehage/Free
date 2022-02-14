@@ -10,9 +10,12 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 
 import android.widget.EditText;
@@ -41,22 +44,9 @@ public class Recycle1Activity extends AppCompatActivity {
     Button recycle_camera;
     Button paper, paper2, glass, can, vinyl, plastic;
 
-    EditText et1;
-    //Button bt1;
-    TextView tv1;
-
     public ArrayList arrayList;
 
-    private DatabaseHelper mDBHelper;
-
-    //https://webisfree.com/2014-01-28/[mysql]-%ED%95%84%EB%93%9C%EC%97%90%EC%84%9C-%ED%8A%B9%EC%A0%95%EB%AC%B8%EC%9E%90-%ED%8F%AC%ED%95%A8-%EB%98%90%EB%8A%94-%EC%A0%9C%EC%99%B8%ED%95%9C-db-%EA%B2%80%EC%83%89-like-not
-    //https://asterisco.tistory.com/70
-
-
-
     private SearchView recycle_search_view;
-
-
 
 
     @Override
@@ -152,13 +142,7 @@ public class Recycle1Activity extends AppCompatActivity {
             }
         });
 
-
-
-        //recycle_search_view = (SearchView) findViewById(R.id.recycle_search_view);
-
-
     }
-
 
 
 }

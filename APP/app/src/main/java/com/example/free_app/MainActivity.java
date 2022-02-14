@@ -1,5 +1,6 @@
 package com.example.free_app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -9,8 +10,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 
@@ -115,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
         databaseHelper.close();
 
     }
+
+
+
 
 
 }
