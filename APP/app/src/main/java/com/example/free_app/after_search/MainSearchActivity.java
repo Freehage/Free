@@ -109,7 +109,6 @@ public class MainSearchActivity extends AppCompatActivity {
 
         if(item_list.size() != 0){
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView_forsearch);
-            //recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
             GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
             recyclerView.setLayoutManager(gridLayoutManager);
             adapter = new SearchAdapter(item_list,this);

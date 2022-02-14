@@ -74,7 +74,7 @@ public class RecycleActivity extends AppCompatActivity {
         recycle_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),Recycle3Activity.class);
+                Intent intent = new Intent(getApplicationContext(),ZerowasteActivity.class);
                 startActivity(intent);
 
             }

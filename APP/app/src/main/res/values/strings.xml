@@ -11,6 +11,17 @@
     <string name="pet_plastic">페트, 플라스틱</string>
     <string name="can">캔류</string>
     <string name="vinyl">비닐</string>
+    <string name="zerowaste">제로웨이스트 (zero waste)</string>
+    <string name="zerowaste_detail">배출되는 쓰레기를 최소화하자는 의미로,\n모든 제품이 재사용될 수 있도록 장려하며\n폐기물을 방지하는데 초점을 맞춘 원칙\n\n 제로웨이스트 매장은 다음과 같은 방식으로\n생활 속 쓰레기를 줄이기에 동참하고 있습니다!</string>
+    <string name="how1">1.리필스테이션</string>
+    <string name="how1_1">세탁세제, 섬유 유연제, 주방세제, 샴프, 린스 등</string>
+    <string name="how2">2. 친환경 제품, 공정 무역 제품 판매</string>
+    <string name="how2_1">비건 비누, 대나무 칫솔, 고체 치약, 천연 수세미 등</string>
+    <string name="how3">3. 자원 순환소</string>
+    <string name="how3_1">종이팩, 커피찌꺼기 등을 수거하여 자원 재활용 / DIY 체험 등</string>
+
+
+
 
 
     <string name="search_title">재활용 방법 알아보기</string>

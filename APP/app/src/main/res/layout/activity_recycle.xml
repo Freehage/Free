@@ -4,9 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_gravity="center_vertical">
 
     <Button
         android:layout_weight="1"
@@ -15,7 +16,7 @@
         android:layout_height="120dp"
         android:background="#FFFFFF"
         android:backgroundTint="@color/white"
-        android:drawableLeft="@mipmap/ic_launcher"
+        android:drawableLeft="@drawable/recycle2button"
         android:text="재활용 방법 알아보기"
         android:textColor="@color/black"
         android:layout_margin="20dp"/>
@@ -25,9 +26,10 @@
         android:id="@+id/recycle_2"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:drawableStart="@mipmap/ic_launcher"
-        android:text="재활용 팁 알아보기"
+        android:background="#FFFFFF"
         android:backgroundTint="@color/white"
+        android:drawableLeft="@drawable/tipbutton"
+        android:text="재활용 팁 알아보기"
         android:textColor="@color/black"
         android:layout_margin="20dp"/>
 
@@ -36,10 +38,12 @@
         android:id="@+id/recycle_3"
         android:layout_width="match_parent"
         android:layout_height="120dp"
+        android:background="#FFFFFF"
         android:backgroundTint="@color/white"
-        android:drawableLeft="@mipmap/ic_launcher"
-        android:text="제로웨이스트 오프라인 매장 찾기"
+        android:drawableLeft="@drawable/shopbutton"
+        android:text="제로웨이스트 매장 알아보기"
         android:textColor="@color/black"
         android:layout_margin="20dp"/>
+
 
 </LinearLayout>

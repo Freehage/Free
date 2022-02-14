@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="30dp">
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="71dp"
@@ -36,7 +36,7 @@
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:layout_toEndOf = "@+id/icon"
         android:background="@drawable/background"
         app:iconifiedByDefault="false"
@@ -80,6 +80,28 @@
         android:layout_marginBottom="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
+
+        <!--<Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/photo"
+            android:drawableLeft="@drawable/camerabutton"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:text="제품촬영"
+            android:layout_weight="1"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/recycle2"
+            android:drawableLeft="@drawable/recycle2button"
+            android:layout_gravity="center"
+            android:text="재활용"
+            android:layout_weight="1"
+            style="?android:attr/borderlessButtonStyle"/>-->
+
 
 
         <Button
