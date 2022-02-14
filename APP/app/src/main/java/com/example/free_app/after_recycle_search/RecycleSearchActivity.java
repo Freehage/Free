@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.free_app.MainActivity;
 import com.example.free_app.R;
 import com.example.free_app.after_search.MainSearchActivity;
+import com.example.free_app.after_search.NoitemActivity;
 import com.example.free_app.after_search.SearchAdapter;
 import com.example.free_app.database.DatabaseHelper;
 import com.example.free_app.model.Product;
@@ -76,12 +77,19 @@ public class RecycleSearchActivity extends AppCompatActivity {
         int spacing = 100; // 50px
         boolean includeEdge = false;
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView_forsearch);
-        //recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        adapter = new RecycleSearchAdapter(item_list,this);
-        recyclerView.setAdapter(adapter);
+        if(item_list.size() != 0){
+            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView_forsearch);
+            //recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
+            recyclerView.setLayoutManager(gridLayoutManager);
+            adapter = new RecycleSearchAdapter(item_list,this);
+            recyclerView.setAdapter(adapter);
+        }else{
+            Intent intent1 = new Intent(getApplicationContext(), NoitemRecycleActivity.class);
+            intent1.putExtra("search_name",search_name);
+            startActivity(intent1);
+        }
+
 
 
     }
@@ -98,5 +106,6 @@ public class RecycleSearchActivity extends AppCompatActivity {
         }
         return return_value;
     }
+
 }
 

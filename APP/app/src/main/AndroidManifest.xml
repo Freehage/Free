@@ -48,12 +48,16 @@
         <activity android:name=".after_search.RecommendBackActivity"/>
         <activity android:name=".after_search.RecommendRecycleBackActivity"/>
         <activity android:name=".after_search.SearchRecycleBackActivity"/>
+        <activity android:name=".after_search.NoitemActivity"
+            android:parentActivityName=".MainActivity"/>
 
         <activity android:name=".after_recycle_search.RecycleSearchActivity"
             android:parentActivityName=".Recycle1Activity"/>
         <activity android:name=".after_recycle_search.AfterRecycleSearch"
             android:parentActivityName=".after_recycle_search.RecycleSearchBackActivity"/>
         <activity android:name=".after_recycle_search.RecycleSearchBackActivity"/>
+        <activity android:name=".after_recycle_search.NoitemRecycleActivity"
+            android:parentActivityName=".Recycle1Activity"/>
 
 
         <activity android:name=".Recycle1Activity"
