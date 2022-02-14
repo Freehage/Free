@@ -83,11 +83,6 @@
         <activity android:name=".Recycle_Method.VinylActivity"
             android:parentActivityName=".Recycle1Activity"/>
 
-        <activity android:name=".RecycleSearch2Activity"
-            android:parentActivityName=".Recycle1Activity"/>
-
-
-
 
         <activity android:name=".Recycle3Activity"
             android:parentActivityName=".RecycleActivity"/>
