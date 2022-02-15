@@ -3,7 +3,6 @@ package com.example.free_app;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,18 +21,13 @@ import org.tensorflow.lite.support.image.ImageProcessor;
 import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.image.ops.ResizeOp;
 import org.tensorflow.lite.support.image.ops.ResizeWithCropOrPadOp;
-import org.tensorflow.lite.support.label.TensorLabel;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
-import java.io.BufferedReader;
+
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class AfterDetectActivity extends AppCompatActivity {
 
@@ -48,6 +42,7 @@ public class AfterDetectActivity extends AppCompatActivity {
     private  int imageSizeX;
     private  int imageSizeY;
     private TensorBuffer outputProbabilityBuffer;
+    private Integer output;
     private TensorProcessor probabilityProcessor;
     private static final float IMAGE_MEAN = 0.0f;
     private static final float IMAGE_STD = 1.0f;
@@ -57,7 +52,9 @@ public class AfterDetectActivity extends AppCompatActivity {
     private List<String> labels;
     ImageView imageView;
     TextView result_detail;
-
+    public org.tensorflow.lite.DataType probabilityDataType;
+    public float conf;
+    public float[][] preoutput2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +98,9 @@ public class AfterDetectActivity extends AppCompatActivity {
     // yolo 모델 load 하기.
     private MappedByteBuffer loadmodelfile(Activity activity, String modelFilename) throws IOException {
         AssetFileDescriptor fileDescriptor = activity.getAssets().openFd(modelFilename);
-        FileInputStream inputStream=new FileInputStream(fileDescriptor.getFileDescriptor());
+        FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
         FileChannel fileChannel=inputStream.getChannel();
+
         long startoffset = fileDescriptor.getStartOffset();
         long declaredLength=fileDescriptor.getDeclaredLength();
         return fileChannel.map(FileChannel.MapMode.READ_ONLY,startoffset,declaredLength);
@@ -126,28 +124,93 @@ public class AfterDetectActivity extends AppCompatActivity {
 
     // yolo model result 출력.
     private void showresult() {
-        try{
-            labels = FileUtil.loadLabels(this,"classes.txt");
-            Map<String, Float> labeledProbability =
-                    new TensorLabel(labels, probabilityProcessor.process(outputProbabilityBuffer))
-                            .getMapWithFloatValue();
+        try {
+            labels = FileUtil.loadLabels(this, "classes.txt");
+            TensorBuffer preprocess = probabilityProcessor.process(outputProbabilityBuffer);
+            float[] preoutput = preprocess.getFloatArray();
+            preoutput2 = arr2arr2(preoutput, 12);
+            int output_index = NMS(preoutput2);
+            Log.e("결과", String.valueOf(output_index));
 
-            float maxValueInMap =(Collections.max(labeledProbability.values()));
+            result_detail.setText(labels.get(output_index));
 
-            for (Map.Entry<String, Float> entry : labeledProbability.entrySet()) {
-                if (entry.getValue()==maxValueInMap) {
-                    result_detail.setText(entry.getKey());
-                    // * 추후 class명으로 수정.
-                    //result_detail.setText("chilsung");
-                }
-            }
-        }catch (Exception e){
-            //e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             result_detail.setText("아직...");
         }
+    }
 
+    private int NMS(float[][] arr) {
+        float max = 0.0f;
+        int label_index = 8;
+        for(int i=5; i< 12; i++){
+            float a = max(arr[i]);
+            if(a > max & a > 0){
+                max = a;
+                label_index = i-5;
+            }
+            Log.e("레이블", String.valueOf(label_index));
+            //float[] max_Bbox = {arr[i-5][maxIndex],arr[i-4][maxIndex],arr[i-3][maxIndex],arr[i-2][maxIndex]};
+            //Iou(max_Bbox,arr[i-5],arr[i-4],arr[i-3],arr[i-2],i);
+        }
+        return label_index;
 
     }
+
+    private void Iou(float[] max_Bbox, float[] x1, float[] y1, float[] x2, float[] y2, int k) {
+        float maxbox_area = (max_Bbox[2] - max_Bbox[0] + 1) * (max_Bbox[3] - max_Bbox[1] + 1);
+        for(int i=0; i< x1.length; i++){
+            float box2_area = (x2[i] - x1[i] + 1) * (y2[i] - y1[i] + 1);
+            float inter_x1 = Math.max(max_Bbox[0],x1[i]);
+            float inter_y1 = Math.max(max_Bbox[1],y1[i]);
+            float inter_x2 = Math.max(max_Bbox[2],x2[i]);
+            float inter_y2 = Math.max(max_Bbox[3],y2[i]);
+
+            float w = Math.max(0,inter_x2-inter_x1 +1);
+            float h = Math.max(0,inter_y2-inter_y1+1);
+
+            float iou = (w * h) / (maxbox_area + box2_area);
+
+            if(iou < 0.5){
+                preoutput2[k][i] = 0;
+            }
+        }
+    }
+
+    private float max(float[] arr) {
+        int maxIndex = 0;
+        float max = 0.0f;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+                maxIndex = i;
+            }
+        }
+        Log.e("MAX", String.valueOf(maxIndex)+' '+ String.valueOf(max));
+        return max;
+    }
+
+    private float[][] arr2arr2(float[] arr, int num) {
+        float[][] result = new float[num][arr.length/num];
+        int k = 0;
+        for(int i=0; i< arr.length/num; i++){
+            for(int j=4; j<num;j++){
+                if(j == 4){
+                    result[j-4][i] = arr[k+j-4] - arr[k+j-2];
+                    result[j-3][i] = arr[k+j-3] - arr[k+j-1];
+                    result[j-2][i] = arr[k+j-4] - arr[k+j-2];
+                    result[j-1][i] = arr[k+j-3] - arr[k+j-1];
+                    conf = arr[k+j];
+                }
+                else{
+                    result[j][i] = arr[k+j] * conf;
+                }
+            }
+            k += 12;
+        }
+        return result;
+    }
+
 
     // camera 사진 찍기.
     public void takePicture() {
@@ -172,7 +235,6 @@ public class AfterDetectActivity extends AppCompatActivity {
             // * classify 수행.
             bitmap = imageBitmap;
 
-
             // yolo 결과 바로 출력.
             int imageTensorIndex = 0;
             int[] imageShape = tflite.getInputTensor(imageTensorIndex).shape(); // {1, height, width, 3}
@@ -182,11 +244,12 @@ public class AfterDetectActivity extends AppCompatActivity {
 
             int probabilityTensorIndex = 0;
             int[] probabilityShape =
-                    tflite.getOutputTensor(probabilityTensorIndex).shape(); // {1, NUM_CLASSES}
-            org.tensorflow.lite.DataType probabilityDataType = tflite.getOutputTensor(probabilityTensorIndex).dataType();
+                   tflite.getOutputTensor(probabilityTensorIndex).shape();
 
+            probabilityDataType = tflite.getOutputTensor(probabilityTensorIndex).dataType();
             inputImageBuffer = new TensorImage(imageDataType);
             outputProbabilityBuffer = TensorBuffer.createFixedSize(probabilityShape, probabilityDataType);
+
             probabilityProcessor = new TensorProcessor.Builder().add(getPostprocessNormalizeOp()).build();
 
             inputImageBuffer = loadImage(bitmap);
@@ -197,4 +260,6 @@ public class AfterDetectActivity extends AppCompatActivity {
 
         }
     }
+
+
 }
