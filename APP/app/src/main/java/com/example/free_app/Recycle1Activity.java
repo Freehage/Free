@@ -95,8 +95,6 @@ public class Recycle1Activity extends AppCompatActivity {
 
         recycle_camera = findViewById(R.id.recycle_camera);
 
-
-
         paper = findViewById(R.id.paper);
         paper2 = findViewById(R.id.paper2);
         glass = findViewById(R.id.glass);
@@ -164,11 +162,15 @@ public class Recycle1Activity extends AppCompatActivity {
 
         //recycle_search_view = (SearchView) findViewById(R.id.recycle_search_view);
 
+        // 촬영 버튼을 클릭했을 경우.
+        recycle_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RecycleCamera.class);
+                startActivity(intent);
+            }
+        });
 
     }
-
-
-
-
 
 }
