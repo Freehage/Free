@@ -153,7 +153,6 @@ public class AfterDetectActivity extends AppCompatActivity {
                 result_detail.setText("인식 못함");
             }
 
-
         } catch (Exception e) {
             e.printStackTrace();
             result_detail.setText("아직...");
@@ -234,8 +233,6 @@ public class AfterDetectActivity extends AppCompatActivity {
 
             tflite.run(inputImageBuffer.getBuffer(),outputProbabilityBuffer.getBuffer().rewind());
             showresult();
-
-
         }
     }
 

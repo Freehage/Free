@@ -116,7 +116,8 @@ public class RecycleCamera extends AppCompatActivity {
                 // detect class result
                 String result_recycle_detect = (String) classitext.getText();
 
-                // 각 class 별 재활용 결과 페이지로 이동/
+                // 각 class 별 재활용 결과 페이지로 이동
+                // * 추가
                 if(result_recycle_detect == "glass") {
                     Intent intent_glass = new Intent(getApplicationContext(), RecycleResult_bottle.class);
                     startActivity(intent_glass);
