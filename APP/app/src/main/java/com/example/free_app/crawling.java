@@ -29,13 +29,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         textView = (TextView) findViewById(R.id.result);
         final Bundle bundle = new Bundle();
+        String url = "https://www.google.com/searchbyimage?site=search&sa=X&image_url="+"이미지url";
 
         new Thread(){
             @Override
             public void run() {
                 Document doc = null;
                 try {
-                    doc = Jsoup.connect("https://www.google.com/search?tbs=sbi:AMhZZisnZcoRrCBK3kS5iTlAgs9Lyg3ZRXQBXOnUAjDTUQVKmBehbh2AZLqBE-KLxyEValvo9w0Wlq7GMTGlRGh-XlUfXdaj2hovyzpO7cnwJ3XRxR0B3FuWy0rVrKGqUb9PzZ8nQiE2-cRmhlDRrwEUnP9C01J4ZcueJWvyc8a5R7UCyV6OxYu5PiGbXXVqJczGg_1vo0Ok_1KrZ5fsu6hB7XB0C1BWONuAbAnzoj5AxoLZG7EteCW0C7FzS6V14d3GQuHU2csVXCz4ZgThcvR7LekNjuOPLugUkuFswe5T-aMyPKj8SRTnxzqgwO8Jw6itQhUA9jB38DwSYUqa1UBAajPi0_1RElE4Q&hl=ko").get();
+                    doc = Jsoup.connect(url).get();
                     Elements contents = doc.select(".fKDtNb");          //class값 가져오기
                     nums = contents.text();
 
