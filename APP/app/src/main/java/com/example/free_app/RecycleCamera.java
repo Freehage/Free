@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,17 +39,25 @@ import java.util.Map;
 public class RecycleCamera extends AppCompatActivity {
 
     // tflite model
+
+    // tflite model
+    public String MODEL_NAME = "best.tflite";
+    public int LAVEL_NUM = 7;
     protected Interpreter tflite;
     private MappedByteBuffer tfliteModel;
     private TensorImage inputImageBuffer;
-    private  int imageSizeX;
-    private  int imageSizeY;
-    private  TensorBuffer outputProbabilityBuffer;
-    private  TensorProcessor probabilityProcessor;
+    private int imageSizeX;
+    private int imageSizeY;
+    private TensorBuffer outputProbabilityBuffer;
+    private Integer output;
+    private TensorProcessor probabilityProcessor;
     private static final float IMAGE_MEAN = 0.0f;
     private static final float IMAGE_STD = 1.0f;
     private static final float PROBABILITY_MEAN = 0.0f;
     private static final float PROBABILITY_STD = 255.0f;
+    public float conf;
+    public float CONF = 0.0f;
+    public org.tensorflow.lite.DataType probabilityDataType;
     private Bitmap bitmap;
     private List<String> labels;
     ImageView imageView;
@@ -67,86 +76,57 @@ public class RecycleCamera extends AppCompatActivity {
         setContentView(R.layout.activity_recyclecamera);
 
         // yolo model
-        imageView=(ImageView)findViewById(R.id.image);
-        buclassify=(Button)findViewById(R.id.classify);
-        classitext=(TextView)findViewById(R.id.classifytext);
+        imageView = (ImageView) findViewById(R.id.image);
+//        buclassify = (Button) findViewById(R.id.classify);
+        classitext = (TextView) findViewById(R.id.classifytext);
 
         // camera
         //imageView_ = findViewById(R.id.imageView); -> 갤러리 연동 안할꺼면 삭제.
-        btn_picture = findViewById(R.id.btn_picture);
 
-        // 카메라 버튼 클릭했을 경우.
-        btn_picture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takePicture();
-            }
-        });
+        // 재활용 방법 알아보기 btn
+        btn_picture = findViewById(R.id.btn_picture);
+        takePicture();
 
         // imageView 클릭했을 경우.
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent();
+                Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Select Picture"),12);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 12);
             }
         });
 
-        try{
-            tflite=new Interpreter(loadmodelfile(this));
-        }catch (Exception e) {
+        try {
+            tflite = new Interpreter(loadmodelfile(this,MODEL_NAME));
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // classify 버튼 클릭했을 경우.
-        buclassify.setOnClickListener(new View.OnClickListener() {
+
+        // 재활용 방법 알아보기 버튼 클릭했을 경우.
+        btn_picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 재활용 방법 안내 페이지로 intent
+                Intent intent = new Intent(getApplicationContext(), RecycleResult_bottle.class);
+                startActivity(intent);
 
-                int imageTensorIndex = 0;
-                int[] imageShape = tflite.getInputTensor(imageTensorIndex).shape(); // {1, height, width, 3}
-                imageSizeY = imageShape[1];
-                imageSizeX = imageShape[2];
-                org.tensorflow.lite.DataType imageDataType = tflite.getInputTensor(imageTensorIndex).dataType();
+                // detect class result
+                String result_recycle_detect = (String) classitext.getText();
 
-                int probabilityTensorIndex = 0;
-                int[] probabilityShape =
-                        tflite.getOutputTensor(probabilityTensorIndex).shape(); // {1, NUM_CLASSES}
-                org.tensorflow.lite.DataType probabilityDataType = tflite.getOutputTensor(probabilityTensorIndex).dataType();
-
-                inputImageBuffer = new TensorImage(imageDataType);
-                outputProbabilityBuffer = TensorBuffer.createFixedSize(probabilityShape, probabilityDataType);
-                probabilityProcessor = new TensorProcessor.Builder().add(getPostprocessNormalizeOp()).build();
-
-                inputImageBuffer = loadImage(bitmap);
-
-                tflite.run(inputImageBuffer.getBuffer(),outputProbabilityBuffer.getBuffer().rewind());
-                showresult();
-            }
-        });
-
-        // 재활용 결과 글씨를 클릭했을 경우.
-        classitext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), RecycleResult_bottle.class);
-//                startActivity(intent);
-
-                // 재활용 종류에 따라 페이지 연결
-                if(classitext.getText() == "재활용 결과 페이지") {
-                    // 추후 특정 재활용 소개 페이지로 Intent.
-                    Intent intent = new Intent(getApplicationContext(), RecycleResult_bottle.class);
-                    startActivity(intent);
-                } else if (classitext.getText() == "재활용 (비닐)") {
-                    // 재활용 비닐 소개 페이지로 Intent. -> 추후 class 수정
-                    Intent intent = new Intent(getApplicationContext(), RecycleResult_bottle.class);
-                    startActivity(intent);
+                // 각 class 별 재활용 결과 페이지로 이동/
+                if(result_recycle_detect == "glass") {
+                    Intent intent_glass = new Intent(getApplicationContext(), RecycleResult_bottle.class);
+                    startActivity(intent_glass);
+                } else if(result_recycle_detect == "pet") {
+                    Intent intent_pet = new Intent(getApplicationContext(), RecycleResult_bottle.class);
+                    startActivity(intent_pet);
                 }
+                Log.e("...............", result_recycle_detect);
             }
         });
-
     }
 
     // yolo 객체 인식을 위해 이미지 load 하기.
@@ -166,67 +146,91 @@ public class RecycleCamera extends AppCompatActivity {
     }
 
     // yolo 모델 load 하기.
-    private MappedByteBuffer loadmodelfile(Activity activity) throws IOException {
-        AssetFileDescriptor fileDescriptor=activity.getAssets().openFd("model.tflite");
-        FileInputStream inputStream=new FileInputStream(fileDescriptor.getFileDescriptor());
-        FileChannel fileChannel=inputStream.getChannel();
+    private MappedByteBuffer loadmodelfile(Activity activity, String modelFilename) throws IOException {
+        AssetFileDescriptor fileDescriptor = activity.getAssets().openFd(modelFilename);
+        FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
+        FileChannel fileChannel = inputStream.getChannel();
+
         long startoffset = fileDescriptor.getStartOffset();
-        long declaredLength=fileDescriptor.getDeclaredLength();
-        return fileChannel.map(FileChannel.MapMode.READ_ONLY,startoffset,declaredLength);
+        long declaredLength = fileDescriptor.getDeclaredLength();
+        return fileChannel.map(FileChannel.MapMode.READ_ONLY, startoffset, declaredLength);
     }
 
     private TensorOperator getPreprocessNormalizeOp() {
         return new NormalizeOp(IMAGE_MEAN, IMAGE_STD);
     }
-    private TensorOperator getPostprocessNormalizeOp(){
+
+    private TensorOperator getPostprocessNormalizeOp() {
         return new NormalizeOp(PROBABILITY_MEAN, PROBABILITY_STD);
     }
 
+
     // yolo model result 출력.
-    private void showresult(){
+    private void showresult() {
+        try {
+            String result = "";
+            labels = FileUtil.loadLabels(this, "classes.txt");
+            TensorBuffer preprocess = probabilityProcessor.process(outputProbabilityBuffer);
+            float[] preoutput = preprocess.getFloatArray();
+            float[] preoutput2 = find_max_conf(preoutput, LAVEL_NUM + 5);
 
-        try{
-            labels = FileUtil.loadLabels(this,"dict.txt");
-        }catch (Exception e){
+            int max_conf_index = (int) preoutput2[0];
+            float max_conf = preoutput2[1];
+
+            float[] output = {preoutput[max_conf_index + 1], preoutput[max_conf_index + 2], preoutput[max_conf_index + 3],
+                    preoutput[max_conf_index + 4], preoutput[max_conf_index + 5], preoutput[max_conf_index + 6], preoutput[max_conf_index + 7]};
+
+            int class_label = max(output);
+            result = labels.get(class_label);
+            Log.e("class_label", String.valueOf(class_label));
+
+
+            if (max_conf * preoutput[max_conf_index + class_label] > CONF) {
+                classitext.setText(result);
+            } else {
+                classitext.setText("인식 못함");
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
+            classitext.setText("아직...");
         }
-        Map<String, Float> labeledProbability =
-                new TensorLabel(labels, probabilityProcessor.process(outputProbabilityBuffer))
-                        .getMapWithFloatValue();
-        float maxValueInMap =(Collections.max(labeledProbability.values()));
+    }
 
-        for (Map.Entry<String, Float> entry : labeledProbability.entrySet()) {
-//            if (entry.getValue()==maxValueInMap) {
-//                classitext.setText(entry.getKey());
-//            }
-            // * 재활용 종류에 따라 사용자에게 출력하는 text 설정. -> 추후 수정
-            if (entry.getValue()==maxValueInMap) {
-                if (entry.getKey()=="vinyl") {
-                    classitext.setText("재활용 (비닐)");
-                } else if (entry.getKey() == "glass") {
-                    classitext.setText("재활용 (유리)");
-                } else if (entry.getKey() == "paper") {
-                    classitext.setText("재활용 (종이)");
-                } else if (entry.getKey() == "paperpack") {
-                    classitext.setText("재활용 (종이팩)");
-                } else if (entry.getKey() == "can") {
-                    classitext.setText("재활용 (캔)");
-                } else if (entry.getKey() == "pet") {
-                    classitext.setText("재활용 (페트)");
-                } else if (entry.getKey() == "plastic") {
-                    classitext.setText("재활용 (플라스틱)");
-                } else {
-                    classitext.setText("재활용 결과 페이지");
-                }
+    private int max(float[] arr) {
+        int maxIndex = 0;
+        float max = 0.0f;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+                maxIndex = i;
             }
         }
+        Log.e("MAX", String.valueOf(max));
+        return maxIndex;
+    }
+
+    private float[] find_max_conf(float[] arr, int num) {
+        float[] result = new float[2];
+        int index = 0;
+        float max_conf = arr[4];
+        for (int i = 16; i < arr.length / num; i += 12) {
+            conf = arr[i];
+            if (conf > max_conf) {
+                max_conf = conf;
+                index = i;
+            }
+        }
+        result[0] = index;
+        result[1] = max_conf;
+        return result;
     }
 
     // camera 사진 찍기.
     public void takePicture() {
         Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        if(imageTakeIntent.resolveActivity(getPackageManager()) != null) {
+        if (imageTakeIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(imageTakeIntent, REQUEST_IMAGE_CODE);
         }
     }
@@ -237,17 +241,38 @@ public class RecycleCamera extends AppCompatActivity {
         super.onActivityResult(requestcode, resultcode, data);
 
         // 카메라로 찍었을 때 imageView.
-        if(requestcode == REQUEST_IMAGE_CODE && resultcode == RESULT_OK) {
+        if (requestcode == REQUEST_IMAGE_CODE && resultcode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             //imageView_.setImageBitmap(imageBitmap);
             imageView.setImageBitmap(imageBitmap);
             // * classify 수행.
             bitmap = imageBitmap;
+
+            // camera -> imageView -> classify result textView
+            int imageTensorIndex = 0;
+            int[] imageShape = tflite.getInputTensor(imageTensorIndex).shape(); // {1, height, width, 3}
+            imageSizeY = imageShape[1];
+            imageSizeX = imageShape[2];
+            org.tensorflow.lite.DataType imageDataType = tflite.getInputTensor(imageTensorIndex).dataType();
+
+            int probabilityTensorIndex = 0;
+            int[] probabilityShape =
+                    tflite.getOutputTensor(probabilityTensorIndex).shape(); // {1, NUM_CLASSES}
+            org.tensorflow.lite.DataType probabilityDataType = tflite.getOutputTensor(probabilityTensorIndex).dataType();
+
+            inputImageBuffer = new TensorImage(imageDataType);
+            outputProbabilityBuffer = TensorBuffer.createFixedSize(probabilityShape, probabilityDataType);
+            probabilityProcessor = new TensorProcessor.Builder().add(getPostprocessNormalizeOp()).build();
+
+            inputImageBuffer = loadImage(bitmap);
+
+            tflite.run(inputImageBuffer.getBuffer(), outputProbabilityBuffer.getBuffer().rewind());
+            showresult();
         }
 
         // imageView 클릭 후 갤러리에 있는 이미지를 업로드 하였을 경우 -> 갤러리 연동 안할꺼면 삭제.
-        if(requestcode==12 && resultcode==RESULT_OK && data!=null) {
+        if (requestcode == 12 && resultcode == RESULT_OK && data != null) {
             imageuri = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageuri);

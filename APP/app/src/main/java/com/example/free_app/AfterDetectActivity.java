@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+//import androidx.room.jarjarred.org.stringtemplate.v4.Interpreter;
+
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.common.FileUtil;
 import org.tensorflow.lite.support.common.TensorOperator;
@@ -74,9 +76,9 @@ public class AfterDetectActivity extends AppCompatActivity {
         openOrCreateDatabase("FreeAppDB.db", MODE_PRIVATE, null);
         // db.close() -- DO NOT USE THIS
 
-        try{
+        try {
             tflite = new Interpreter(loadmodelfile(this,MODEL_NAME));
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -137,14 +139,14 @@ public class AfterDetectActivity extends AppCompatActivity {
             int max_conf_index = (int) preoutput2[0];
             float max_conf = preoutput2[1];
 
-            float[] output = {preoutput[max_conf_index+1],preoutput[max_conf_index+2],preoutput[max_conf_index+3],
-                    preoutput[max_conf_index+4],preoutput[max_conf_index+5],preoutput[max_conf_index+6],preoutput[max_conf_index+7]};
+            float[] output = {preoutput[max_conf_index+1], preoutput[max_conf_index+2], preoutput[max_conf_index+3],
+                    preoutput[max_conf_index+4], preoutput[max_conf_index+5], preoutput[max_conf_index+6], preoutput[max_conf_index+7]};
 
             int class_label = max(output);
             result = labels.get(class_label);
             Log.e("class_label", String.valueOf(class_label));
 
-            if(max_conf*preoutput[max_conf_index+class_label] > CONF){
+            if(max_conf*preoutput[max_conf_index+class_label] > CONF) {
                 result_detail.setText(result);
             }
             else{

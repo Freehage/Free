@@ -1,7 +1,7 @@
 vinyl
 glass
 paper
-papaerpack
+paperpack
 can
 pet
 plastic
