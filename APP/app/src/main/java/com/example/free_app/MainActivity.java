@@ -21,7 +21,9 @@ import androidx.appcompat.widget.SearchView;
 import com.example.free_app.after_search.MainSearchActivity;
 import com.example.free_app.cardnews.CustomAdapter;
 import com.example.free_app.database.DatabaseHelper;
+import com.example.free_app.database.DatabaseHelper2;
 import com.example.free_app.model.Product;
+import com.example.free_app.model.ZeroShop;
 
 import java.util.List;
 
@@ -40,12 +42,14 @@ public class MainActivity extends AppCompatActivity {
     private SearchView searchView;
     public List<Product> productlist;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         main_context = MainActivity.this;
         initLoadDB();
+
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -103,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent_recycle = new Intent(getApplicationContext(), RecycleActivity.class);
                 startActivity(intent_recycle);
-
             }
         });
 
@@ -119,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
         databaseHelper.close();
 
     }
+
+
+
+
 
 
 
