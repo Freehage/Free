@@ -2,6 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.free_app">
 
+    <!--yolo-->
+    <!--Permission-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--camera-->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION_LOCATION" />
@@ -92,6 +102,12 @@
 
         <activity android:name=".recycleTip.RecycleTip"
             android:parentActivityName=".RecycleActivity"/>
+        <activity android:name=".RecycleCamera"
+            android:parentActivityName=".Recycle1Activity"/>
+        <activity android:name="RecycleResult_bottle"
+            android:parentActivityName=".RecycleCamera"/>
+        <activity android:name=".AfterDetectActivity"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 
