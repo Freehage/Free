@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-//import androidx.room.jarjarred.org.stringtemplate.v4.Interpreter;
-
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.common.FileUtil;
 import org.tensorflow.lite.support.common.TensorOperator;
@@ -39,7 +37,6 @@ public class AfterDetectActivity extends AppCompatActivity {
 
     // tflite model
     public String MODEL_NAME = "best.tflite";
-    public int LAVEL_NUM = 7;
     protected Interpreter tflite;
     private MappedByteBuffer tfliteModel;
     private TensorImage inputImageBuffer;
@@ -58,7 +55,9 @@ public class AfterDetectActivity extends AppCompatActivity {
     TextView result_detail;
     public org.tensorflow.lite.DataType probabilityDataType;
     public float conf;
-    public float CONF = 0.0f;
+    public float[][] class_score = new float[6300][7];
+    public float[][] preoutput2;
+    public float CONF = 0.25f;
 
 
     @Override
@@ -76,9 +75,9 @@ public class AfterDetectActivity extends AppCompatActivity {
         openOrCreateDatabase("FreeAppDB.db", MODE_PRIVATE, null);
         // db.close() -- DO NOT USE THIS
 
-        try {
+        try{
             tflite = new Interpreter(loadmodelfile(this,MODEL_NAME));
-        } catch (Exception e) {
+        }catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -134,29 +133,83 @@ public class AfterDetectActivity extends AppCompatActivity {
             labels = FileUtil.loadLabels(this, "classes.txt");
             TensorBuffer preprocess = probabilityProcessor.process(outputProbabilityBuffer);
             float[] preoutput = preprocess.getFloatArray();
-            float [] preoutput2 = find_max_conf(preoutput, LAVEL_NUM+5);
+            Log.e("ㅇㅇㅇ", String.valueOf(preprocess.getShape()[1])+" "+String.valueOf(preprocess.getShape()[2]));
+            /*for(int i=0; i<preoutput.length;i++){
+                Log.e("ㅖㅇㅇㅇㄻㅁㅁㅇㄴ",String.valueOf(i)+' '+ String.valueOf(preoutput[i]));
+            }*/
 
-            int max_conf_index = (int) preoutput2[0];
-            float max_conf = preoutput2[1];
 
-            float[] output = {preoutput[max_conf_index+1], preoutput[max_conf_index+2], preoutput[max_conf_index+3],
-                    preoutput[max_conf_index+4], preoutput[max_conf_index+5], preoutput[max_conf_index+6], preoutput[max_conf_index+7]};
+            preoutput2 = arr2arr2(preoutput, 12);
+            NMS(preoutput2);
+            float[] count_arr = new float[7];
+            float max_bbox_conf = preoutput2[4][0];
+            for(int i = 0; i< class_score.length; i++){
+                int class_label = max(class_score[i]);
+                float bbox_conf = preoutput2[4][i];
 
-            int class_label = max(output);
-            result = labels.get(class_label);
-            Log.e("class_label", String.valueOf(class_label));
-
-            if(max_conf*preoutput[max_conf_index+class_label] > CONF) {
-                result_detail.setText(result);
+                if(class_score[i][class_label] > 0 & bbox_conf > max_bbox_conf){
+                    max_bbox_conf = bbox_conf;
+                    count_arr[class_label] += 1;
+                    result = labels.get(class_label);
+                    Log.e("class_label", String.valueOf(preoutput2[0][i])+' '+String.valueOf(class_label)+' '+String.valueOf(max_bbox_conf));
+                }
             }
-            else{
-                result_detail.setText("인식 못함");
-            }
+            Log.e("정답", String.valueOf(count_arr[0])+' '+String.valueOf(count_arr[1])+
+                    ' '+String.valueOf(count_arr[2])+' '+String.valueOf(count_arr[3])+' '+
+                    String.valueOf(count_arr[4])+' '+String.valueOf(count_arr[5])+
+                    ' '+String.valueOf(count_arr[6]));
+            result_detail.setText(result);
 
         } catch (Exception e) {
             e.printStackTrace();
             result_detail.setText("아직...");
         }
+    }
+
+    private void NMS(float[][] arr) {
+        for(int i=5; i< 12; i++){
+            int maxIndex = max(arr[i]);
+            class_score[maxIndex][i-5] = arr[i][maxIndex];
+            float[] max_Bbox = {arr[i-5][maxIndex],arr[i-4][maxIndex],arr[i-3][maxIndex],arr[i-2][maxIndex]};
+            ArrayList<Integer> next = Iou(max_Bbox,arr[i-5],arr[i-4],arr[i-3],arr[i-2],i,maxIndex);
+            while(next != null){
+                Integer next_num = next.get(0);
+                float[] next_Bbox = {arr[i-5][next_num],arr[i-4][next_num],arr[i-3][next_num],arr[i-2][next_num]};
+                next = Iou(next_Bbox,arr[i-5],arr[i-4],arr[i-3],arr[i-2],i,next_num);
+            }
+        }
+
+    }
+
+    private ArrayList<Integer> Iou(float[] max_Bbox, float[] x1, float[] y1, float[] x2, float[] y2, int k, int max_index) {
+        float maxbox_area = (max_Bbox[2] - max_Bbox[0] + 1) * (max_Bbox[3] - max_Bbox[1] + 1);
+        ArrayList<Integer> next_max = null;
+        for(int i=0; i< x1.length; i++){
+            if(preoutput2[k][i] > CONF){
+                if(i != max_index ){
+                    float box2_area = (x2[i] - x1[i] + 1) * (y2[i] - y1[i] + 1);
+                    float inter_x1 = Math.max(max_Bbox[0],x1[i]);
+                    float inter_y1 = Math.max(max_Bbox[1],y1[i]);
+                    float inter_x2 = Math.max(max_Bbox[2],x2[i]);
+                    float inter_y2 = Math.max(max_Bbox[3],y2[i]);
+
+                    float w = Math.max(0,inter_x2-inter_x1 +1);
+                    float h = Math.max(0,inter_y2-inter_y1+1);
+
+                    float iou = (w * h) / (maxbox_area + box2_area);
+
+                    if(iou > 0.49){
+                        class_score[i][k-5] = 0;
+                    }
+                    else{
+                        class_score[i][k-5] = preoutput2[k][i];
+                        Log.e("OTHER", String.valueOf(class_score[i][k-5]));
+                        next_max.add(i);
+                    }
+                }
+            }
+        }
+        return next_max;
     }
 
     private int max(float[] arr) {
@@ -168,23 +221,28 @@ public class AfterDetectActivity extends AppCompatActivity {
                 maxIndex = i;
             }
         }
-        Log.e("MAX", String.valueOf(max));
         return maxIndex;
     }
 
-    private float[] find_max_conf(float[] arr, int num) {
-        float[] result = new float[2];
-        int index = 0;
-        float max_conf = arr[4];
-        for(int i = 16; i< arr.length/num; i += 12){
-            conf = arr[i];
-            if(conf > max_conf){
-                max_conf = conf;
-                index = i;
+    private float[][] arr2arr2(float[] arr, int num) {
+        float[][] result = new float[num][arr.length/num];
+        int k = 0;
+        for(int i=0; i< arr.length/num; i++){
+            for(int j=4; j<num;j++){
+                if(j == 4){
+                    result[j-4][i] = arr[k+j-4] - arr[k+j-2];
+                    result[j-3][i] = arr[k+j-3] - arr[k+j-1];
+                    result[j-2][i] = arr[k+j-4] - arr[k+j-2];
+                    result[j-1][i] = arr[k+j-3] - arr[k+j-1];
+                    conf = arr[k+j];
+                    result[j][i] = conf;
+                }
+                else{
+                    result[j][i] = arr[k+j] * conf;
+                }
             }
+            k += 12;
         }
-        result[0] = index;
-        result[1] = max_conf;
         return result;
     }
 
@@ -220,8 +278,9 @@ public class AfterDetectActivity extends AppCompatActivity {
             org.tensorflow.lite.DataType imageDataType = tflite.getInputTensor(imageTensorIndex).dataType();
 
             int probabilityTensorIndex = 0;
+            tflite.getOutputTensorCount();
             int[] probabilityShape =
-                   tflite.getOutputTensor(probabilityTensorIndex).shape();
+                    tflite.getOutputTensor(probabilityTensorIndex).shape();
 
             probabilityDataType = tflite.getOutputTensor(probabilityTensorIndex).dataType();
             inputImageBuffer = new TensorImage(imageDataType);
@@ -233,6 +292,8 @@ public class AfterDetectActivity extends AppCompatActivity {
 
             tflite.run(inputImageBuffer.getBuffer(),outputProbabilityBuffer.getBuffer().rewind());
             showresult();
+
+
         }
     }
 
