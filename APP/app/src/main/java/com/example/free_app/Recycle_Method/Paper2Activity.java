@@ -36,7 +36,7 @@ public class Paper2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.paper);
+        setContentView(R.layout.paper2);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_space);
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>종이팩 재활용 방법 </font>"));

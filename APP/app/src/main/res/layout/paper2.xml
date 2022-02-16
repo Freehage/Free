@@ -11,14 +11,14 @@
 
             <ImageView
                 android:id="@+id/re_paper2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/re_paper2" />
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                app:srcCompat="@drawable/how_paperpacks" />
             <ImageView
                 android:id="@+id/re_paper2_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/re_paper2_2" />
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                app:srcCompat="@drawable/how_paperpack2" />
 
         </LinearLayout>
 

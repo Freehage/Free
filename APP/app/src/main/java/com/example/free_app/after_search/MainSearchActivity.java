@@ -7,6 +7,8 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,11 +23,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.free_app.MainActivity;
 import com.example.free_app.R;
+import com.example.free_app.RecycleActivity;
 import com.example.free_app.database.DatabaseHelper;
 import com.example.free_app.model.Product;
 import com.example.free_app.recycleTip.TipAdapter;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,6 +41,7 @@ public class MainSearchActivity extends AppCompatActivity {
     private List result_name;
     public static Context search_context;
     public String search_name;
+    public Button button1;
 
     //홈버튼 추가
     @Override
@@ -75,7 +80,7 @@ public class MainSearchActivity extends AppCompatActivity {
         mDBHelper = new DatabaseHelper(this);
         //출력값:: 이름들 list
 
-        //ArrayList item_list = mDBHelper.getObjectResult(search_name);
+        //ArrayList item_list2 = mDBHelper.getObjectResult(search_name);
 
 
         ArrayList<Product> item_list = search(search_name,productslists);
@@ -118,7 +123,6 @@ public class MainSearchActivity extends AppCompatActivity {
             intent1.putExtra("search_name",search_name);
             startActivity(intent1);
         }
-
 
 
 
