@@ -133,27 +133,29 @@ public class AfterDetectActivity extends AppCompatActivity {
             labels = FileUtil.loadLabels(this, "classes.txt");
             TensorBuffer preprocess = probabilityProcessor.process(outputProbabilityBuffer);
             float[] preoutput = preprocess.getFloatArray();
-            Log.e("ㅇㅇㅇ", String.valueOf(preprocess.getShape()[1])+" "+String.valueOf(preprocess.getShape()[2]));
+            //Log.e("ㅇㅇㅇ", String.valueOf(preprocess.getShape()[1])+" "+String.valueOf(preprocess.getShape()[2]));
             /*for(int i=0; i<preoutput.length;i++){
                 Log.e("ㅖㅇㅇㅇㄻㅁㅁㅇㄴ",String.valueOf(i)+' '+ String.valueOf(preoutput[i]));
             }*/
-
-
-            preoutput2 = arr2arr2(preoutput, 12);
+            preoutput2 = arr2arr22(preoutput, 12);
             NMS(preoutput2);
-            float[] count_arr = new float[7];
-            float max_bbox_conf = preoutput2[4][0];
-            for(int i = 0; i< class_score.length; i++){
-                int class_label = max(class_score[i]);
-                float bbox_conf = preoutput2[4][i];
 
-                if(class_score[i][class_label] > 0 & bbox_conf > max_bbox_conf){
+            int class_label = 8;
+            float[] count_arr = new float[7];
+            float max_bbox_conf = 0;
+            for(int i = 0; i< class_score.length; i++){
+                int pre_class_label = max(class_score[i]);
+                float bbox_conf = preoutput2[4][i];
+                //Log.e("CONF", String.valueOf(bbox_conf)+" "+String.valueOf(i));
+                //& bbox_conf > max_bbox_conf
+                if(class_score[i][pre_class_label] > 0 & bbox_conf > max_bbox_conf){
                     max_bbox_conf = bbox_conf;
-                    count_arr[class_label] += 1;
-                    result = labels.get(class_label);
-                    Log.e("class_label", String.valueOf(preoutput2[0][i])+' '+String.valueOf(class_label)+' '+String.valueOf(max_bbox_conf));
+                    count_arr[pre_class_label] += 1;
+                    class_label = pre_class_label;
+                    Log.e("class_label", String.valueOf(class_score[i][pre_class_label])+' '+String.valueOf(pre_class_label)+' '+String.valueOf(max_bbox_conf));
                 }
             }
+            result = labels.get(class_label);
             Log.e("정답", String.valueOf(count_arr[0])+' '+String.valueOf(count_arr[1])+
                     ' '+String.valueOf(count_arr[2])+' '+String.valueOf(count_arr[3])+' '+
                     String.valueOf(count_arr[4])+' '+String.valueOf(count_arr[5])+
@@ -242,6 +244,17 @@ public class AfterDetectActivity extends AppCompatActivity {
                 }
             }
             k += 12;
+        }
+        return result;
+    }
+    private float[][] arr2arr22(float[] arr, int num) {
+        float[][] result = new float[num][arr.length/num];
+        int k = 0;
+        for(int i=0; i< num; i++){
+            for(int j=0; j<arr.length/num;j++){
+                result[i][j] = arr[j+k];
+            }
+            k += 6300;
         }
         return result;
     }
