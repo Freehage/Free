@@ -35,7 +35,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
         android:text="재활용 방법 알아보기"
-        android:textSize="18dp"
+        android:textSize="15dp"
         android:textStyle="bold" />
 
     <!--yolo-->
