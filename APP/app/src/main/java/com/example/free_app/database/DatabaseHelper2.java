@@ -142,6 +142,7 @@ public class DatabaseHelper2 extends SQLiteOpenHelper {
         }
     }
 
+
     public String getStoreName(String search) {
         // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();

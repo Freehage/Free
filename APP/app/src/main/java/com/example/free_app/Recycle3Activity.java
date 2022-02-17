@@ -132,7 +132,7 @@ public class Recycle3Activity extends AppCompatActivity implements OnMapReadyCal
                     String storeName = marketList.get(i).storeName;     // 이름
                     String url = marketList.get(i).url;                 // 웹사이트 주소
                     if (marker.getTitle().equals(storeName)) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url + "/"));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         startActivity(intent);
                     }
                 }
@@ -148,9 +148,6 @@ public class Recycle3Activity extends AppCompatActivity implements OnMapReadyCal
                 googleMap.animateCamera(CameraUpdateFactory.zoomTo(11));
             }
         });
-
-
-
     }
 
 

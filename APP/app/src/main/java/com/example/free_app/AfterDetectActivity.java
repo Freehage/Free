@@ -3,15 +3,25 @@ package com.example.free_app;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.googlecode.tesseract.android.TessBaseAPI;
+
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.common.FileUtil;
 import org.tensorflow.lite.support.common.TensorOperator;
@@ -23,8 +33,13 @@ import org.tensorflow.lite.support.image.ops.ResizeOp;
 import org.tensorflow.lite.support.image.ops.ResizeWithCropOrPadOp;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
@@ -35,28 +50,24 @@ public class AfterDetectActivity extends AppCompatActivity {
     // camera
     private static final int REQUEST_IMAGE_CODE = 101;
 
-    // tflite model
-    public String MODEL_NAME = "three.tflite";
-    public int LAVEL_NUM = 2;
-    protected Interpreter tflite;
-    private MappedByteBuffer tfliteModel;
-    private TensorImage inputImageBuffer;
-    private  int imageSizeX;
-    private  int imageSizeY;
-    private TensorBuffer outputProbabilityBuffer;
-    private Integer output;
-    private TensorProcessor probabilityProcessor;
-    private static final float IMAGE_MEAN = 0.0f;
-    private static final float IMAGE_STD = 1.0f;
-    private static final float PROBABILITY_MEAN = 0.0f;
-    private static final float PROBABILITY_STD = 255.0f;
+    // OCR API
+    Bitmap imageBitmap;
+    private TessBaseAPI mTess;
+    String datapath = "";
+    Button btn_ocr;
+    private String imageFilePath;
+    private Uri p_Uri;
+
+
     private Bitmap bitmap;
     private List<String> labels;
     ImageView imageView;
     TextView result_detail;
     public org.tensorflow.lite.DataType probabilityDataType;
     public float conf;
-    public float CONF = 0.0f;
+    public float[][] class_score = new float[6300][7];
+    public float[][] preoutput2;
+    public float CONF = 0.25f;
 
 
     @Override
@@ -64,7 +75,6 @@ public class AfterDetectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_afterdetect);
 
-        // yolo model
         imageView=(ImageView)findViewById(R.id.result_img);
         result_detail=(TextView)findViewById(R.id.result_detail);
 
@@ -74,123 +84,131 @@ public class AfterDetectActivity extends AppCompatActivity {
         openOrCreateDatabase("FreeAppDB.db", MODE_PRIVATE, null);
         // db.close() -- DO NOT USE THIS
 
+        // ocr
+        btn_ocr = findViewById(R.id.btn_ocr);
+
+        // 언어 파일 경로
+        datapath = getFilesDir() + "/tesseract/";
+
+        // 트레이닝 데이터가 카피되어 있는지 체크
+        checkFile(new File(datapath + "tessdata/"), "kor");
+        checkFile(new File(datapath + "tessdata/"), "eng");
+
+        String lang = "kor";
+
+        mTess = new TessBaseAPI();
+        mTess.init(datapath, lang);
+
+        // 텍스트 추출 버튼
+        btn_ocr.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                // 가져와진 사진을 bitmap 으로 추출
+                BitmapDrawable d = (BitmapDrawable)((ImageView) findViewById(R.id.result_img)).getDrawable();
+                imageBitmap = d.getBitmap();
+
+                String OCRresult = null;
+                mTess.setImage(imageBitmap);
+
+                // 텍스트 추출
+                OCRresult = mTess.getUTF8Text();
+                TextView OCRTextView = (TextView) findViewById(R.id.result_detail);
+                OCRTextView.setText(OCRresult);
+
+                // 특수 문자 제거
+                String match = "[^\uAC00-\uD7A30-9a-zA-Z]";
+                OCRresult = OCRresult.replaceAll(match, " ");
+                Log.e("OCR result", OCRresult);
+
+                // 인식한 text split 후 -> list
+                String[] OCRSplit = OCRresult.split(" ");
+
+                // split 한 문자열 모두 출력
+                for(int i = 0; i < OCRSplit.length; i++) {
+                    Log.e("OCRSplit------------", OCRSplit[i]);
+                    Log.e("   ", "   ");
+//                    System.out.println(OCRSplit[i]);
+                }
+                Log.e("OCR------------------------", OCRresult);
+                Log.e("type-----------------------", OCRresult.getClass().getName());
+            }
+        });
+    }
+
+    // ocr
+    private int exifOrientationToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270;
+        }
+        return 0;
+    }
+
+    // ocr
+    private Bitmap rotate(Bitmap bitmap, float degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    // ocr
+    // 장치에 파일 복사
+    private void copyFiles(String lang) {
         try{
-            tflite = new Interpreter(loadmodelfile(this,MODEL_NAME));
-        }catch (Exception e) {
+            // 파일이 있을 위치
+            String filepath = datapath + "/tessdata/"+lang+".traineddata";
+
+            // AssetManager에 액세스
+            AssetManager assetManager = getAssets();
+
+            // 읽기, 쓰기를 위한 열린 바이트 스트림
+            InputStream instream = assetManager.open("tessdata/"+lang+".traineddata");
+            OutputStream outstream = new FileOutputStream(filepath);
+
+            // filepath에 의해 지정된 위치에 파일 복사
+            byte[] buffer = new byte[1024];
+            int read;
+
+            while ((read = instream.read(buffer)) != -1) {
+                outstream.write(buffer, 0, read);
+            }
+            outstream.flush();
+            outstream.close();
+            instream.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // yolo 객체 인식을 위해 이미지 load 하기.
-    private TensorImage loadImage(final Bitmap bitmap) {
-        // Loads bitmap into a TensorImage.
-        inputImageBuffer.load(bitmap);
-
-        // Creates processor for the TensorImage.
-        int cropSize = Math.min(bitmap.getWidth(), bitmap.getHeight());
-        ImageProcessor imageProcessor =
-                new ImageProcessor.Builder()
-                        .add(new ResizeWithCropOrPadOp(cropSize, cropSize))
-                        .add(new ResizeOp(imageSizeX, imageSizeY, ResizeOp.ResizeMethod.NEAREST_NEIGHBOR))
-                        .add(getPreprocessNormalizeOp())
-                        .build();
-        return imageProcessor.process(inputImageBuffer);
+    // ocr
+    private void checkFile(File dir, String lang) {
+        // 디렉토리가 없으면 디렉토리를 만들고 그 후에 파일 copy
+        if(!dir.exists()&& dir.mkdirs()) {
+            copyFiles(lang);
+        }
+        // 디렉토리가 있지만 파일이 없으면 파일 copy 진행
+        if(dir.exists()) {
+            String datafilepath = datapath+ "/tessdata/"+lang+".traineddata";
+            File datafile = new File(datafilepath);
+            if(!datafile.exists()) {
+                copyFiles(lang);
+            }
+        }
     }
 
-
-    // yolo 모델 load 하기.
-    private MappedByteBuffer loadmodelfile(Activity activity, String modelFilename) throws IOException {
-        AssetFileDescriptor fileDescriptor = activity.getAssets().openFd(modelFilename);
-        FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
-        FileChannel fileChannel=inputStream.getChannel();
-
-        long startoffset = fileDescriptor.getStartOffset();
-        long declaredLength=fileDescriptor.getDeclaredLength();
-        return fileChannel.map(FileChannel.MapMode.READ_ONLY,startoffset,declaredLength);
-    }
-
-
-
-    private TensorOperator getPreprocessNormalizeOp() {
-        return new NormalizeOp(IMAGE_MEAN, IMAGE_STD);
-    }
-    private TensorOperator getPostprocessNormalizeOp(){
-        return new NormalizeOp(PROBABILITY_MEAN, PROBABILITY_STD);
-    }
 
     // db에서 인식된 상품과 같은 제품군 찾기.
     private void findObLine() {
 
         result_detail.getText(); // class name
 
-    }
-
-    // yolo model result 출력.
-    private void showresult() {
-        try {
-            String result = "";
-            labels = FileUtil.loadLabels(this, "classes.txt");
-            TensorBuffer preprocess = probabilityProcessor.process(outputProbabilityBuffer);
-            float[] preoutput = preprocess.getFloatArray();
-            /*for(int i=0; i<preoutput.length; i++){
-                Log.e(">", String.valueOf(preoutput[i]));
-            }*/
-            float [] preoutput2 = find_max_conf(preoutput, LAVEL_NUM+5);
-
-            int max_conf_index = (int) preoutput2[0];
-            float max_conf = preoutput2[1];
-            Log.e("CONF",String.valueOf(max_conf)+' '+String.valueOf(max_conf_index));
-            float[] output = {preoutput[max_conf_index+1],preoutput[max_conf_index+2]};//,preoutput[max_conf_index+3]};
-            //preoutput[max_conf_index+4*6300], preoutput[max_conf_index+5*6300],preoutput[max_conf_index+6*6300],preoutput[max_conf_index+7*6300]};
-            Log.e("OUTPUT",String.valueOf(preoutput[max_conf_index+1])+ ' ' + String.valueOf(preoutput[max_conf_index+2])+ ' ' +
-                    String.valueOf(preoutput[max_conf_index+3]));/*+ ' ' + String.valueOf(preoutput[max_conf_index+4*6300])+ ' ' +
-                    String.valueOf(preoutput[max_conf_index+5*6300])+ ' ' +
-                    String.valueOf(preoutput[max_conf_index+6*6300])+ ' ' + String.valueOf(preoutput[max_conf_index+7*6300]));*/
-            int class_label = max(output);
-            result = labels.get(class_label);
-            Log.e("class_label", String.valueOf(class_label));
-
-            if(max_conf*preoutput[max_conf_index+class_label] > CONF){
-                result_detail.setText(result);
-            }
-            else{
-                result_detail.setText("인식 못함");
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            result_detail.setText("아직...");
-        }
-    }
-
-    private int max(float[] arr) {
-        int maxIndex = 0;
-        float max = 0.0f;
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] > max) {
-                max = arr[i];
-                maxIndex = i;
-            }
-        }
-        Log.e("MAX", String.valueOf(max));
-        return maxIndex;
-    }
-
-    private float[] find_max_conf(float[] arr, int num) {
-        float[] result = new float[2];
-        int index = 0;
-        float max_conf = arr[4];
-        for(int i = 11; i< arr.length/num; i +=7){
-            conf = arr[i];
-            if(conf > max_conf){
-                max_conf = conf;
-                index = i;
-            }
-        }
-        result[0] = index;
-        result[1] = max_conf;
-        return result;
     }
 
 
@@ -203,7 +221,7 @@ public class AfterDetectActivity extends AppCompatActivity {
         }
     }
 
-    // yolo model + camera 결과 가져오기.
+    // OCR + camera 결과 가져오기.
     @Override
     protected void onActivityResult(int requestcode, int resultcode, @Nullable Intent data) {
         super.onActivityResult(requestcode, resultcode, data);
@@ -214,35 +232,6 @@ public class AfterDetectActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             //imageView_.setImageBitmap(imageBitmap);
             imageView.setImageBitmap(imageBitmap);
-            // * classify 수행.
-            bitmap = imageBitmap;
-
-            // yolo 결과 바로 출력.
-            int imageTensorIndex = 0;
-            int[] imageShape = tflite.getInputTensor(imageTensorIndex).shape(); // {1, height, width, 3}
-            imageSizeY = imageShape[1];
-            imageSizeX = imageShape[2];
-            org.tensorflow.lite.DataType imageDataType = tflite.getInputTensor(imageTensorIndex).dataType();
-
-            int probabilityTensorIndex = 0;
-            int[] probabilityShape =
-                    tflite.getOutputTensor(probabilityTensorIndex).shape();
-
-            probabilityDataType = tflite.getOutputTensor(probabilityTensorIndex).dataType();
-            inputImageBuffer = new TensorImage(imageDataType);
-            outputProbabilityBuffer = TensorBuffer.createFixedSize(probabilityShape, probabilityDataType);
-
-            probabilityProcessor = new TensorProcessor.Builder().add(getPostprocessNormalizeOp()).build();
-
-            inputImageBuffer = loadImage(bitmap);
-
-            tflite.run(inputImageBuffer.getBuffer(),outputProbabilityBuffer.getBuffer().rewind());
-            showresult();
-
-
         }
     }
-
-
 }
-
