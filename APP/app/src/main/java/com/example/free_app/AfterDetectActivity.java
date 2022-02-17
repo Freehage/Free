@@ -110,11 +110,11 @@ public class AfterDetectActivity extends AppCompatActivity {
         // 언어 파일 경로
         datapath = getFilesDir() + "/tesseract/";
 
-        // 트레이닝데이터가 카피되어 있는지 체크
+        // 트레이닝 데이터가 카피되어 있는지 체크
         checkFile(new File(datapath + "tessdata/"), "kor");
         checkFile(new File(datapath + "tessdata/"), "eng");
 
-        String lang = "kor+eng";
+        String lang = "kor";
 
         mTess = new TessBaseAPI();
         mTess.init(datapath, lang);
@@ -124,19 +124,34 @@ public class AfterDetectActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
 
-                // 가져와진 사진을 bitmap으로 추출
+                // 가져와진 사진을 bitmap 으로 추출
                 BitmapDrawable d = (BitmapDrawable)((ImageView) findViewById(R.id.result_img)).getDrawable();
                 imageBitmap = d.getBitmap();
 
                 String OCRresult = null;
                 mTess.setImage(imageBitmap);
 
-                //텍스트 추출
+                // 텍스트 추출
                 OCRresult = mTess.getUTF8Text();
                 TextView OCRTextView = (TextView) findViewById(R.id.result_detail);
                 OCRTextView.setText(OCRresult);
 
-                Log.e("OCR------------------------f", OCRresult);
+                // 특수 문자 제거
+                String match = "[^\uAC00-\uD7A30-9a-zA-Z]";
+                OCRresult = OCRresult.replaceAll(match, " ");
+                Log.e("OCR result", OCRresult);
+
+                // 인식한 text split 후 -> list
+                String[] OCRSplit = OCRresult.split(" ");
+
+                // split 한 문자열 모두 출력
+                for(int i = 0; i < OCRSplit.length; i++) {
+                    Log.e("OCRSplit------------", OCRSplit[i]);
+                    Log.e("   ", "   ");
+//                    System.out.println(OCRSplit[i]);
+                }
+                Log.e("OCR------------------------", OCRresult);
+                Log.e("type-----------------------", OCRresult.getClass().getName());
             }
         });
     }
@@ -164,17 +179,17 @@ public class AfterDetectActivity extends AppCompatActivity {
     // 장치에 파일 복사
     private void copyFiles(String lang) {
         try{
-            //파일이 있을 위치
+            // 파일이 있을 위치
             String filepath = datapath + "/tessdata/"+lang+".traineddata";
 
-            //AssetManager에 액세스
+            // AssetManager에 액세스
             AssetManager assetManager = getAssets();
 
-            //읽기/쓰기를 위한 열린 바이트 스트림
+            // 읽기, 쓰기를 위한 열린 바이트 스트림
             InputStream instream = assetManager.open("tessdata/"+lang+".traineddata");
             OutputStream outstream = new FileOutputStream(filepath);
 
-            //filepath에 의해 지정된 위치에 파일 복사
+            // filepath에 의해 지정된 위치에 파일 복사
             byte[] buffer = new byte[1024];
             int read;
 
@@ -194,11 +209,11 @@ public class AfterDetectActivity extends AppCompatActivity {
 
     // ocr
     private void checkFile(File dir, String lang) {
-        //디렉토리가 없으면 디렉토리를 만들고 그후에 파일을 카피
+        // 디렉토리가 없으면 디렉토리를 만들고 그 후에 파일 copy
         if(!dir.exists()&& dir.mkdirs()) {
             copyFiles(lang);
         }
-        //디렉토리가 있지만 파일이 없으면 파일카피 진행
+        // 디렉토리가 있지만 파일이 없으면 파일 copy 진행
         if(dir.exists()) {
             String datafilepath = datapath+ "/tessdata/"+lang+".traineddata";
             File datafile = new File(datafilepath);
@@ -207,6 +222,7 @@ public class AfterDetectActivity extends AppCompatActivity {
             }
         }
     }
+
 
     // yolo 객체 인식을 위해 이미지 load 하기.
     private TensorImage loadImage(final Bitmap bitmap) {
@@ -237,7 +253,6 @@ public class AfterDetectActivity extends AppCompatActivity {
     }
 
 
-
     private TensorOperator getPreprocessNormalizeOp() {
         return new NormalizeOp(IMAGE_MEAN, IMAGE_STD);
     }
@@ -245,12 +260,14 @@ public class AfterDetectActivity extends AppCompatActivity {
         return new NormalizeOp(PROBABILITY_MEAN, PROBABILITY_STD);
     }
 
+
     // db에서 인식된 상품과 같은 제품군 찾기.
     private void findObLine() {
 
         result_detail.getText(); // class name
 
     }
+
 
     // yolo model result 출력.
     private void showresult() {
@@ -260,10 +277,6 @@ public class AfterDetectActivity extends AppCompatActivity {
             TensorBuffer preprocess = probabilityProcessor.process(outputProbabilityBuffer);
             float[] preoutput = preprocess.getFloatArray();
             Log.e("ㅇㅇㅇ", String.valueOf(preprocess.getShape()[1])+" "+String.valueOf(preprocess.getShape()[2]));
-            /*for(int i=0; i<preoutput.length;i++){
-                Log.e("ㅖㅇㅇㅇㄻㅁㅁㅇㄴ",String.valueOf(i)+' '+ String.valueOf(preoutput[i]));
-            }*/
-
 
             preoutput2 = arr2arr2(preoutput, 12);
             NMS(preoutput2);
@@ -273,17 +286,17 @@ public class AfterDetectActivity extends AppCompatActivity {
                 int class_label = max(class_score[i]);
                 float bbox_conf = preoutput2[4][i];
 
-                if(class_score[i][class_label] > 0 & bbox_conf > max_bbox_conf){
+                if(class_score[i][class_label] > 0 & bbox_conf > max_bbox_conf) {
                     max_bbox_conf = bbox_conf;
                     count_arr[class_label] += 1;
                     result = labels.get(class_label);
-                    Log.e("class_label", String.valueOf(preoutput2[0][i])+' '+String.valueOf(class_label)+' '+String.valueOf(max_bbox_conf));
+                    Log.e("class_label", String.valueOf(preoutput2[0][i]) + ' ' + String.valueOf(class_label) + ' ' + String.valueOf(max_bbox_conf));
                 }
             }
-            Log.e("정답", String.valueOf(count_arr[0])+' '+String.valueOf(count_arr[1])+
-                    ' '+String.valueOf(count_arr[2])+' '+String.valueOf(count_arr[3])+' '+
-                    String.valueOf(count_arr[4])+' '+String.valueOf(count_arr[5])+
-                    ' '+String.valueOf(count_arr[6]));
+            Log.e("정답", String.valueOf(count_arr[0]) + ' ' + String.valueOf(count_arr[1]) +
+                    ' ' + String.valueOf(count_arr[2]) + ' ' + String.valueOf(count_arr[3]) + ' ' +
+                    String.valueOf(count_arr[4]) + ' ' + String.valueOf(count_arr[5]) +
+                    ' ' + String.valueOf(count_arr[6]));
             result_detail.setText(result);
 
         } catch (Exception e) {
@@ -293,15 +306,15 @@ public class AfterDetectActivity extends AppCompatActivity {
     }
 
     private void NMS(float[][] arr) {
-        for(int i=5; i< 12; i++){
+        for(int i = 5; i < 12; i++) {
             int maxIndex = max(arr[i]);
             class_score[maxIndex][i-5] = arr[i][maxIndex];
-            float[] max_Bbox = {arr[i-5][maxIndex],arr[i-4][maxIndex],arr[i-3][maxIndex],arr[i-2][maxIndex]};
-            ArrayList<Integer> next = Iou(max_Bbox,arr[i-5],arr[i-4],arr[i-3],arr[i-2],i,maxIndex);
+            float[] max_Bbox = {arr[i-5][maxIndex], arr[i-4][maxIndex], arr[i-3][maxIndex], arr[i-2][maxIndex]};
+            ArrayList<Integer> next = Iou(max_Bbox, arr[i-5], arr[i-4], arr[i-3], arr[i-2], i, maxIndex);
             while(next != null){
                 Integer next_num = next.get(0);
-                float[] next_Bbox = {arr[i-5][next_num],arr[i-4][next_num],arr[i-3][next_num],arr[i-2][next_num]};
-                next = Iou(next_Bbox,arr[i-5],arr[i-4],arr[i-3],arr[i-2],i,next_num);
+                float[] next_Bbox = {arr[i-5][next_num], arr[i-4][next_num], arr[i-3][next_num], arr[i-2][next_num]};
+                next = Iou(next_Bbox, arr[i-5], arr[i-4], arr[i-3], arr[i-2], i, next_num);
             }
         }
 
@@ -310,9 +323,9 @@ public class AfterDetectActivity extends AppCompatActivity {
     private ArrayList<Integer> Iou(float[] max_Bbox, float[] x1, float[] y1, float[] x2, float[] y2, int k, int max_index) {
         float maxbox_area = (max_Bbox[2] - max_Bbox[0] + 1) * (max_Bbox[3] - max_Bbox[1] + 1);
         ArrayList<Integer> next_max = null;
-        for(int i=0; i< x1.length; i++){
-            if(preoutput2[k][i] > CONF){
-                if(i != max_index ){
+        for(int i=0; i< x1.length; i++) {
+            if(preoutput2[k][i] > CONF) {
+                if(i != max_index ) {
                     float box2_area = (x2[i] - x1[i] + 1) * (y2[i] - y1[i] + 1);
                     float inter_x1 = Math.max(max_Bbox[0],x1[i]);
                     float inter_y1 = Math.max(max_Bbox[1],y1[i]);
@@ -324,10 +337,10 @@ public class AfterDetectActivity extends AppCompatActivity {
 
                     float iou = (w * h) / (maxbox_area + box2_area);
 
-                    if(iou > 0.49){
+                    if(iou > 0.49) {
                         class_score[i][k-5] = 0;
                     }
-                    else{
+                    else {
                         class_score[i][k-5] = preoutput2[k][i];
                         Log.e("OTHER", String.valueOf(class_score[i][k-5]));
                         next_max.add(i);
@@ -353,7 +366,7 @@ public class AfterDetectActivity extends AppCompatActivity {
     private float[][] arr2arr2(float[] arr, int num) {
         float[][] result = new float[num][arr.length/num];
         int k = 0;
-        for(int i=0; i< arr.length/num; i++){
+        for(int i= 0 ; i < arr.length/num; i++){
             for(int j=4; j<num;j++){
                 if(j == 4){
                     result[j-4][i] = arr[k+j-4] - arr[k+j-2];
@@ -420,10 +433,6 @@ public class AfterDetectActivity extends AppCompatActivity {
 //
 //            tflite.run(inputImageBuffer.getBuffer(),outputProbabilityBuffer.getBuffer().rewind());
 //            showresult();
-
-
         }
     }
-
-
 }
