@@ -2,26 +2,26 @@ package com.example.free_app.model;
 
 public class Product {
 
-    private int id;
-    private String object;
-    private String company;
-    private String obline;
-    private String obrecy;
-    private int oblevel;
-    private String oboutC;
+    private int id;         //0
+    private String object;  //1
+    private String company; //2
+    private String obline;  //3
+    private String obrecy;  //4
+    private int oblevel;    //5
+    private String oboutC;  //6
 
 
-    private double unitoboutC;
-    private double price;
-    private double score;
-    private String obendday;
+    private double unitoboutC; //7
+    private double price;      //8
+    private double score;      //9
+    private String obendday;   //10
 
-    private String imageUrl;
-    private String Url;
+    private String imageUrl;   //11
+    private String Url;        //12
 
-    private double ReCarbon;
-    private double RePrice;
-    private double ResScore;
+    private double ReCarbon;   //13
+    private double RePrice;    //14
+    private double ReScore;   //15
 
 
 
@@ -152,12 +152,12 @@ public class Product {
         RePrice = rePrice;
     }
 
-    public double getResScore() {
-        return ResScore;
+    public double getReScore() {
+        return ReScore;
     }
 
-    public void setResScore(double resScore) {
-        ResScore = resScore;
+    public void setReScore(double reScore) {
+        ReScore = reScore;
     }
 
 
