@@ -2,46 +2,41 @@ package com.example.free_app.after_search;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
 
 import com.example.free_app.MainActivity;
 import com.example.free_app.R;
-import com.example.free_app.RecycleActivity;
-import com.example.free_app.database.DatabaseHelper;
+import com.example.free_app.after_search.recommend.Carbon_Frag;
+import com.example.free_app.after_search.recommend.Money_Frag;
+import com.example.free_app.after_search.recommend.Recommend_Frag;
+import com.example.free_app.after_search.recommend.Score_Frag;
 import com.example.free_app.model.Product;
-import com.example.free_app.recycleTip.TipAdapter;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 public class MainSearchActivity extends AppCompatActivity {
     public List<Product> productslists;
     private SearchView searchView;
-    private SearchAdapter adapter;
-    private DatabaseHelper mDBHelper;
     private List result_name;
     public static Context search_context;
     public String search_name;
     public Button button1;
+    Fragment recommend_Frag, money_Frag, score_Frag, carbon_Frag;
+
+    private Button btn_recommend,btn_money,btn_carbon,btn_score;
 
     //홈버튼 추가
     @Override
@@ -73,19 +68,19 @@ public class MainSearchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         productslists = ((MainActivity)MainActivity.main_context).productlist;
-
         Intent intent = getIntent();
         search_name = intent.getStringExtra("search_name");
+        btn_recommend.setBackgroundColor(Color.parseColor("#afe3ff"));
 
-        mDBHelper = new DatabaseHelper(this);
-        //출력값:: 이름들 list
+        btn_recommend = findViewById(R.id.btn_recommend);
+        btn_carbon = findViewById(R.id.btn_carbon);
+        btn_money = findViewById(R.id.btn_money);
+        btn_score = findViewById(R.id.btn_score);
 
-        //ArrayList item_list2 = mDBHelper.getObjectResult(search_name);
-
-
-        ArrayList<Product> item_list = search(search_name,productslists);
-
-
+        recommend_Frag = new Recommend_Frag();
+        money_Frag = new Money_Frag();
+        carbon_Frag = new Carbon_Frag();
+        score_Frag = new Score_Frag();
 
         searchView = (SearchView) findViewById(R.id.after_search_bar);
         searchView.setQueryHint(search_name);
@@ -106,38 +101,68 @@ public class MainSearchActivity extends AppCompatActivity {
             }
         });
 
+        Bundle bundle = new Bundle();
+        bundle.putString("search_name",search_name);
+        recommend_Frag.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_for_rec,recommend_Frag).commit();
 
 
-        int spanCount = 2; // 3 columns
-        int spacing = 100; // 50px
-        boolean includeEdge = false;
+        btn_recommend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_recommend.setBackgroundColor(Color.parseColor("#afe3ff"));
+                btn_carbon.setBackgroundColor(Color.parseColor("#000000"));
+                btn_money.setBackgroundColor(Color.parseColor("#000000"));
+                btn_score.setBackgroundColor(Color.parseColor("#000000"));
+                Intent intent_mainsearch = new Intent(getApplicationContext(), MainSearchActivity.class);
+                intent_mainsearch.putExtra("search_name",search_name);
+                startActivity(intent_mainsearch);
 
-        if(item_list.size() != 0){
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView_forsearch);
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
-            recyclerView.setLayoutManager(gridLayoutManager);
-            adapter = new SearchAdapter(item_list,this);
-            recyclerView.setAdapter(adapter);
-        }else{
-            Intent intent1 = new Intent(getApplicationContext(),NoitemActivity.class);
-            intent1.putExtra("search_name",search_name);
-            startActivity(intent1);
-        }
-
-
-
-    }
-
-    private ArrayList<Product> search(String search_name, List<Product> productslists) {
-        ArrayList<Product> return_value = new ArrayList<Product>();
-        Iterator<Product> iterator = productslists.iterator();
-        while (iterator.hasNext()) {
-            Product item = iterator.next();
-            String searchs = item.getObject();
-            if (searchs.contains(search_name)) {
-                return_value.add(item);
             }
-        }
-        return return_value;
+        });
+
+        btn_carbon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_recommend.setBackgroundColor(Color.parseColor("#000000"));
+                btn_carbon.setBackgroundColor(Color.parseColor("#afe3ff"));
+                btn_money.setBackgroundColor(Color.parseColor("#000000"));
+                btn_score.setBackgroundColor(Color.parseColor("#000000"));
+                Bundle bundle = new Bundle();
+                bundle.putString("search_name",search_name);
+                carbon_Frag.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_for_rec,carbon_Frag).commit();
+            }
+        });
+
+        btn_money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_recommend.setBackgroundColor(Color.parseColor("#000000"));
+                btn_carbon.setBackgroundColor(Color.parseColor("#000000"));
+                btn_money.setBackgroundColor(Color.parseColor("#afe3ff"));
+                btn_score.setBackgroundColor(Color.parseColor("#000000"));
+                Bundle bundle = new Bundle();
+                bundle.putString("search_name",search_name);
+                money_Frag.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_for_rec,money_Frag).commit();
+            }
+        });
+
+        btn_score.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_recommend.setBackgroundColor(Color.parseColor("#000000"));
+                btn_carbon.setBackgroundColor(Color.parseColor("#000000"));
+                btn_money.setBackgroundColor(Color.parseColor("#000000"));
+                btn_score.setBackgroundColor(Color.parseColor("#afe3ff"));
+                Bundle bundle = new Bundle();
+                bundle.putString("search_name",search_name);
+                score_Frag.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_for_rec,score_Frag).commit();
+            }
+        });
+
+
     }
 }

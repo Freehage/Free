@@ -176,7 +176,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String category = "";
         //이름이 ! 일 떄 해당 상품의 카테고리 얻음
-        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '" + search + "' ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%" + search + "%\"", null);
         while (cursor.moveToNext()) {
             category = cursor.getString(4); //OBLINE얻음
         }
@@ -189,6 +189,57 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //OBLINE이 ~인 상품 중에 탄소배출량이 적은 제품 순서대로 3개 나열 + 같은 제품은 제외
         Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBLINE = '" + search + "' AND OBJECT != '" + search + "'" +
                 "ORDER BY OBOUTC ASC LIMIT 3 ", null);
+        while (cursor.moveToNext()) {
+
+            arrayList_OB.add(cursor.getString(1)); // 상품명 Append
+        }
+        return arrayList_OB;
+    }
+
+    public ArrayList getObjectsResult_for_recommend(String search) {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList arrayList_OB = new ArrayList();
+        //OBLINE이 ~인 상품 중에 탄소배출량이 적은 제품 순서대로 3개 나열 + 같은 제품은 제외
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%" + search + "%\"" +
+                "ORDER BY OBOUTC ASC ", null);
+        while (cursor.moveToNext()) {
+
+            arrayList_OB.add(cursor.getString(1)); // 상품명 Append
+        }
+        return arrayList_OB;
+    }
+
+    public ArrayList getObjectsResult_for_money(String search) {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList arrayList_OB = new ArrayList();
+        //OBLINE이 ~인 상품 중에 가격이 적은 제품 순서대로 나열 + 같은 제품은 제외
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBLINE = '" + search + "' AND OBJECT != '" + search + "'" +
+                "ORDER BY PRICE ASC ", null);
+        while (cursor.moveToNext()) {
+
+            arrayList_OB.add(cursor.getString(1)); // 상품명 Append
+        }
+        return arrayList_OB;
+    }
+    public ArrayList getObjectsResult_for_carbon(String search) {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList arrayList_OB = new ArrayList();
+        //OBLINE이 ~인 상품 중에 탄소배출량이 적은 제품 순서대로 나열 + 같은 제품은 제외
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBLINE = '" + search + "' AND OBJECT != '" + search + "'" +
+                "ORDER BY OBOUTC ASC ", null);
+        while (cursor.moveToNext()) {
+
+            arrayList_OB.add(cursor.getString(1)); // 상품명 Append
+        }
+        return arrayList_OB;
+    }
+
+    public ArrayList getObjectsResult_for_score(String search) {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList arrayList_OB = new ArrayList();
+        //OBLINE이 ~인 상품 중에 평점이 적은 제품 순서대로 나열 + 같은 제품은 제외
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBLINE = '" + search + "' AND OBJECT != '" + search + "'" +
+                "ORDER BY SCORE ASC ", null);
         while (cursor.moveToNext()) {
 
             arrayList_OB.add(cursor.getString(1)); // 상품명 Append

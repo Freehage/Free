@@ -22,13 +22,12 @@ import java.util.ArrayList;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder>
         implements OnPersonItemClickListener2 {
-    private ArrayList<Product> productArrayList;
-    private ArrayList<Product> product_COMArrayList;
+    private ArrayList<String> productArrayList;
     OnPersonItemClickListener2 listener;
     private Context mcontext;
     private DatabaseHelper mDBHelper;
 
-    public SearchAdapter(ArrayList<Product> dataList, Context context){
+    public SearchAdapter(ArrayList<String> dataList, Context context){
 
         this.mcontext = context;
         productArrayList = dataList;
@@ -49,11 +48,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(SearchAdapter.ViewHolder holder, int position) {
-        String company = productArrayList.get(position).getCompany();
-        String object = productArrayList.get(position).getObject();
-        String level = Integer.toString(productArrayList.get(position).getOblevel());
-        String end_date = productArrayList.get(position).getObendday();
-        String recycle = productArrayList.get(position).getObrecy();
+        String object = productArrayList.get(position).toString();
+        String company = mDBHelper.getCompanyResult(object);
+        String level = mDBHelper.getLevel(object);
+        String end_date = mDBHelper.getEndDate(object);
+        String recycle = mDBHelper.getRecycle(object);
+
 
         holder.object1.setText(object);
         holder.level1.setText("탄소 중립 LEVEL: " + level);

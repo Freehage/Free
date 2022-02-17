@@ -17,7 +17,7 @@ import com.example.free_app.MainActivity;
 import com.example.free_app.R;
 
 import java.util.ArrayList;
-
+////이게 fragment
 public class ClickRecommend extends AppCompatActivity {
     public String recycle_category;
     public static Context recommend_context;
