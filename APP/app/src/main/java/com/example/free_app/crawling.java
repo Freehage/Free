@@ -1,5 +1,4 @@
-/* gradle에 implementation 'org.jsoup:jsoup:1.13.1' 추가!!*/
-
+/*
 package com.example.imagesearch;
 
 import androidx.annotation.NonNull;
@@ -46,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     nums += doc.select("#bnusNo").text();  */                 //보너스 번호 contents 변수를 사용하지 않고 가져오는 방법
 
+
+        /*
                     bundle.putString("numbers", nums);                               //핸들러를 이용해서 Thread()에서 가져온 데이터를 메인 쓰레드에 보내준다.
                     Message msg = handler.obtainMessage();
                     msg.setData(bundle);
@@ -67,4 +68,4 @@ public class MainActivity extends AppCompatActivity {
     };
 }
 
-
+*/

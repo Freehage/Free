@@ -119,23 +119,25 @@ public class Recycle3Activity extends AppCompatActivity implements OnMapReadyCal
             googleMap.addMarker(markerOptions);
 
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                @Override
-                public void onInfoWindowClick(Marker marker) {
-                    if (marker.getTitle().equals(storeName)) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url+"/"));
-                        startActivity(intent);
-                    }
-
-                }
-            });
-
-
 
         }
 
 
 
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+
+                for (int i = 0; i < marketList.size(); i++) {
+                    String storeName = marketList.get(i).storeName;     // 이름
+                    String url = marketList.get(i).url;                 // 웹사이트 주소
+                    if (marker.getTitle().equals(storeName)) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url + "/"));
+                        startActivity(intent);
+                    }
+                }
+            }
+        });
 
             //처음화면
         googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
