@@ -20,17 +20,17 @@
 
     </LinearLayout>
 
-    // 상품명 출력 textView.
+    <!--상품명 출력 textView-->
     <TextView
         android:id="@+id/result_detail"
-        android:layout_width="200dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/linear_result1"
-        android:text="c02 mark"
         android:layout_centerInParent="true"
         android:layout_marginTop="30dp"
-        android:textSize="18dp"
+        android:text="c02 mark"
         android:textAlignment="center"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <Button
@@ -42,11 +42,21 @@
         android:layout_marginTop="20dp"
         android:text="BUTTON"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OCR RESULTS"
+        android:id="@+id/btn_ocr"
+        android:layout_below="@+id/btn_gotorecycle"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"/>
+
     <ListView
         android:id="@+id/recomment_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_gotorecycle" />
+        android:layout_below="@+id/btn_ocr"
+        android:layout_marginTop="10dp"/>
 
 
 </RelativeLayout>

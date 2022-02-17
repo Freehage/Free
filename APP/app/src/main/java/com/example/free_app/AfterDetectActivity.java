@@ -3,15 +3,25 @@ package com.example.free_app;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.googlecode.tesseract.android.TessBaseAPI;
+
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.common.FileUtil;
 import org.tensorflow.lite.support.common.TensorOperator;
@@ -23,8 +33,13 @@ import org.tensorflow.lite.support.image.ops.ResizeOp;
 import org.tensorflow.lite.support.image.ops.ResizeWithCropOrPadOp;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
@@ -34,6 +49,14 @@ public class AfterDetectActivity extends AppCompatActivity {
 
     // camera
     private static final int REQUEST_IMAGE_CODE = 101;
+
+    // OCR API
+    Bitmap imageBitmap;
+    private TessBaseAPI mTess;
+    String datapath = "";
+    Button btn_ocr;
+    private String imageFilePath;
+    private Uri p_Uri;
 
     // tflite model
     public String MODEL_NAME = "best.tflite";
@@ -79,6 +102,109 @@ public class AfterDetectActivity extends AppCompatActivity {
             tflite = new Interpreter(loadmodelfile(this,MODEL_NAME));
         }catch (Exception e) {
             e.printStackTrace();
+        }
+
+        // ocr
+        btn_ocr = findViewById(R.id.btn_ocr);
+
+        // 언어 파일 경로
+        datapath = getFilesDir() + "/tesseract/";
+
+        // 트레이닝데이터가 카피되어 있는지 체크
+        checkFile(new File(datapath + "tessdata/"), "kor");
+        checkFile(new File(datapath + "tessdata/"), "eng");
+
+        String lang = "kor+eng";
+
+        mTess = new TessBaseAPI();
+        mTess.init(datapath, lang);
+
+        // 텍스트 추출 버튼
+        btn_ocr.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                // 가져와진 사진을 bitmap으로 추출
+                BitmapDrawable d = (BitmapDrawable)((ImageView) findViewById(R.id.result_img)).getDrawable();
+                imageBitmap = d.getBitmap();
+
+                String OCRresult = null;
+                mTess.setImage(imageBitmap);
+
+                //텍스트 추출
+                OCRresult = mTess.getUTF8Text();
+                TextView OCRTextView = (TextView) findViewById(R.id.result_detail);
+                OCRTextView.setText(OCRresult);
+
+                Log.e("OCR------------------------f", OCRresult);
+            }
+        });
+    }
+
+    // ocr
+    private int exifOrientationToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270;
+        }
+        return 0;
+    }
+
+    // ocr
+    private Bitmap rotate(Bitmap bitmap, float degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    // ocr
+    // 장치에 파일 복사
+    private void copyFiles(String lang) {
+        try{
+            //파일이 있을 위치
+            String filepath = datapath + "/tessdata/"+lang+".traineddata";
+
+            //AssetManager에 액세스
+            AssetManager assetManager = getAssets();
+
+            //읽기/쓰기를 위한 열린 바이트 스트림
+            InputStream instream = assetManager.open("tessdata/"+lang+".traineddata");
+            OutputStream outstream = new FileOutputStream(filepath);
+
+            //filepath에 의해 지정된 위치에 파일 복사
+            byte[] buffer = new byte[1024];
+            int read;
+
+            while ((read = instream.read(buffer)) != -1) {
+                outstream.write(buffer, 0, read);
+            }
+            outstream.flush();
+            outstream.close();
+            instream.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ocr
+    private void checkFile(File dir, String lang) {
+        //디렉토리가 없으면 디렉토리를 만들고 그후에 파일을 카피
+        if(!dir.exists()&& dir.mkdirs()) {
+            copyFiles(lang);
+        }
+        //디렉토리가 있지만 파일이 없으면 파일카피 진행
+        if(dir.exists()) {
+            String datafilepath = datapath+ "/tessdata/"+lang+".traineddata";
+            File datafile = new File(datafilepath);
+            if(!datafile.exists()) {
+                copyFiles(lang);
+            }
         }
     }
 
@@ -267,31 +393,33 @@ public class AfterDetectActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             //imageView_.setImageBitmap(imageBitmap);
             imageView.setImageBitmap(imageBitmap);
+
+
             // * classify 수행.
-            bitmap = imageBitmap;
+//            bitmap = imageBitmap;
 
             // yolo 결과 바로 출력.
-            int imageTensorIndex = 0;
-            int[] imageShape = tflite.getInputTensor(imageTensorIndex).shape(); // {1, height, width, 3}
-            imageSizeY = imageShape[1];
-            imageSizeX = imageShape[2];
-            org.tensorflow.lite.DataType imageDataType = tflite.getInputTensor(imageTensorIndex).dataType();
-
-            int probabilityTensorIndex = 0;
-            tflite.getOutputTensorCount();
-            int[] probabilityShape =
-                    tflite.getOutputTensor(probabilityTensorIndex).shape();
-
-            probabilityDataType = tflite.getOutputTensor(probabilityTensorIndex).dataType();
-            inputImageBuffer = new TensorImage(imageDataType);
-            outputProbabilityBuffer = TensorBuffer.createFixedSize(probabilityShape, probabilityDataType);
-
-            probabilityProcessor = new TensorProcessor.Builder().add(getPostprocessNormalizeOp()).build();
-
-            inputImageBuffer = loadImage(bitmap);
-
-            tflite.run(inputImageBuffer.getBuffer(),outputProbabilityBuffer.getBuffer().rewind());
-            showresult();
+//            int imageTensorIndex = 0;
+//            int[] imageShape = tflite.getInputTensor(imageTensorIndex).shape(); // {1, height, width, 3}
+//            imageSizeY = imageShape[1];
+//            imageSizeX = imageShape[2];
+//            org.tensorflow.lite.DataType imageDataType = tflite.getInputTensor(imageTensorIndex).dataType();
+//
+//            int probabilityTensorIndex = 0;
+//            tflite.getOutputTensorCount();
+//            int[] probabilityShape =
+//                    tflite.getOutputTensor(probabilityTensorIndex).shape();
+//
+//            probabilityDataType = tflite.getOutputTensor(probabilityTensorIndex).dataType();
+//            inputImageBuffer = new TensorImage(imageDataType);
+//            outputProbabilityBuffer = TensorBuffer.createFixedSize(probabilityShape, probabilityDataType);
+//
+//            probabilityProcessor = new TensorProcessor.Builder().add(getPostprocessNormalizeOp()).build();
+//
+//            inputImageBuffer = loadImage(bitmap);
+//
+//            tflite.run(inputImageBuffer.getBuffer(),outputProbabilityBuffer.getBuffer().rewind());
+//            showresult();
 
 
         }
