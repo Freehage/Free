@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private CircleIndicator3 circleIndicator3;
     private SearchView searchView;
     public List<Product> productlist;
+    public int num = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
