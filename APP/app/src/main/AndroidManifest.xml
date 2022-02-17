@@ -96,9 +96,10 @@
 
         <activity android:name=".Recycle3Activity"
             android:parentActivityName=".ZerowasteActivity"/>
-
         <activity android:name=".ZerowasteActivity"
             android:parentActivityName=".RecycleActivity"/>
+
+
         <activity android:name=".recycleTip.RecycleTip"
             android:parentActivityName=".RecycleActivity"/>
         <activity android:name=".RecycleCamera"

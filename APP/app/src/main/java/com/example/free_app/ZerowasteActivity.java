@@ -1,8 +1,10 @@
 package com.example.free_app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,9 +12,14 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ZerowasteActivity extends AppCompatActivity {
+import com.example.free_app.database.DatabaseHelper2;
+import com.example.free_app.model.ZeroShop;
 
+import java.util.List;
+
+public class ZerowasteActivity extends AppCompatActivity {
     Button zerowaste;
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)    {
@@ -27,7 +34,6 @@ public class ZerowasteActivity extends AppCompatActivity {
             case R.id.home_button:
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
-                //Toast.makeText(getApplicationContext(), "Search Action", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -54,5 +60,7 @@ public class ZerowasteActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 }
