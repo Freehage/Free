@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.free_app.R;
+import com.example.free_app.database.DatabaseHelper;
 import com.example.free_app.model.Product;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class OcrAdapter extends BaseAdapter {
     Context mContext = null;
     LayoutInflater mLayoutInflater = null;
     ArrayList<Product> sample;
+    private DatabaseHelper mDBHelper;
 
     public OcrAdapter(Context context, ArrayList<Product> data) {
 
@@ -27,6 +29,7 @@ public class OcrAdapter extends BaseAdapter {
         sample = data;
         mLayoutInflater = LayoutInflater.from(mContext);
         Log.e("ㅎㅎㅎㅎㅎ","????????????");
+        mDBHelper = new DatabaseHelper(context);
 
 
     }
@@ -57,9 +60,12 @@ public class OcrAdapter extends BaseAdapter {
 
         //recom_img1.setImageResource(sample.get(position).getObject());
         //Log.e("--", sample.get(position).getObject());
-        recom_Title1.setText(sample.get(position).getObject());
-        recom_detail1.setText("회사:" +sample.get(position).getCompany());
-        recom_detail2.setText("탄소배출량:" +sample.get(position).getOboutC());
+
+        String object = sample.get(position).toString();
+        recom_Title1.setText(object);
+        //recom_detail1.setText("회사:" +amount);
+        String amount = mDBHelper.getCarbon(object);
+        recom_detail2.setText("탄소배출량:" +amount);
 
         return view;
 
