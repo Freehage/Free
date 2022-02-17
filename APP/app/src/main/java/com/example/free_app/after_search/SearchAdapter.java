@@ -1,5 +1,7 @@
 package com.example.free_app.after_search;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -70,7 +72,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 intent.putExtra("level",level);
                 intent.putExtra("end_date",end_date);
                 intent.putExtra("recycle_category",recycle);
-                mcontext.startActivity(intent);
+                mcontext.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
             }
         });
 

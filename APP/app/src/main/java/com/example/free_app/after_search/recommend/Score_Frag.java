@@ -3,6 +3,7 @@ package com.example.free_app.after_search.recommend;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class Score_Frag extends Fragment {
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.activity_aftersearchframe,container,false);
 
         String search_name = getArguments().getString("search_name");
+        Log.e("SCORE","!!");
 
         mDBHelper = new DatabaseHelper(getActivity().getApplicationContext());
         ArrayList<String> item_list = mDBHelper.getObjectsResult_for_recommend(search_name);

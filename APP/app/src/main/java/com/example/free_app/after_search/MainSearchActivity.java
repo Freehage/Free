@@ -1,5 +1,6 @@
 package com.example.free_app.after_search;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -58,6 +59,7 @@ public class MainSearchActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,16 +68,15 @@ public class MainSearchActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_space);
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>검색결과 </font>"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        productslists = ((MainActivity)MainActivity.main_context).productlist;
-        Intent intent = getIntent();
-        search_name = intent.getStringExtra("search_name");
-        btn_recommend.setBackgroundColor(Color.parseColor("#afe3ff"));
-
         btn_recommend = findViewById(R.id.btn_recommend);
         btn_carbon = findViewById(R.id.btn_carbon);
         btn_money = findViewById(R.id.btn_money);
         btn_score = findViewById(R.id.btn_score);
+
+        productslists = ((MainActivity)MainActivity.main_context).productlist;
+        Intent intent = getIntent();
+        search_name = intent.getStringExtra("search_name");
+        btn_recommend.setBackgroundColor(Color.GRAY);
 
         recommend_Frag = new Recommend_Frag();
         money_Frag = new Money_Frag();
@@ -110,13 +111,15 @@ public class MainSearchActivity extends AppCompatActivity {
         btn_recommend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_recommend.setBackgroundColor(Color.parseColor("#afe3ff"));
-                btn_carbon.setBackgroundColor(Color.parseColor("#000000"));
-                btn_money.setBackgroundColor(Color.parseColor("#000000"));
-                btn_score.setBackgroundColor(Color.parseColor("#000000"));
-                Intent intent_mainsearch = new Intent(getApplicationContext(), MainSearchActivity.class);
-                intent_mainsearch.putExtra("search_name",search_name);
-                startActivity(intent_mainsearch);
+                btn_recommend.setBackgroundColor(Color.GRAY);
+                btn_carbon.setBackgroundColor(Color.WHITE);
+                btn_money.setBackgroundColor(Color.WHITE);
+                btn_score.setBackgroundColor(Color.WHITE);
+                Bundle bundle = new Bundle();
+                bundle.putString("search_name",search_name);
+                recommend_Frag.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_for_rec,recommend_Frag).commit();
+
 
             }
         });
@@ -124,10 +127,10 @@ public class MainSearchActivity extends AppCompatActivity {
         btn_carbon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_recommend.setBackgroundColor(Color.parseColor("#000000"));
-                btn_carbon.setBackgroundColor(Color.parseColor("#afe3ff"));
-                btn_money.setBackgroundColor(Color.parseColor("#000000"));
-                btn_score.setBackgroundColor(Color.parseColor("#000000"));
+                btn_recommend.setBackgroundColor(Color.WHITE);
+                btn_carbon.setBackgroundColor(Color.GRAY);
+                btn_money.setBackgroundColor(Color.WHITE);
+                btn_score.setBackgroundColor(Color.WHITE);
                 Bundle bundle = new Bundle();
                 bundle.putString("search_name",search_name);
                 carbon_Frag.setArguments(bundle);
@@ -138,10 +141,10 @@ public class MainSearchActivity extends AppCompatActivity {
         btn_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_recommend.setBackgroundColor(Color.parseColor("#000000"));
-                btn_carbon.setBackgroundColor(Color.parseColor("#000000"));
-                btn_money.setBackgroundColor(Color.parseColor("#afe3ff"));
-                btn_score.setBackgroundColor(Color.parseColor("#000000"));
+                btn_recommend.setBackgroundColor(Color.WHITE);
+                btn_carbon.setBackgroundColor(Color.WHITE);
+                btn_money.setBackgroundColor(Color.GRAY);
+                btn_score.setBackgroundColor(Color.WHITE);
                 Bundle bundle = new Bundle();
                 bundle.putString("search_name",search_name);
                 money_Frag.setArguments(bundle);
@@ -152,10 +155,10 @@ public class MainSearchActivity extends AppCompatActivity {
         btn_score.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_recommend.setBackgroundColor(Color.parseColor("#000000"));
-                btn_carbon.setBackgroundColor(Color.parseColor("#000000"));
-                btn_money.setBackgroundColor(Color.parseColor("#000000"));
-                btn_score.setBackgroundColor(Color.parseColor("#afe3ff"));
+                btn_recommend.setBackgroundColor(Color.WHITE);
+                btn_carbon.setBackgroundColor(Color.WHITE);
+                btn_money.setBackgroundColor(Color.WHITE);
+                btn_score.setBackgroundColor(Color.GRAY);
                 Bundle bundle = new Bundle();
                 bundle.putString("search_name",search_name);
                 score_Frag.setArguments(bundle);
