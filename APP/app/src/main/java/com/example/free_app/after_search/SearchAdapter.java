@@ -55,12 +55,24 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         String level = mDBHelper.getLevel(object);
         String end_date = mDBHelper.getEndDate(object);
         String recycle = mDBHelper.getRecycle(object);
+        String money = mDBHelper.getMoney(object);
+        String score = mDBHelper.getScore(object);
+        String amount = mDBHelper.getCarbon(object);
 
 
         holder.object1.setText(object);
-        holder.level1.setText("탄소 중립 LEVEL: " + level);
-        //String company_level = mDBHelper.getLevel(productArrayList.get(position).getObject());
-        //holder.level1.setText("탄소 중립 레벨: " + company_level);
+        if(((MainActivity)MainActivity.main_context).num == 0){
+            holder.level1.setText("탄소 중립 LEVEL: " + level);
+        }
+        else if(((MainActivity)MainActivity.main_context).num == 1){
+            holder.level1.setText("탄소 배출량 " + amount);
+        }
+        else if(((MainActivity)MainActivity.main_context).num == 2){
+            holder.level1.setText("가격: " + money);
+        }
+        else if(((MainActivity)MainActivity.main_context).num == 3){
+            holder.level1.setText("평점 " + score);
+        }
         holder.img1.setImageResource(R.mipmap.ic_launcher);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -111,6 +111,7 @@ public class MainSearchActivity extends AppCompatActivity {
         btn_recommend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((MainActivity)MainActivity.main_context).num = 0;
                 btn_recommend.setBackgroundColor(Color.GRAY);
                 btn_carbon.setBackgroundColor(Color.WHITE);
                 btn_money.setBackgroundColor(Color.WHITE);
@@ -127,6 +128,7 @@ public class MainSearchActivity extends AppCompatActivity {
         btn_carbon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((MainActivity)MainActivity.main_context).num = 1;
                 btn_recommend.setBackgroundColor(Color.WHITE);
                 btn_carbon.setBackgroundColor(Color.GRAY);
                 btn_money.setBackgroundColor(Color.WHITE);
@@ -141,6 +143,7 @@ public class MainSearchActivity extends AppCompatActivity {
         btn_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((MainActivity)MainActivity.main_context).num = 2;
                 btn_recommend.setBackgroundColor(Color.WHITE);
                 btn_carbon.setBackgroundColor(Color.WHITE);
                 btn_money.setBackgroundColor(Color.GRAY);
@@ -155,6 +158,7 @@ public class MainSearchActivity extends AppCompatActivity {
         btn_score.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((MainActivity)MainActivity.main_context).num = 3;
                 btn_recommend.setBackgroundColor(Color.WHITE);
                 btn_carbon.setBackgroundColor(Color.WHITE);
                 btn_money.setBackgroundColor(Color.WHITE);

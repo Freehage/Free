@@ -49,7 +49,7 @@ public class Score_Frag extends Fragment {
         Log.e("SCORE","!!");
 
         mDBHelper = new DatabaseHelper(getActivity().getApplicationContext());
-        ArrayList<String> item_list = mDBHelper.getObjectsResult_for_recommend(search_name);
+        ArrayList<String> item_list = mDBHelper.getObjectsResult_for_score(search_name);
 
 
         if(item_list.size() != 0){
