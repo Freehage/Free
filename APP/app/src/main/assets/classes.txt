@@ -1,7 +1,2 @@
-vinyl
-glass
-paper
-paperpack
-can
-pet
-plastic
+chilsung
+peacock
