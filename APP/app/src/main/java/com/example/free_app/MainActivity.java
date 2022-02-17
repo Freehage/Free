@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent_searchob = new Intent(getApplicationContext(), AfterDetectActivity.class);
                 startActivity(intent_searchob);
-//                takePicture();
+                // takePicture();
             }
         });
 

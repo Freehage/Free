@@ -15,11 +15,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.free_app.after_search.OcrAdapter;
+import com.example.free_app.after_search.RecommendAdapter;
+import com.example.free_app.database.DatabaseHelper;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 import org.tensorflow.lite.Interpreter;
@@ -69,18 +75,24 @@ public class AfterDetectActivity extends AppCompatActivity {
     public float[][] preoutput2;
     public float CONF = 0.25f;
 
+    //db에서 값 찾아오기
+    private DatabaseHelper mDBHelper;
+
+    ArrayList OCRlist = new ArrayList();
+    ArrayList OCRlist2 = new ArrayList();
+    ArrayList OCRlist3 = new ArrayList();
+    public ArrayList FinalList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_afterdetect);
 
-        imageView=(ImageView)findViewById(R.id.result_img);
-        result_detail=(TextView)findViewById(R.id.result_detail);
-
+        imageView = (ImageView) findViewById(R.id.result_img);
+        result_detail = (TextView) findViewById(R.id.result_detail);
         // 사진 찍기.
         takePicture();
-
         openOrCreateDatabase("FreeAppDB.db", MODE_PRIVATE, null);
         // db.close() -- DO NOT USE THIS
 
@@ -99,42 +111,10 @@ public class AfterDetectActivity extends AppCompatActivity {
         mTess = new TessBaseAPI();
         mTess.init(datapath, lang);
 
-        // 텍스트 추출 버튼
-        btn_ocr.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
 
-                // 가져와진 사진을 bitmap 으로 추출
-                BitmapDrawable d = (BitmapDrawable)((ImageView) findViewById(R.id.result_img)).getDrawable();
-                imageBitmap = d.getBitmap();
+        mDBHelper = new DatabaseHelper(this);
 
-                String OCRresult = null;
-                mTess.setImage(imageBitmap);
-
-                // 텍스트 추출
-                OCRresult = mTess.getUTF8Text();
-                TextView OCRTextView = (TextView) findViewById(R.id.result_detail);
-                OCRTextView.setText(OCRresult);
-
-                // 특수 문자 제거
-                String match = "[^\uAC00-\uD7A30-9a-zA-Z]";
-                OCRresult = OCRresult.replaceAll(match, " ");
-                Log.e("OCR result", OCRresult);
-
-                // 인식한 text split 후 -> list
-                String[] OCRSplit = OCRresult.split(" ");
-
-                // split 한 문자열 모두 출력
-                for(int i = 0; i < OCRSplit.length; i++) {
-                    Log.e("OCRSplit------------", OCRSplit[i]);
-                    Log.e("   ", "   ");
-//                    System.out.println(OCRSplit[i]);
-                }
-                Log.e("OCR------------------------", OCRresult);
-                Log.e("type-----------------------", OCRresult.getClass().getName());
-            }
-        });
-    }
+    }  //여기까지 oncreate
 
     // ocr
     private int exifOrientationToDegrees(int exifOrientation) {
@@ -158,15 +138,15 @@ public class AfterDetectActivity extends AppCompatActivity {
     // ocr
     // 장치에 파일 복사
     private void copyFiles(String lang) {
-        try{
+        try {
             // 파일이 있을 위치
-            String filepath = datapath + "/tessdata/"+lang+".traineddata";
+            String filepath = datapath + "/tessdata/" + lang + ".traineddata";
 
             // AssetManager에 액세스
             AssetManager assetManager = getAssets();
 
             // 읽기, 쓰기를 위한 열린 바이트 스트림
-            InputStream instream = assetManager.open("tessdata/"+lang+".traineddata");
+            InputStream instream = assetManager.open("tessdata/" + lang + ".traineddata");
             OutputStream outstream = new FileOutputStream(filepath);
 
             // filepath에 의해 지정된 위치에 파일 복사
@@ -190,14 +170,14 @@ public class AfterDetectActivity extends AppCompatActivity {
     // ocr
     private void checkFile(File dir, String lang) {
         // 디렉토리가 없으면 디렉토리를 만들고 그 후에 파일 copy
-        if(!dir.exists()&& dir.mkdirs()) {
+        if (!dir.exists() && dir.mkdirs()) {
             copyFiles(lang);
         }
         // 디렉토리가 있지만 파일이 없으면 파일 copy 진행
-        if(dir.exists()) {
-            String datafilepath = datapath+ "/tessdata/"+lang+".traineddata";
+        if (dir.exists()) {
+            String datafilepath = datapath + "/tessdata/" + lang + ".traineddata";
             File datafile = new File(datafilepath);
-            if(!datafile.exists()) {
+            if (!datafile.exists()) {
                 copyFiles(lang);
             }
         }
@@ -216,7 +196,7 @@ public class AfterDetectActivity extends AppCompatActivity {
     public void takePicture() {
         Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        if(imageTakeIntent.resolveActivity(getPackageManager()) != null) {
+        if (imageTakeIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(imageTakeIntent, REQUEST_IMAGE_CODE);
         }
     }
@@ -227,11 +207,64 @@ public class AfterDetectActivity extends AppCompatActivity {
         super.onActivityResult(requestcode, resultcode, data);
 
         // 카메라로 찍었을 때 imageView.
-        if(requestcode == REQUEST_IMAGE_CODE && resultcode == RESULT_OK) {
+        if (requestcode == REQUEST_IMAGE_CODE && resultcode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             //imageView_.setImageBitmap(imageBitmap);
             imageView.setImageBitmap(imageBitmap);
+
+            // 가져와진 사진을 bitmap 으로 추출
+            BitmapDrawable d = (BitmapDrawable) ((ImageView) findViewById(R.id.result_img)).getDrawable();
+            imageBitmap = d.getBitmap();
+
+            String OCRresult = null;
+            mTess.setImage(imageBitmap);
+
+            // 텍스트 추출
+            OCRresult = mTess.getUTF8Text();
+            TextView OCRTextView = (TextView) findViewById(R.id.result_detail);
+            OCRTextView.setText(OCRresult);
+
+            // 특수 문자 제거
+            String match = "[^\uAC00-\uD7A30-9a-zA-Z]";
+            OCRresult = OCRresult.replaceAll(match, " ");
+            Log.e("OCR result", OCRresult);
+
+            // 인식한 text split 후 -> list
+            String[] OCRSplit = OCRresult.split(" ");
+
+
+            // split 한 문자열 모두 출력
+            for (int i = 0; i < OCRSplit.length; i++) {
+                Log.e("OCRSplit------------", OCRSplit[i]);
+                Log.e("   ", "   ");
+                OCRlist.add(OCRSplit[i]);
+
+//                    System.out.println(OCRSplit[i]);
+            }
+            Log.e("OCR------------------------", OCRSplit[0]);
+            Log.e("OCRLIST------------------------", OCRlist.get(0).toString());
+            Log.e("type-----------------------", OCRSplit.getClass().getName());
+
+            for (int i = 0; i < OCRlist.size(); i++) {
+                //ArrayList OCRlist2 = new ArrayList();
+                OCRlist2 = mDBHelper.getObjectResult(OCRlist.get(i).toString());
+                for (int j = 0; j < OCRlist2.size(); j++) {
+                    if (!OCRlist3.contains(OCRlist2.get(j).toString())) {
+                        OCRlist3.add(OCRlist2.get(j));
+                    }
+                }
+            }
+            Log.e("OCRLIST3333333------------------------", OCRlist3.get(0).toString());
         }
+        FinalList = new ArrayList();
+        FinalList = mDBHelper.ChageforAdapter(OCRlist3);
+        Log.e("ㅡㅡㅡㅡㅡㅡㅡ","?");
+        ListView listView = (ListView) findViewById(R.id.recomment_result);
+        OcrAdapter ocrAdapter = new OcrAdapter(this, FinalList);
+        listView.setAdapter(ocrAdapter);
     }
+
+
+
 }

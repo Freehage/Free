@@ -108,8 +108,6 @@ public class SearchResultActivity  extends AppCompatActivity {
         arrayList_OB = mDBHelper.getObjectsResult(categoryResult);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recommend);
-        //recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
-        //recyclerView.setLayoutManager(gridLayoutManager);
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         adapter = new RecommendAdapter(arrayList_OB,arrayList_back,this);

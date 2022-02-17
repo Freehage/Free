@@ -3,7 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Project/Free/APP/app/src/main/res/layout/activity_afterdetect.xml" value="0.22" />
+        <entry key="..\:/Project/Free/APP/app/src/main/res/layout/activity_afterdetect.xml" value="0.14666666666666667" />
         <entry key="..\:/Project/Free/APP/app/src/main/res/layout/activity_aftersearch.xml" value="0.3333333333333333" />
         <entry key="..\:/Project/Free/APP/app/src/main/res/layout/activity_main.xml" value="0.16354166666666667" />
         <entry key="..\:/Project/Free/APP/app/src/main/res/layout/activity_recycle1.xml" value="0.16666666666666666" />
@@ -27,12 +27,14 @@
         <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/drawable/tipbutton.xml" value="0.2245" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/action_bar.xml" value="0.17753623188405798" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_after_recommend.xml" value="0.1" />
+        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_afterdetect.xml" value="0.1" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_aftersearch.xml" value="0.264" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_aftersearchdata.xml" value="0.4" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_cardnews.xml" value="0.11955420466058764" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_main.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_noitem.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_recommend.xml" value="0.264" />
+        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_ocr.xml" value="0.2" />
+        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_recommend.xml" value="0.1" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_recommend2.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_recycle.xml" value="0.182518115942029" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_recycle1.xml" value="0.1" />

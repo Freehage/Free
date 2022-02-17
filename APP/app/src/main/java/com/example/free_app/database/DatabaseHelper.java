@@ -141,20 +141,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-
+    //이름 포함된 제품명 가져오기
     public ArrayList getObjectResult(String search) {
         // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
-        //String result = "";
-        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
-        //Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE %'" + search + "'%", null);
         Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%" + search + "%\"", null);
         while (cursor.moveToNext()) {
-            arrayList_OB.add(cursor.getInt(0));
+            arrayList_OB.add(cursor.getString(1));
         }
         return arrayList_OB;
     }
+
+    //
+    public ArrayList ChageforAdapter(ArrayList list) {
+        // 읽기가 가능하게 DB 열기
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList arrayList_OB = new ArrayList();
+        for(int i=0; i<list.size();i++ ){
+            Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '" + list.get(i) + "' ", null);
+            while (cursor.moveToNext()) {
+                arrayList_OB.add(cursor.getString(1));
+            }
+        }
+        return arrayList_OB;
+    }
+
 
     public String getCompanyResult(String search) {
         // 읽기가 가능하게 DB 열기
