@@ -28,6 +28,8 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
 
     private SQLiteDatabase mDatabase;
     private final Context mContext;
+    public Cursor cursor_for_object;
+
 
     public DatabaseHelper3(@Nullable Context context) {
         super(context, DB_NAME, null, 1);
@@ -157,13 +159,11 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
-        //String result = "";
-        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
-        //Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE %'" + search + "'%", null);
-        //Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE \"%" + search + "%\"", null);
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT LIKE \"%" + search + "%\"", null);
-        while (cursor.moveToNext()) {
-            arrayList_OB.add(cursor.getString(1));
+        if(search.length() != 0){
+            cursor_for_object = db.rawQuery("SELECT * FROM Free WHERE OBJECT LIKE \"%" + search + "%\"", null);
+        }
+        while (cursor_for_object.moveToNext()) {
+            arrayList_OB.add(cursor_for_object.getString(1));
         }
         return arrayList_OB;
     }
@@ -285,7 +285,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     public String getLevel(String search) {
         SQLiteDatabase db = getReadableDatabase();
         String level = "";
-        Cursor cursor = db.rawQuery("SELECT * FROM Free, WHERE OBJECT = '" + search + "' ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             level = Integer.toString(cursor.getInt(5));
         }

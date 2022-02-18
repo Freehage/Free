@@ -1,8 +1,6 @@
 package com.example.free_app;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -11,12 +9,14 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Html;
 import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,33 +25,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 //import com.example.free_app.after_search.OcrAdapter;
 import com.example.free_app.after_search.OcrAdapter;
-import com.example.free_app.after_search.RecommendAdapter;
-import com.example.free_app.database.DatabaseHelper;
+import com.example.free_app.database.DatabaseHelper3;
 import com.example.free_app.model.Product;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
-import org.tensorflow.lite.Interpreter;
-import org.tensorflow.lite.support.common.FileUtil;
-import org.tensorflow.lite.support.common.TensorOperator;
-import org.tensorflow.lite.support.common.TensorProcessor;
-import org.tensorflow.lite.support.common.ops.NormalizeOp;
-import org.tensorflow.lite.support.image.ImageProcessor;
-import org.tensorflow.lite.support.image.TensorImage;
-import org.tensorflow.lite.support.image.ops.ResizeOp;
-import org.tensorflow.lite.support.image.ops.ResizeWithCropOrPadOp;
-import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class AfterDetectActivity extends AppCompatActivity {
@@ -79,7 +63,7 @@ public class AfterDetectActivity extends AppCompatActivity {
     public float CONF = 0.25f;
 
     //db에서 값 찾아오기
-    private DatabaseHelper mDBHelper;
+    private DatabaseHelper3 mDBHelper;
 
     ArrayList OCRlist = new ArrayList();
     ArrayList OCRlist2 = new ArrayList();
@@ -88,23 +72,39 @@ public class AfterDetectActivity extends AppCompatActivity {
     public List<Product> productslists;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    //홈버튼 추가
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)    {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.home_button:
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_afterdetect);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_space);
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>제품 인식 결과</font>"));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         imageView = (ImageView) findViewById(R.id.result_img);
-        //result_detail = (TextView) findViewById(R.id.result_detail);
-        // 사진 찍기.
         takePicture();
         openOrCreateDatabase("FreeAppDB.db", MODE_PRIVATE, null);
-        // db.close() -- DO NOT USE THIS
 
-        // ocr
-        //btn_ocr = findViewById(R.id.btn_ocr);
-
-        // 언어 파일 경로
         datapath = getFilesDir() + "/tesseract/";
 
         // 트레이닝 데이터가 카피되어 있는지 체크
@@ -117,7 +117,7 @@ public class AfterDetectActivity extends AppCompatActivity {
         mTess.init(datapath, lang);
 
 
-        mDBHelper = new DatabaseHelper(this);
+        mDBHelper = new DatabaseHelper3(this);
 
     }  //여기까지 oncreate
 
@@ -245,16 +245,30 @@ public class AfterDetectActivity extends AppCompatActivity {
                 }
             }
 
-            for (int i = 0; i < OCRlist.size(); i++) {
-                //if(!OCRlist.get(i).toString().contains(" ")){
-                    OCRlist2 = mDBHelper.getObject(OCRlist.get(i).toString());
-                for (int j = 0; j < OCRlist2.size(); j++) {
-                    if (!OCRlist3.contains(OCRlist2.get(j).toString())) {
-                        OCRlist3.add(OCRlist2.get(j));
+            try{
+                for (int i = 0; i < OCRlist.size(); i++) {
+                    OCRlist2 = mDBHelper.getObjectResult(OCRlist.get(i).toString());
+                    for (int j = 0; j < OCRlist2.size(); j++) {
+                        if (!OCRlist3.contains(OCRlist2.get(j).toString())) {
+                            OCRlist3.add(OCRlist2.get(j));
+                        }
                     }
+
                 }
-                //}
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this,"다시 한번 시도해 주세요",Toast.LENGTH_SHORT).show();
+                Intent intents = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intents);
             }
+            if(OCRlist3.size() == 0){
+                Toast.makeText(this,"다시 한번 시도해 주세요",Toast.LENGTH_SHORT).show();
+                Intent intents = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intents);
+
+            }
+
+
         }
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recommend_results);

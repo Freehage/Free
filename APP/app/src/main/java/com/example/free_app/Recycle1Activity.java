@@ -1,24 +1,13 @@
 package com.example.free_app;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import androidx.appcompat.widget.SearchView;
-
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,13 +18,8 @@ import com.example.free_app.Recycle_Method.PaperActivity;
 import com.example.free_app.Recycle_Method.PlasticActivity;
 import com.example.free_app.Recycle_Method.VinylActivity;
 import com.example.free_app.after_recycle_search.RecycleSearchActivity;
-import com.example.free_app.after_search.MainSearchActivity;
-import com.example.free_app.database.DatabaseHelper;
-import com.example.free_app.model.Product;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class Recycle1Activity extends AppCompatActivity {
 

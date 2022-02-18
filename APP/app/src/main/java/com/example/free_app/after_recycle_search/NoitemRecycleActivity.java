@@ -3,17 +3,13 @@ package com.example.free_app.after_recycle_search;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
-import com.example.free_app.MainActivity;
 import com.example.free_app.R;
-import com.example.free_app.after_search.MainSearchActivity;
-import com.example.free_app.database.DatabaseHelper;
 
 public class NoitemRecycleActivity extends AppCompatActivity {
     @Override

@@ -7,11 +7,15 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,9 +42,6 @@ import java.util.Map;
 
 public class RecycleCamera extends AppCompatActivity {
 
-    // tflite model
-
-    // tflite model
     public String MODEL_NAME = "best.tflite";
     public int LAVEL_NUM = 7;
     protected Interpreter tflite;
@@ -70,10 +71,35 @@ public class RecycleCamera extends AppCompatActivity {
     private Button btn_picture;
     private ImageView imageView_;
 
+    //홈버튼 추가
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)    {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.home_button:
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyclecamera);
+
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_space);
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>제품 인식 결과 </font>"));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // yolo model
         imageView = (ImageView) findViewById(R.id.image);
@@ -110,20 +136,28 @@ public class RecycleCamera extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 재활용 방법 안내 페이지로 intent
-                Intent intent = new Intent(getApplicationContext(), RecycleResult_bottle.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(getApplicationContext(), RecycleResult_bottle.class);
+                startActivity(intent);*/
 
                 // detect class result
                 String result_recycle_detect = (String) classitext.getText();
-
                 // 각 class 별 재활용 결과 페이지로 이동
-                // * 추가
-                if(result_recycle_detect == "glass") {
-                    Intent intent_glass = new Intent(getApplicationContext(), RecycleResult_bottle.class);
-                    startActivity(intent_glass);
-                } else if(result_recycle_detect == "pet") {
-                    Intent intent_pet = new Intent(getApplicationContext(), RecycleResult_bottle.class);
-                    startActivity(intent_pet);
+                if (result_recycle_detect.equals("paper")){
+                    setContentView(R.layout.paper);
+                }else if(result_recycle_detect.equals("paperpack")){
+                    setContentView(R.layout.paper2);
+                }else if(result_recycle_detect.equals("glass")){
+                    setContentView(R.layout.glass);
+                }else if(result_recycle_detect.equals("vinyl")){
+                    setContentView(R.layout.can);
+                }else if(result_recycle_detect.equals("can")){
+                    setContentView(R.layout.vinyl);
+                }else if(result_recycle_detect.equals("pet")){
+                    setContentView(R.layout.plastic);
+                }else{
+                    Toast.makeText(getApplicationContext(),"다시 한번 시도해 주세요",Toast.LENGTH_SHORT).show();
+                    Intent intents = new Intent(getApplicationContext(), Recycle1Activity.class);
+                    startActivity(intents);
                 }
                 Log.e("...............", result_recycle_detect);
             }

@@ -39,39 +39,28 @@
         <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_recycle.xml" value="0.182518115942029" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_recycle1.xml" value="0.1" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_recycle3.xml" value="0.1" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_recycleaftersearch.xml" value="0.1408514492753623" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_recycletip.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_result.xml" value="0.1037037037037037" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/activity_zerowaste.xml" value="0.2" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/can.xml" value="0.16822916666666668" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/frame1.xml" value="0.1" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/glass.xml" value="0.10099637681159421" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/paper.xml" value="0.10099637681159421" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/paper2.xml" value="0.1" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/plastic.xml" value="0.10099637681159421" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/row_listview.xml" value="0.1" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/layout/vinyl.xml" value="0.1671195652173913" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Freehage2/APP/app/src/main/res/menu/menu.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/drawable-v24/background.xml" value="0.13425925925925927" />
-        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_after_recommend.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_after_recommend.xml" value="0.1" />
         <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_afterdetect.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_afterrecyclesearch.xml" value="0.14375" />
         <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_aftersearch.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_aftersearchdata.xml" value="0.1526268115942029" />
+        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_aftersearchdata.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_aftersearchframe.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_cardnews.xml" value="0.19746376811594202" />
         <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_noitem.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_recommend.xml" value="0.12604166666666666" />
+        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_recommend.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_recommend2.xml" value="0.125" />
         <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_recycle.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_recycle1.xml" value="0.21693840579710144" />
+        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_recyclecamera.xml" value="0.16614583333333333" />
+        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_recycleresult_bottle.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_recycletip.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_recycletipdata.xml" value="0.1" />
-        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_result.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/activity_result.xml" value="0.1431159420289855" />
         <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/fragmentwebview.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/frame1.xml" value="0.1322463768115942" />
-        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/frame2.xml" value="0.1526268115942029" />
-        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/frame3.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/frame4.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/recommend_obj.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/row_listview.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/Desktop/Android Studio/Free/APP/app/src/main/res/layout/webviewfortip.xml" value="0.25364583333333335" />
       </map>
     </option>

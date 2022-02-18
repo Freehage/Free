@@ -1,6 +1,5 @@
 package com.example.free_app;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -11,25 +10,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import android.widget.Toast;
-
 import androidx.appcompat.widget.SearchView;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.free_app.after_search.MainSearchActivity;
 import com.example.free_app.cardnews.CustomAdapter;
-import com.example.free_app.database.DatabaseHelper;
+import com.example.free_app.database.DatabaseHelper3;
 import com.example.free_app.model.Product;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator3;
@@ -132,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initLoadDB(){
-        DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
+        DatabaseHelper3 databaseHelper = new DatabaseHelper3(getApplicationContext());
         databaseHelper.openDB();
 
         productlist = databaseHelper.getTableData();

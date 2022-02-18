@@ -1,2 +1,6 @@
-chilsung
-peacock
+paper
+glass
+paperpack
+vinyl
+can
+pet

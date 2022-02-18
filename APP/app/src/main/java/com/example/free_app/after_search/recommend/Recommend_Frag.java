@@ -18,13 +18,13 @@ import com.example.free_app.R;
 import com.example.free_app.after_search.MainSearchActivity;
 import com.example.free_app.after_search.NoitemActivity;
 import com.example.free_app.after_search.SearchAdapter;
-import com.example.free_app.database.DatabaseHelper;
+import com.example.free_app.database.DatabaseHelper3;
 
 import java.util.ArrayList;
 
 public class Recommend_Frag extends Fragment {
     MainSearchActivity mainSearchActivity;
-    private DatabaseHelper mDBHelper;
+    private DatabaseHelper3 mDBHelper;
     private SearchAdapter adapter;
 
     @Override
@@ -47,7 +47,7 @@ public class Recommend_Frag extends Fragment {
         String search_name = getArguments().getString("search_name");
         Log.e("RECOMMEND","!");
 
-        mDBHelper = new DatabaseHelper(getActivity().getApplicationContext());
+        mDBHelper = new DatabaseHelper3(getActivity().getApplicationContext());
         ArrayList<String> item_list = mDBHelper.getObjectsResult_for_recommend(search_name);
 
 

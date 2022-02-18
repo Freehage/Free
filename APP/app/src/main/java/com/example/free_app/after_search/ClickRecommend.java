@@ -65,8 +65,8 @@ public class ClickRecommend extends AppCompatActivity {
         if(intent != null){
             company = intent.getStringExtra("company");
             txt_com.setText(company);
-            end_date = intent.getStringExtra("end_date");
-            txt_end.setText(end_date);
+            end_date = intent.getStringExtra("carbon_amount");
+            txt_end.setText("탄소 배출량: "+ end_date);
             level = intent.getStringExtra("level");
             txt_level.setText("탄소 중립 LEVEL: " + level);
             objects = intent.getStringExtra("object");

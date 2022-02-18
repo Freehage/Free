@@ -14,10 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.free_app.MainActivity;
 import com.example.free_app.R;
-import com.example.free_app.after_search.MainSearchActivity;
-import com.example.free_app.after_search.NoitemActivity;
-import com.example.free_app.after_search.SearchAdapter;
-import com.example.free_app.database.DatabaseHelper;
+import com.example.free_app.database.DatabaseHelper3;
 import com.example.free_app.model.Product;
 
 import java.util.ArrayList;
@@ -28,7 +25,7 @@ public class RecycleSearchActivity extends AppCompatActivity {
     public List<Product> productslists;
     private SearchView searchView;
     private RecycleSearchAdapter adapter;
-    private DatabaseHelper mDBHelper;
+    private DatabaseHelper3 mDBHelper;
     private List result_name;
     public static Context recycle_search_context;
     public String search_name;
@@ -36,23 +33,24 @@ public class RecycleSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aftersearch);
+        setContentView(R.layout.activity_afterrecyclesearch);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_space);
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>검색결과 </font>"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         productslists = ((MainActivity)MainActivity.main_context).productlist;
+        Log.e("PRODUCT", String.valueOf(productslists.size()));
 
         Intent intent = getIntent();
         search_name = intent.getStringExtra("recycle_search_name");
 
-        mDBHelper = new DatabaseHelper(this);
+        mDBHelper = new DatabaseHelper3(this);
 
         ArrayList<Product> item_list = search(search_name,productslists);
 
 
-        searchView = (SearchView) findViewById(R.id.after_search_bar);
+        searchView = (SearchView) findViewById(R.id.after_recycle_search_bar);
         searchView.setQueryHint(search_name);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -71,15 +69,8 @@ public class RecycleSearchActivity extends AppCompatActivity {
             }
         });
 
-
-
-        int spanCount = 2; // 3 columns
-        int spacing = 100; // 50px
-        boolean includeEdge = false;
-
         if(item_list.size() != 0){
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView_forsearch);
-            //recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
+            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView_forrecyclesearch);
             GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
             recyclerView.setLayoutManager(gridLayoutManager);
             adapter = new RecycleSearchAdapter(item_list,this);
@@ -94,18 +85,22 @@ public class RecycleSearchActivity extends AppCompatActivity {
 
     }
 
-    private ArrayList<Product> search(String search_name, List<Product> productslists) {
+    private ArrayList<Product> search(String search_name, List<Product> productslist) {
         ArrayList<Product> return_value = new ArrayList<Product>();
-        Iterator<Product> iterator = productslists.iterator();
-        while (iterator.hasNext()) {
+        Iterator<Product> iterator = productslist.iterator();
+        while(iterator.hasNext()) {
             Product item = iterator.next();
             String searchs = item.getObject();
-            if (searchs.contains(search_name)) {
-                return_value.add(item);
+            try{
+                if (searchs.contains(search_name)) {
+                    return_value.add(item);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return return_value;
             }
         }
         return return_value;
     }
-
 }
 

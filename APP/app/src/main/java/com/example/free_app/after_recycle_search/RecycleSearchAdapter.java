@@ -2,7 +2,6 @@ package com.example.free_app.after_recycle_search;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.free_app.R;
 import com.example.free_app.Recycle1Activity;
-import com.example.free_app.after_search.SearchResultActivity;
-import com.example.free_app.database.DatabaseHelper;
+import com.example.free_app.database.DatabaseHelper3;
 import com.example.free_app.model.Product;
 
 import java.util.ArrayList;
@@ -25,14 +23,14 @@ public class RecycleSearchAdapter extends RecyclerView.Adapter<RecycleSearchAdap
     private ArrayList<Product> productArrayList;
     OnPersonItemClickListener4 listener;
     private Context mcontext;
-    private DatabaseHelper mDBHelper;
+    private DatabaseHelper3 mDBHelper;
 
     public RecycleSearchAdapter(ArrayList<Product> dataList, Context context){
 
         this.mcontext = context;
         productArrayList = dataList;
 
-        mDBHelper = new DatabaseHelper(context);
+        mDBHelper = new DatabaseHelper3(context);
     }
 
 

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.free_app.R;
-import com.example.free_app.database.DatabaseHelper;
+import com.example.free_app.database.DatabaseHelper3;
 import com.example.free_app.model.Product;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
 
     private ArrayList productArrayList;
     private Context mcontext;
-    private DatabaseHelper mDBHelper;
+    private DatabaseHelper3 mDBHelper;
     private ArrayList<String> backdatalist;
 
     public RecommendAdapter(ArrayList<Product> dataList, ArrayList<String> backlist, Context context){
@@ -29,7 +29,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
         this.mcontext = context;
         productArrayList = dataList;
         backdatalist = backlist;
-        mDBHelper = new DatabaseHelper(context);
+        mDBHelper = new DatabaseHelper3(context);
 
 
     }
@@ -63,6 +63,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
                 intent.putExtra("object",object);
                 intent.putExtra("level",level);
                 intent.putExtra("end_date",end_date);
+                intent.putExtra("carbon_amount",amount);
                 intent.putExtra("recycle_category",recycle);
                 intent.putExtra("backlist",backdatalist);
                 mcontext.startActivity(intent);

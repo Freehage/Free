@@ -18,8 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.free_app.MainActivity;
 import com.example.free_app.R;
-import com.example.free_app.database.DatabaseHelper;
-import com.example.free_app.model.Product;
+import com.example.free_app.database.DatabaseHelper3;
 
 import java.util.ArrayList;
 
@@ -33,10 +32,10 @@ public class SearchResultActivity  extends AppCompatActivity {
     private RecommendAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     public static Context context_search_recycle;
-    public String company,objects,end_date,level,recycle_category;
+    public String company,objects,end_date,level,recycle_category,amount;
 
     //hs
-    private DatabaseHelper mDBHelper;
+    private DatabaseHelper3 mDBHelper;
 
     //홈버튼 추가
     @Override
@@ -72,6 +71,7 @@ public class SearchResultActivity  extends AppCompatActivity {
         objects = intent.getStringExtra("object");
         level = intent.getStringExtra("level");
         end_date = intent.getStringExtra("end_date");
+        amount = intent.getStringExtra("carbon_amount");
         recycle_category = intent.getStringExtra("recycle_category");
 
         txt_com = findViewById(R.id.txt_company);
@@ -84,7 +84,7 @@ public class SearchResultActivity  extends AppCompatActivity {
         txt_com.setText(company);
         txt_obj.setText(objects);
         txt_level.setText("탄소 중립 LEVEL: " + level);
-        txt_end.setText(end_date);
+        txt_end.setText("탄소 배출량: "+ amount);
         txt_rec.setText(recycle_category);
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +103,7 @@ public class SearchResultActivity  extends AppCompatActivity {
         arrayList_back.add(end_date);
 
         //hs
-        mDBHelper = new DatabaseHelper(this);
+        mDBHelper = new DatabaseHelper3(this);
         String categoryResult = mDBHelper.getCategory(objects);
         ArrayList arrayList_OB = new ArrayList();
         arrayList_OB = mDBHelper.getObjectsResult(categoryResult);

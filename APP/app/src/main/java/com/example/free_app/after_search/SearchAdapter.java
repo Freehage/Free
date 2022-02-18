@@ -4,8 +4,6 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.free_app.MainActivity;
 import com.example.free_app.R;
-import com.example.free_app.database.DatabaseHelper;
-import com.example.free_app.model.Product;
+import com.example.free_app.database.DatabaseHelper3;
 
 import java.util.ArrayList;
 
@@ -27,14 +24,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     private ArrayList<String> productArrayList;
     OnPersonItemClickListener2 listener;
     private Context mcontext;
-    private DatabaseHelper mDBHelper;
+    private DatabaseHelper3 mDBHelper;
 
     public SearchAdapter(ArrayList<String> dataList, Context context){
 
         this.mcontext = context;
         productArrayList = dataList;
 
-        mDBHelper = new DatabaseHelper(context);
+        mDBHelper = new DatabaseHelper3(context);
     }
 
 
@@ -61,6 +58,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
 
         holder.object1.setText(object);
+        holder.recycle1.setText(recycle);
         if(((MainActivity)MainActivity.main_context).num == 0){
             holder.level1.setText("탄소 중립 LEVEL: " + level);
         }
@@ -83,6 +81,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 intent.putExtra("object",object);
                 intent.putExtra("level",level);
                 intent.putExtra("end_date",end_date);
+                intent.putExtra("carbon_amount",amount);
                 intent.putExtra("recycle_category",recycle);
                 mcontext.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
             }
@@ -110,12 +109,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView object1;
         TextView level1;
+        TextView recycle1;
         ImageView img1;
 
         public ViewHolder(@NonNull View itemView,final OnPersonItemClickListener2 listener) {
             super(itemView);
 
             object1 = itemView.findViewById(R.id.txt_objname);
+            recycle1 = itemView.findViewById(R.id.txt_recycle);
             level1 = itemView.findViewById(R.id.txt_level);
             img1 = itemView.findViewById(R.id.img1);
         }
