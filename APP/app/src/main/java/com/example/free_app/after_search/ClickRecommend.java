@@ -52,10 +52,10 @@ public class ClickRecommend extends AppCompatActivity {
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>상품 정보 알아보기 </font>"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        TextView txt_com = findViewById(R.id.txt_company);
-        TextView txt_obj = findViewById(R.id.txt_objname);
-        TextView txt_level = findViewById(R.id.txt_level);
-        TextView txt_end = findViewById(R.id.txt_enddate);
+        TextView txt_com = findViewById(R.id.txt_company2);
+        TextView txt_obj = findViewById(R.id.txt_objname2);
+        TextView txt_level = findViewById(R.id.txt_level2);
+        TextView txt_end = findViewById(R.id.txt_enddate2);
         TextView txt_rec = findViewById(R.id.txt_recycle2);
         Button recycle_btn = findViewById(R.id.recycle_btn);
 

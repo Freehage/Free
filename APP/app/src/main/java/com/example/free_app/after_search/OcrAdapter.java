@@ -1,6 +1,7 @@
 package com.example.free_app.after_search;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,63 +11,86 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.free_app.R;
+import com.example.free_app.database.DatabaseHelper;
 import com.example.free_app.model.Product;
 
 import java.util.ArrayList;
 
-public class OcrAdapter extends BaseAdapter {
-    Context mContext = null;
-    LayoutInflater mLayoutInflater = null;
-    ArrayList<Product> sample;
+public class OcrAdapter extends RecyclerView.Adapter<OcrAdapter.ViewHolder>{
 
-    public OcrAdapter(Context context, ArrayList<Product> data) {
+    private ArrayList productArrayList;
+    private Context mcontext;
+    private DatabaseHelper mDBHelper;
 
-        mContext = context;
-        sample = data;
-        mLayoutInflater = LayoutInflater.from(mContext);
-        Log.e("ㅎㅎㅎㅎㅎ","????????????");
+    public OcrAdapter(Context context, ArrayList<Product> dataList){
+
+        this.mcontext = context;
+        productArrayList = dataList;
+        mDBHelper = new DatabaseHelper(context);
 
 
     }
-
-    public int getCount() {
-        return sample.size();
+    @NonNull
+    @Override
+    public OcrAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recommend2, parent, false);
+        return new OcrAdapter.ViewHolder(view);
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public void onBindViewHolder(@NonNull OcrAdapter.ViewHolder holder, int position) {
+        String object = productArrayList.get(position).toString();
+        Log.e("OBJET",object);
+        holder.recom_Title1.setText(object);
+        //탄소중립 레벨
+        String level = mDBHelper.getLevel(object);
+        holder.recom_detail1.setText("탄소 중립 LEVEL: " + level);
+        //탄소 배출량 : getOBOUTC
+        String amount = mDBHelper.getCarbon(object);
+        holder.recom_detail2.setText("탄소 배출량: " + amount);
+        holder.recom_img1.setImageResource(R.mipmap.ic_launcher);
+        String company = mDBHelper.getCompanyResult(object);
+        String end_date = mDBHelper.getEndDate(object);
+        String recycle = mDBHelper.getRecycle(object);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mcontext, SearchResultActivity.class);
+                intent.putExtra("company",company);
+                intent.putExtra("object",object);
+                intent.putExtra("level",level);
+                intent.putExtra("end_date",end_date);
+                intent.putExtra("recycle_category",recycle);
+                mcontext.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
-    public Product getItem(int position) {
-        return sample.get(position);
+    public int getItemCount() {
+        return productArrayList.size();
     }
 
-    @Override
-    public View getView(int position, View converView, ViewGroup parent) {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        View view = mLayoutInflater.inflate(R.layout.activity_ocr,null);
+        TextView recom_Title1;
+        TextView recom_detail1;
+        TextView recom_detail2;
+        ImageView recom_img1;
 
-        TextView recom_Title1 = (TextView)view.findViewById(R.id.recom_Title);
-        TextView recom_detail1 = (TextView)view.findViewById(R.id.recom_detail);
-        TextView recom_detail2 = (TextView)view.findViewById(R.id.recom_detail2);
-        //ImageView recom_img1 = (ImageView) view.findViewById(R.id.recom_img);
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
 
-        //recom_img1.setImageResource(sample.get(position).getObject());
-        //Log.e("--", sample.get(position).getObject());
-        recom_Title1.setText(sample.get(position).getObject());
-        recom_detail1.setText("회사:" +sample.get(position).getCompany());
-        recom_detail2.setText("탄소배출량:" +sample.get(position).getOboutC());
+            recom_Title1 = itemView.findViewById(R.id.recom_Title2);
+            recom_detail1 = itemView.findViewById(R.id.recom_detail12);
+            recom_detail2 = itemView.findViewById(R.id.recom_detail22);
+            recom_img1 = itemView.findViewById(R.id.recom_img2);
 
-        return view;
-
-
-
+        }
     }
-
-
-
 }

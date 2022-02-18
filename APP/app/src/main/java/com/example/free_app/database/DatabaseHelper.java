@@ -28,6 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private SQLiteDatabase mDatabase;
     private final Context mContext;
+    public Cursor cursor_for_object;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DB_NAME, null, 1);
@@ -142,17 +143,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //이름 포함된 제품명 가져오기
-    public ArrayList getObjectResult(String search) {
+    public ArrayList getObject(String search) {
         // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
+        Log.e("SEARCdddddddddG",search);
         ArrayList arrayList_OB = new ArrayList();
-        //String result = "";
-        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
-        //Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE %'" + search + "'%", null);
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT LIKE \"%" + search + "%\"", null);
-        //Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%" + search + "%\"", null);
-        while (cursor.moveToNext()) {
-            arrayList_OB.add(cursor.getString(1));
+        Log.e("SEARCG",search);
+        if(search.length() != 0){
+            cursor_for_object = db.rawQuery("SELECT * FROM Free WHERE OBJECT LIKE \"%" + search + "%\"", null);
+        }
+        while(cursor_for_object.moveToNext()) {
+            if(cursor_for_object.getString(1).contains(search)){
+                arrayList_OB.add(cursor_for_object.getString(1));
+
+            }
         }
         return arrayList_OB;
     }
@@ -163,7 +167,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
         for(int i=0; i<list.size();i++ ){
-            Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '" + list.get(i) + "' ", null);
+            Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT = '" + list.get(i).toString() + "' ", null);
             while (cursor.moveToNext()) {
                 arrayList_OB.add(cursor.getString(1));
             }
@@ -201,11 +205,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ArrayList getObjectsResult(String search) {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
+        Log.e("DDDDDD",search);
         //OBLINE이 ~인 상품 중에 탄소배출량이 적은 제품 순서대로 3개 나열 + 같은 제품은 제외
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBLINE = '" + search + "' AND OBJECT != '" + search + "'" +
+        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE LINE = '" + search + "' AND OBJECT != '" + search + "'" +
                 "ORDER BY OBOUTC ASC LIMIT 3 ", null);
         while (cursor.moveToNext()) {
 
+            Log.e("C", String.valueOf(cursor));
             arrayList_OB.add(cursor.getString(1)); // 상품명 Append
         }
         return arrayList_OB;

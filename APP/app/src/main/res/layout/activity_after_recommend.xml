@@ -33,7 +33,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_objname"
+                android:id="@+id/txt_objname2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="object name"
@@ -41,7 +41,7 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/txt_level"
+                android:id="@+id/txt_level2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="object level"
@@ -50,7 +50,7 @@
 
             <TextView
 
-                android:id="@+id/txt_company"
+                android:id="@+id/txt_company2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="object company"
@@ -59,7 +59,7 @@
                 android:textSize="14sp"/>
 
             <TextView
-                android:id="@+id/txt_enddate"
+                android:id="@+id/txt_enddate2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="object end date"

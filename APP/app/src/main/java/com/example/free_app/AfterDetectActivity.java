@@ -23,9 +23,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+//import com.example.free_app.after_search.OcrAdapter;
 import com.example.free_app.after_search.OcrAdapter;
 import com.example.free_app.after_search.RecommendAdapter;
 import com.example.free_app.database.DatabaseHelper;
+import com.example.free_app.model.Product;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 import org.tensorflow.lite.Interpreter;
@@ -49,6 +51,7 @@ import java.io.OutputStream;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class AfterDetectActivity extends AppCompatActivity {
@@ -82,6 +85,8 @@ public class AfterDetectActivity extends AppCompatActivity {
     ArrayList OCRlist2 = new ArrayList();
     ArrayList OCRlist3 = new ArrayList();
     public ArrayList FinalList;
+    public List<Product> productslists;
+    private RecyclerView.LayoutManager mLayoutManager;
 
 
     @Override
@@ -90,14 +95,14 @@ public class AfterDetectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_afterdetect);
 
         imageView = (ImageView) findViewById(R.id.result_img);
-        result_detail = (TextView) findViewById(R.id.result_detail);
+        //result_detail = (TextView) findViewById(R.id.result_detail);
         // 사진 찍기.
         takePicture();
         openOrCreateDatabase("FreeAppDB.db", MODE_PRIVATE, null);
         // db.close() -- DO NOT USE THIS
 
         // ocr
-        btn_ocr = findViewById(R.id.btn_ocr);
+        //btn_ocr = findViewById(R.id.btn_ocr);
 
         // 언어 파일 경로
         datapath = getFilesDir() + "/tesseract/";
@@ -222,49 +227,42 @@ public class AfterDetectActivity extends AppCompatActivity {
 
             // 텍스트 추출
             OCRresult = mTess.getUTF8Text();
-            TextView OCRTextView = (TextView) findViewById(R.id.result_detail);
-            OCRTextView.setText(OCRresult);
+            //TextView OCRTextView = (TextView) findViewById(R.id.result_detail);
+            //OCRTextView.setText(OCRresult);
 
             // 특수 문자 제거
-            String match = "[^\uAC00-\uD7A30-9a-zA-Z]";
+            String match = "[^\uAC00-\uD7A3a-zA-Z]";
             OCRresult = OCRresult.replaceAll(match, " ");
-            Log.e("OCR result", OCRresult);
 
-            // 인식한 text split 후 -> list
             String[] OCRSplit = OCRresult.split(" ");
 
 
             // split 한 문자열 모두 출력
             for (int i = 0; i < OCRSplit.length; i++) {
-                Log.e("OCRSplit------------", OCRSplit[i]);
-                Log.e("   ", "   ");
-                OCRlist.add(OCRSplit[i]);
-
-//                    System.out.println(OCRSplit[i]);
+                if(OCRSplit[i].length() != 1){
+                    OCRlist.add(OCRSplit[i]);
+                    Log.e("OCRLIST", OCRSplit[i]);
+                }
             }
-            Log.e("OCR------------------------", OCRSplit[0]);
-            Log.e("OCRLIST------------------------", OCRlist.get(0).toString());
-            Log.e("type-----------------------", OCRSplit.getClass().getName());
 
             for (int i = 0; i < OCRlist.size(); i++) {
-                //ArrayList OCRlist2 = new ArrayList();
-                OCRlist2 = mDBHelper.getObjectResult(OCRlist.get(i).toString());
+                //if(!OCRlist.get(i).toString().contains(" ")){
+                    OCRlist2 = mDBHelper.getObject(OCRlist.get(i).toString());
                 for (int j = 0; j < OCRlist2.size(); j++) {
                     if (!OCRlist3.contains(OCRlist2.get(j).toString())) {
                         OCRlist3.add(OCRlist2.get(j));
                     }
                 }
+                //}
             }
-            Log.e("OCRLIST3333333------------------------", OCRlist3.get(0).toString());
         }
-        FinalList = new ArrayList();
-        FinalList = mDBHelper.ChageforAdapter(OCRlist3);
-        Log.e("ㅡㅡㅡㅡㅡㅡㅡ","?");
-        ListView listView = (ListView) findViewById(R.id.recomment_result);
-        OcrAdapter ocrAdapter = new OcrAdapter(this, FinalList);
-        listView.setAdapter(ocrAdapter);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recommend_results);
+        mLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLayoutManager);
+        OcrAdapter ocrAdapter = new OcrAdapter(this, OCRlist3);
+        recyclerView.setAdapter(ocrAdapter);
+
     }
-
-
 
 }

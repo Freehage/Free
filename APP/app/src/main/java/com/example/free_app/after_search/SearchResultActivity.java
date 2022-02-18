@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -107,6 +108,8 @@ public class SearchResultActivity  extends AppCompatActivity {
         ArrayList arrayList_OB = new ArrayList();
         arrayList_OB = mDBHelper.getObjectsResult(categoryResult);
 
+
+        Log.e("AAAa", String.valueOf(arrayList_OB.get(0)));
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recommend);
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
