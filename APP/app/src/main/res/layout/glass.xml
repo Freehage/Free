@@ -12,14 +12,14 @@
 
             <ImageView
                 android:id="@+id/re_glass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/re_glass" />
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                app:srcCompat="@drawable/how_glass" />
             <ImageView
                 android:id="@+id/re_glass_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/re_glass_2" />
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                app:srcCompat="@drawable/how_glass2" />
 
         </LinearLayout>
 
