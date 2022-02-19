@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Free_APP</string>
+    <string name="app_name">RE⧖BON</string>
     <string name="recycle1_name">재활용 방법 알아보기</string>
     <string name="recycle2_name">재활용 팁 알아보기</string>
     <string name="recycle3_name">제로웨이스트 매장 알아보기</string>
@@ -19,10 +19,6 @@
     <string name="how2_1">비건 비누, 대나무 칫솔, 고체 치약, 천연 수세미 등</string>
     <string name="how3">3. 자원 순환소</string>
     <string name="how3_1">종이팩, 커피찌꺼기 등을 수거하여 자원 재활용 / DIY 체험 등</string>
-
-
-
-
 
     <string name="search_title">재활용 방법 알아보기</string>
     <string name="search_hint">제품명을 입력하세요</string>
