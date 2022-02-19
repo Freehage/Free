@@ -9,6 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.free_app.MainActivity;
 import com.example.free_app.model.Product;
 
 import java.io.File;
@@ -29,6 +30,11 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     private SQLiteDatabase mDatabase;
     private final Context mContext;
     public Cursor cursor_for_object;
+
+    double Carbon = ((MainActivity)MainActivity.main_context).Carbon;
+    double Price = ((MainActivity)MainActivity.main_context).Price;
+    double Score = ((MainActivity)MainActivity.main_context).Score;
+
 
 
     public DatabaseHelper3(@Nullable Context context) {
@@ -340,7 +346,8 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         Double ReScore = 0.0;
         Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
-            ReScore = cursor.getDouble(13) *0.5 + cursor.getDouble(14) *0.3 + cursor.getDouble(15) *0.2 ;// 탄소배출량, 돈, 점수
+            ReScore = cursor.getDouble(13) *Carbon + cursor.getDouble(14) *Price + cursor.getDouble(15) *Score ;// 탄소배출량, 돈, 점수
+
         }
         return ReScore;
     }

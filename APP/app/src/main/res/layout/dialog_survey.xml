@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="370dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:text="소비 성향을 선택해주세요" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="가격"/>
+            <RadioGroup
+                android:id="@+id/radioGroup1"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RadioButton
+                    android:id="@+id/rg_btn11"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1" />
+
+                <RadioButton
+                    android:layout_weight="1"
+                    android:text="2"
+                    android:id="@+id/rg_btn12"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rg_btn13"
+                    android:layout_weight="1"
+                    android:text="3" />
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rg_btn14"
+                    android:layout_weight="1"
+                    android:text="4" />
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rg_btn15"
+                    android:layout_weight="1"
+                    android:text="5" />
+            </RadioGroup>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="환경보호"/>
+            <RadioGroup
+                android:id="@+id/radioGroup2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp">
+
+                <RadioButton
+                    android:id="@+id/rg_btn21"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1" />
+
+                <RadioButton
+                    android:layout_weight="1"
+                    android:text="2"
+                    android:id="@+id/rg_btn22"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rg_btn23"
+                    android:layout_weight="1"
+                    android:text="3" />
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rg_btn24"
+                    android:layout_weight="1"
+                    android:text="4" />
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rg_btn25"
+                    android:layout_weight="1"
+                    android:text="5" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="평점"/>
+            <RadioGroup
+                android:id="@+id/radioGroup3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp">
+
+                <RadioButton
+                    android:id="@+id/rg_btn31"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1" />
+
+                <RadioButton
+                    android:layout_weight="1"
+                    android:text="2"
+                    android:id="@+id/rg_btn32"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rg_btn33"
+                    android:layout_weight="1"
+                    android:text="3" />
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rg_btn34"
+                    android:layout_weight="1"
+                    android:text="4" />
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rg_btn35"
+                    android:layout_weight="1"
+                    android:text="5" />
+            </RadioGroup>
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Switch" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:text="선택 완료"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="50dp"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
