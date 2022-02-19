@@ -220,7 +220,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         ArrayList arrayList_OB = new ArrayList();
         //OBLINE이 ~인 상품 중에 탄소배출량이 적은 제품 순서대로 3개 나열 + 같은 제품은 제외
         Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBLINE = '" + search + "' AND OBJECT != '" + search + "'" +
-                "ORDER BY OBOUTC ASC LIMIT 3 ", null);
+                "ORDER BY OBLEVEL DESC, OBOUTC ASC LIMIT 3 ", null);
         while (cursor.moveToNext()) {
 
             arrayList_OB.add(cursor.getString(1)); // 상품명 Append
@@ -233,7 +233,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         ArrayList arrayList_OB = new ArrayList();
         //OBLINE이 ~인 상품 중에 탄소배출량이 적은 제품 순서대로 3개 나열 + 같은 제품은 제외
         Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE \"%" + search + "%\"" +
-                "ORDER BY OBOUTC ASC ", null);
+                "ORDER BY OBLEVEL DESC, OBOUTC ASC", null);
         while (cursor.moveToNext()) {
 
             arrayList_OB.add(cursor.getString(1)); // 상품명 Append
