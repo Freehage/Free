@@ -55,11 +55,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         String money = mDBHelper.getMoney(object);
         String score = mDBHelper.getScore(object);
         String amount = mDBHelper.getCarbon(object);
+        String url = mDBHelper.getUrl(object);
 
 
         holder.object1.setText(object);
-        holder.recycle1.setText(recycle);
-        if(((MainActivity)MainActivity.main_context).num == 0){
+        holder.recycle1.setText("재활용 분류: "+ recycle);
+        if(level.contains("0")){
+            holder.recycle1.setText("해당 제품은 저탄소 제품 인증 마크가 없는 제품입니다");
+            holder.level1.setText(" ");
+        }
+        else if(((MainActivity)MainActivity.main_context).num == 0){
             holder.recycle1.setText("탄소 LEVEL: " + level);
             holder.level1.setText("가격: " + money);
         }
@@ -85,6 +90,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 intent.putExtra("end_date",end_date);
                 intent.putExtra("carbon_amount",amount);
                 intent.putExtra("recycle_category",recycle);
+                intent.putExtra("url",url);
                 mcontext.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
             }
         });

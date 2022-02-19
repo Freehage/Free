@@ -46,15 +46,20 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
         holder.recom_Title1.setText(object);
         //탄소중립 레벨
         String level = mDBHelper.getLevel(object);
-        holder.recom_detail1.setText("탄소 중립 LEVEL: " + level);
-        //탄소 배출량 : getOBOUTC
         String amount = mDBHelper.getCarbon(object);
-        holder.recom_detail2.setText("탄소 배출량: " + amount);
-        holder.recom_img1.setImageResource(R.drawable.main);
         String company = mDBHelper.getCompanyResult(object);
         String end_date = mDBHelper.getEndDate(object);
         String recycle = mDBHelper.getRecycle(object);
+        String url = mDBHelper.getUrl(object);
 
+        if(level.contains("0")){
+            holder.recom_detail1.setText("해당 제품은 저탄소 제품 인증 마크가 없는 제품입니다");
+            holder.recom_detail2.setText(" ");
+        }else{
+            holder.recom_detail1.setText("탄소 중립 LEVEL: " + level);
+            holder.recom_detail2.setText("탄소 배출량: " + amount);
+        }
+        holder.recom_img1.setImageResource(R.drawable.main);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +71,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
                 intent.putExtra("carbon_amount",amount);
                 intent.putExtra("recycle_category",recycle);
                 intent.putExtra("backlist",backdatalist);
+                intent.putExtra("url",url);
                 mcontext.startActivity(intent);
             }
         });

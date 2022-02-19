@@ -2,6 +2,7 @@ package com.example.free_app.after_search;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
@@ -22,7 +23,7 @@ public class ClickRecommend extends AppCompatActivity {
     public String recycle_category;
     public static Context recommend_context;
     public ArrayList<String> arrayList;
-    public String company,objects,end_date,level;
+    public String company,objects,end_date,level,url_gonghome;
 
     //홈버튼 추가
     @Override
@@ -58,6 +59,7 @@ public class ClickRecommend extends AppCompatActivity {
         TextView txt_end = findViewById(R.id.txt_enddate2);
         TextView txt_rec = findViewById(R.id.txt_recycle2);
         Button recycle_btn = findViewById(R.id.recycle_btn);
+        Button gonghomeurl = findViewById(R.id.buy);
 
         Intent intent = getIntent();
         arrayList = intent.getStringArrayListExtra("backlist");
@@ -72,8 +74,17 @@ public class ClickRecommend extends AppCompatActivity {
             objects = intent.getStringExtra("object");
             txt_obj.setText(objects);
             recycle_category = intent.getStringExtra("recycle_category");
-            txt_rec.setText(recycle_category);
+            txt_rec.setText("재활용 분류: " + recycle_category);
+            url_gonghome = intent.getStringExtra("url");
         }
+
+        gonghomeurl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url_gonghome));
+                startActivity(intent);
+            }
+        });
 
         recycle_btn.setOnClickListener(new View.OnClickListener() {
             @Override

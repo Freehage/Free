@@ -2,6 +2,8 @@ package com.example.free_app.after_search;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -28,11 +30,11 @@ public class SearchResultActivity  extends AppCompatActivity {
     private TextView txt_obj;
     private TextView txt_level;
     private TextView txt_end;
-    private TextView txt_rec;
+    private TextView txt_rec,txt;
     private RecommendAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     public static Context context_search_recycle;
-    public String company,objects,end_date,level,recycle_category,amount;
+    public String company,objects,end_date,level,recycle_category,amount,url_gonghome;
 
     //hs
     private DatabaseHelper3 mDBHelper;
@@ -73,6 +75,7 @@ public class SearchResultActivity  extends AppCompatActivity {
         end_date = intent.getStringExtra("end_date");
         amount = intent.getStringExtra("carbon_amount");
         recycle_category = intent.getStringExtra("recycle_category");
+        url_gonghome = intent.getStringExtra("url");
 
         txt_com = findViewById(R.id.txt_company);
         txt_obj = findViewById(R.id.txt_objname);
@@ -80,12 +83,29 @@ public class SearchResultActivity  extends AppCompatActivity {
         txt_end = findViewById(R.id.txt_enddate);
         txt_rec = findViewById(R.id.txt_recycle2);
         Button btn = findViewById(R.id.recycle);
+        Button gonghome = findViewById(R.id.buy);
+        txt = findViewById(R.id.txt);
 
         txt_com.setText(company);
         txt_obj.setText(objects);
-        txt_level.setText("탄소 중립 LEVEL: " + level);
-        txt_end.setText("탄소 배출량: "+ amount);
-        txt_rec.setText(recycle_category);
+        if(level.contains("0")){
+            txt_level.setText("해당 제품은 저탄소 제품 인증 마크가 없는 제품입니다");
+            txt.setText("RE⧖BON이 탄소 중립 제품을 추천합니다");
+            txt.setTextColor(Color.BLACK);
+            txt_end.setText("재활용 분류: "+recycle_category);
+        }else{
+            txt_end.setText(end_date);
+            txt_rec.setText("재활용 분류: "+ recycle_category);
+        }
+
+
+        gonghome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url_gonghome));
+                startActivity(intent);
+            }
+        });
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +129,6 @@ public class SearchResultActivity  extends AppCompatActivity {
         arrayList_OB = mDBHelper.getObjectsResult(categoryResult);
 
 
-        Log.e("AAAa", String.valueOf(arrayList_OB.get(0)));
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recommend);
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);

@@ -345,6 +345,16 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         return real;
     }
 
+    public String getUrl(String search) {
+        SQLiteDatabase db = getReadableDatabase();
+        String Url = "";
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '" + search + "' ", null);
+        while (cursor.moveToNext()) {
+            Url = cursor.getString(12);
+        }
+        return Url;
+    }
+
 
 
 

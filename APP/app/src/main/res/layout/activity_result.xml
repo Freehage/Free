@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
-    android:layout_gravity="center_vertical">
+    android:layout_gravity="center_vertical"
+    android:layout_marginTop="15dp">
 
     <LinearLayout
 
@@ -61,7 +62,6 @@
                 android:id="@+id/txt_enddate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="object end date"
                 android:layout_margin="5dp"
                 android:textSize="14sp"/>
 
@@ -69,7 +69,6 @@
                 android:id="@+id/txt_recycle2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="object recycle"
                 android:layout_margin="5dp"
                 android:textSize="14sp"/>
 
