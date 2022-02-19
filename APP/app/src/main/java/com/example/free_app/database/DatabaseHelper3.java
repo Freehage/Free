@@ -334,12 +334,12 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         return Score;
     }
 
-    public ArrayList<Product> getproductObject(String search) {
+    public ArrayList<Cursor> getproductObject(String search) {
         // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
         if(search.length() != 0){
-            cursor_for_object = db.rawQuery("SELECT * FROM Free WHERE OBJECT LIKE \"%" + search + "%\"", null);
+            cursor_for_object = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE \"%" + search + "%\"", null);
         }
         while (cursor_for_object.moveToNext()) {
             arrayList_OB.add(cursor_for_object);

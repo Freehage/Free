@@ -2,6 +2,7 @@ package com.example.free_app.after_search.recommend;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -76,25 +77,31 @@ public class Recommend_Frag extends Fragment {
     }
     public ArrayList<String> userselectpoint(String search, double carbon_point, double score_point, double price_point, Context context){
         DatabaseHelper3 mDBHelper = new DatabaseHelper3(context);
-        ArrayList<Product> products = mDBHelper.getproductObject(search);
+        ArrayList<Cursor> products = mDBHelper.getproductObject(search);
         Map<Float,String> return_value = null;
         ArrayList<String> real = null;
-        for(int i = 0; i < products.size(); i++){
-            double carbon = products.get(i).getReCarbon();
-            double score = products.get(i).getReScore();
-            double price = products.get(i).getRePrice();
+        Log.e("PRODUCE", String.valueOf(products.size()));
 
-            point = (float) (carbon_point * carbon + score_point * score + price_point * price);
-            return_value.put(point,products.get(i).getObject());
+        try{
+            for(int i = 0; i < products.size(); i++){
+                products.get(i).moveToFirst();
+                double carbon = products.get(i).getDouble(13);
+                double score = products.get(i).getDouble(15);
+                double price = products.get(i).getDouble(14);
+                point = (float) (carbon_point * carbon + score_point * score + price_point * price);
+                return_value.put(point,products.get(i).getString(1));
+            }
 
+            Object[] mapkey = return_value.keySet().toArray();
+            Arrays.sort(mapkey);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            for(Float nkey : return_value.keySet()){
+                real.add(return_value.get(nkey));
+            }
         }
 
-        Object[] mapkey = return_value.keySet().toArray();
-        Arrays.sort(mapkey);
-
-        for(Float nkey : return_value.keySet()){
-            real.add(return_value.get(nkey));
-        }
         return real;
     }
 }
