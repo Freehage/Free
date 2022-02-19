@@ -23,7 +23,7 @@ public class RecycleTip extends AppCompatActivity {
     private ArrayList<TipData> arrayList;
     private TipAdapter adapter;
 
-    //홈버튼 추가
+    // 홈버튼 추가
     @Override
     public boolean onCreateOptionsMenu(Menu menu)    {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -60,11 +60,14 @@ public class RecycleTip extends AppCompatActivity {
 
         adapter = new TipAdapter(arrayList,this);
         recyclerView.setAdapter(adapter);
-
     }
 
     private void Initialize() {
         arrayList = new ArrayList<>();
+        arrayList.add(new TipData("빨갛게 물든 엽떡 통, 어떻게 버릴까?",
+                "떡볶이 국물이 묻은 엽떡 통 잘 버리는 방법",
+                "https://cdn.pixabay.com/photo/2016/08/20/13/06/toppokki-1607479_1280.jpg",
+                "https://www.youtube.com/watch?v=P6gqk-1u9SQ"));
         arrayList.add(new TipData("물티슈 뚜껑 활용 방법에 대해 알아보자!",
                 "그냥 버리기 쉬운 물티슈의 뚜껑을 활용한 6가지 재사용 방법.",
                 "http://20.194.103.81/fortip/tip1.jpg",
@@ -74,14 +77,12 @@ public class RecycleTip extends AppCompatActivity {
                 "http://20.194.103.81/fortip/tip2.jpg",
                 "https://sharehows.com/60367/"));
         arrayList.add(new TipData("지구를 사랑하기 위한 또 하나의 방법!",
-                "일상 속에서 제로웨이스트 샵을 통해 손쉽게 실천 가능한 친환경 활동에  동참하세요.",
+                "일상 속에서 제로웨이스트 샵을 통해 손쉽게 실천 가능한 친환경 활동에 동참하세요.",
                 "http://20.194.103.81/fortip/tip4.png",
                 "https://post.naver.com/viewer/postView.naver?volumeNo=32955935&memberNo=36054406&vType=VERTICAL/"));
-
         arrayList.add(new TipData("버리기도 애매한 옷걸이 활용 살림 꿀팁!",
                 "분리수거하기도 애매해서 그냥 쓰레기로 버리기 급급한 옷걸이의 색다른 활용법",
                 "http://20.194.103.81/fortip/tip3.jpg",
                 "https://blog.naver.com/feelintouch9/222572594564/"));
-
     }
 }
