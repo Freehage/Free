@@ -14,18 +14,27 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.free_app.MainActivity;
 import com.example.free_app.R;
 import com.example.free_app.after_search.MainSearchActivity;
 import com.example.free_app.after_search.NoitemActivity;
 import com.example.free_app.after_search.SearchAdapter;
 import com.example.free_app.database.DatabaseHelper3;
+import com.example.free_app.model.Product;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 
 public class Recommend_Frag extends Fragment {
     MainSearchActivity mainSearchActivity;
     private DatabaseHelper3 mDBHelper;
     private SearchAdapter adapter;
+
+    double Carbon = ((MainActivity)MainActivity.main_context).Carbon;
+    double Price = ((MainActivity)MainActivity.main_context).Price;
+    double Score = ((MainActivity)MainActivity.main_context).Score;
+    public float point = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -48,7 +57,7 @@ public class Recommend_Frag extends Fragment {
         Log.e("RECOMMEND","!");
 
         mDBHelper = new DatabaseHelper3(getActivity().getApplicationContext());
-        ArrayList<String> item_list = mDBHelper.getObjectsResult_for_recommend(search_name);
+        ArrayList<String> item_list = userselectpoint(search_name,Carbon,Score,Price,getContext());
 
 
         if(item_list.size() != 0){
@@ -64,5 +73,28 @@ public class Recommend_Frag extends Fragment {
         }
 
         return viewGroup;
+    }
+    public ArrayList<String> userselectpoint(String search, double carbon_point, double score_point, double price_point, Context context){
+        DatabaseHelper3 mDBHelper = new DatabaseHelper3(context);
+        ArrayList<Product> products = mDBHelper.getproductObject(search);
+        Map<Float,String> return_value = null;
+        ArrayList<String> real = null;
+        for(int i = 0; i < products.size(); i++){
+            double carbon = products.get(i).getReCarbon();
+            double score = products.get(i).getReScore();
+            double price = products.get(i).getRePrice();
+
+            point = (float) (carbon_point * carbon + score_point * score + price_point * price);
+            return_value.put(point,products.get(i).getObject());
+
+        }
+
+        Object[] mapkey = return_value.keySet().toArray();
+        Arrays.sort(mapkey);
+
+        for(Float nkey : return_value.keySet()){
+            real.add(return_value.get(nkey));
+        }
+        return real;
     }
 }

@@ -33,14 +33,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="가격"/>
+                android:text="가격"
+                android:layout_margin="20dp"/>
+
             <RadioGroup
                 android:id="@+id/radioGroup1"
                 android:orientation="horizontal"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp">
 
                 <RadioButton
                     android:id="@+id/rg_btn11"
@@ -89,14 +92,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="환경보호"/>
+                android:text="환경보호"
+                android:layout_margin="20dp"/>
             <RadioGroup
                 android:id="@+id/radioGroup2"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp">
 
                 <RadioButton
                     android:id="@+id/rg_btn21"
@@ -143,14 +148,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="평점"/>
+                android:text="평점"
+                android:layout_margin="20dp"/>
             <RadioGroup
                 android:id="@+id/radioGroup3"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp">
 
                 <RadioButton
                     android:id="@+id/rg_btn31"

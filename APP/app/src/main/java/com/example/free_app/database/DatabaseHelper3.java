@@ -31,12 +31,6 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     private final Context mContext;
     public Cursor cursor_for_object;
 
-    double Carbon = ((MainActivity)MainActivity.main_context).Carbon;
-    double Price = ((MainActivity)MainActivity.main_context).Price;
-    double Score = ((MainActivity)MainActivity.main_context).Score;
-
-
-
     public DatabaseHelper3(@Nullable Context context) {
         super(context, DB_NAME, null, 1);
         if (android.os.Build.VERSION.SDK_INT >= 17) {
@@ -339,17 +333,18 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         }
         return Score;
     }
-
-    //제품명 알 때 추천점수 파악
-    public Double getReScore(String search) {
+    
+    public ArrayList<Product> getproductObject(String search) {
+        // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
-        Double ReScore = 0.0;
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT = '" + search + "' ", null);
-        while (cursor.moveToNext()) {
-            ReScore = cursor.getDouble(13) *Carbon + cursor.getDouble(14) *Price + cursor.getDouble(15) *Score ;// 탄소배출량, 돈, 점수
-
+        ArrayList arrayList_OB = new ArrayList();
+        if(search.length() != 0){
+            cursor_for_object = db.rawQuery("SELECT * FROM Free WHERE OBJECT LIKE \"%" + search + "%\"", null);
         }
-        return ReScore;
+        while (cursor_for_object.moveToNext()) {
+            arrayList_OB.add(cursor_for_object);
+        }
+        return arrayList_OB;
     }
 
 
