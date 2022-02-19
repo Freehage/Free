@@ -47,7 +47,7 @@
             android:layout_height="match_parent"
             android:id="@+id/recom_img"
             android:adjustViewBounds="true"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/ic_launcher2"
             android:layout_alignParentEnd="true"/>
 
 

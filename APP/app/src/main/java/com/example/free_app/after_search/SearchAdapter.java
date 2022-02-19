@@ -73,7 +73,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         else if(((MainActivity)MainActivity.main_context).num == 3){
             holder.level1.setText("평점 " + score);
         }
-        holder.img1.setImageResource(R.mipmap.ic_launcher);
+        holder.img1.setImageResource(R.drawable.main);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
