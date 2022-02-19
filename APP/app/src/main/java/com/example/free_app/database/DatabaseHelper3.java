@@ -24,8 +24,8 @@ import java.util.List;
 public class DatabaseHelper3 extends SQLiteOpenHelper {
     private static String TAG = "데이터 베이스 helper";
     private static String DB_PATH = "";
-    private static String DB_NAME = "FreeDB.db";
-    public static String tableName = "Free";
+    private static String DB_NAME = "FreeProductDB.db";
+    public static String tableName = "Product";
 
     private SQLiteDatabase mDatabase;
     private final Context mContext;
