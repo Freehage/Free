@@ -36,7 +36,6 @@
                 android:id="@+id/txt_objname2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="object name"
                 android:layout_margin="5dp"
                 android:textSize="16sp"/>
 
@@ -44,7 +43,6 @@
                 android:id="@+id/txt_level2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="object level"
                 android:layout_margin="5dp"
                 android:textSize="16sp"/>
 
@@ -53,7 +51,6 @@
                 android:id="@+id/txt_company2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="object company"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp"
                 android:textSize="14sp"/>
@@ -62,7 +59,6 @@
                 android:id="@+id/txt_enddate2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="object end date"
                 android:layout_margin="5dp"
                 android:textSize="14sp"/>
 
@@ -70,7 +66,6 @@
                 android:id="@+id/txt_recycle2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="object recycle"
                 android:layout_margin="5dp"
                 android:textSize="14sp"/>
 

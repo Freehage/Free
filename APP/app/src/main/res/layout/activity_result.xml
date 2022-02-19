@@ -37,7 +37,6 @@
                 android:id="@+id/txt_objname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="object name"
                 android:layout_margin="5dp"
                 android:textSize="16sp"/>
 
@@ -45,7 +44,6 @@
                 android:id="@+id/txt_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="object level"
                 android:layout_margin="5dp"
                 android:textSize="16sp"/>
 

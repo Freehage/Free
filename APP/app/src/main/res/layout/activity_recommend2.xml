@@ -34,7 +34,6 @@
                     android:id="@+id/recom_Title2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Title"
                     android:textSize="15sp"
                     android:textColor="@color/black"/>
                 <TextView
@@ -42,14 +41,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_below="@+id/recom_Title"
-                    android:text="detail" />
+                    android:layout_below="@+id/recom_Title" />
                 <TextView
                     android:id="@+id/recom_detail22"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/recom_detail"
-                    android:text="detail" />
+                    android:layout_below="@+id/recom_detail" />
 
 
             </LinearLayout>
