@@ -42,8 +42,8 @@ import java.util.Map;
 
 public class RecycleCamera extends AppCompatActivity {
 
-    public String MODEL_NAME = "best.tflite";
-    public int LAVEL_NUM = 7;
+    public String MODEL_NAME = "final.tflite";
+    public int LAVEL_NUM = 6;
     protected Interpreter tflite;
     private MappedByteBuffer tfliteModel;
     private TensorImage inputImageBuffer;
