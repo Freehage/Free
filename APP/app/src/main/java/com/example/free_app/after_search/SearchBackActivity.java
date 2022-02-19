@@ -36,8 +36,6 @@ public class SearchBackActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_aftersearch);
-
         String search_name = ((MainSearchActivity) MainSearchActivity.search_context).search_name;
         Intent intent = new Intent(getApplicationContext(),MainSearchActivity.class);
         intent.putExtra("search_name",search_name);

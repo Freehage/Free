@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,8 +40,6 @@ public class RecycleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycle);
 
-
-        //View myButtonLayout = getLayoutInflater().inflate(R.layout.action_bar,null);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_space);
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#000000'>재활용 실천하기 </font>"));

@@ -144,12 +144,8 @@ public class DatabaseHelper2 extends SQLiteOpenHelper {
 
 
     public String getStoreName(String search) {
-        // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
         String Storename = "";
-        //String result = "";
-        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력 "UPDATE TodoList SET title='"+_search+"'
-        //Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
         Cursor cursor = db.rawQuery("SELECT * FROM SHOP WHERE field2 = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             Storename = cursor.getString(6);

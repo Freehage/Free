@@ -6,14 +6,12 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,10 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-//import com.example.free_app.after_search.OcrAdapter;
 import com.example.free_app.after_search.OcrAdapter;
 import com.example.free_app.database.DatabaseHelper3;
-import com.example.free_app.model.Product;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 import java.io.File;
@@ -36,7 +32,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AfterDetectActivity extends AppCompatActivity {
 
@@ -44,23 +39,11 @@ public class AfterDetectActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CODE = 101;
 
     // OCR API
-    Bitmap imageBitmap;
     private TessBaseAPI mTess;
     String datapath = "";
-    Button btn_ocr;
-    private String imageFilePath;
-    private Uri p_Uri;
 
-
-    private Bitmap bitmap;
-    private List<String> labels;
     ImageView imageView;
     TextView result_detail;
-    public org.tensorflow.lite.DataType probabilityDataType;
-    public float conf;
-    public float[][] class_score = new float[6300][7];
-    public float[][] preoutput2;
-    public float CONF = 0.25f;
 
     //db에서 값 찾아오기
     private DatabaseHelper3 mDBHelper;
@@ -68,8 +51,6 @@ public class AfterDetectActivity extends AppCompatActivity {
     ArrayList OCRlist = new ArrayList();
     ArrayList OCRlist2 = new ArrayList();
     ArrayList OCRlist3 = new ArrayList();
-    public ArrayList FinalList;
-    public List<Product> productslists;
     private RecyclerView.LayoutManager mLayoutManager;
 
     //홈버튼 추가
@@ -119,7 +100,7 @@ public class AfterDetectActivity extends AppCompatActivity {
 
         mDBHelper = new DatabaseHelper3(this);
 
-    }  //여기까지 oncreate
+    }
 
     // ocr
     private int exifOrientationToDegrees(int exifOrientation) {

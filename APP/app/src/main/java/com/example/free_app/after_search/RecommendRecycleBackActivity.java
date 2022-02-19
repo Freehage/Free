@@ -11,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.free_app.MainActivity;
 import com.example.free_app.R;
 
-import java.util.ArrayList;
-
 public class RecommendRecycleBackActivity extends AppCompatActivity {
 
     //홈버튼 추가

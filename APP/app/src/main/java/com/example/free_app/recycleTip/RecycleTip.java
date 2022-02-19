@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.free_app.MainActivity;
 import com.example.free_app.R;
-import com.example.free_app.recycleTip.TipAdapter;
-import com.example.free_app.recycleTip.TipData;
 
 import java.util.ArrayList;
 

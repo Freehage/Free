@@ -1,23 +1,14 @@
 package com.example.free_app;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.example.free_app.database.DatabaseHelper2;
 import com.example.free_app.model.ZeroShop;
@@ -74,7 +65,6 @@ public class Recycle3Activity extends AppCompatActivity implements OnMapReadyCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Set the layout file as the content view.
         setContentView(R.layout.activity_recycle3);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_space);
@@ -84,8 +74,6 @@ public class Recycle3Activity extends AppCompatActivity implements OnMapReadyCal
         initLoadDB2();
         Log.e("TEST",String.valueOf(marketList.size()));
 
-
-        // Get a handle to the fragment and register the callback.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 

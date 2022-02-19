@@ -44,7 +44,6 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
     public void onBindViewHolder(@NonNull RecommendAdapter.ViewHolder holder, int position) {
         String object = productArrayList.get(position).toString();
         holder.recom_Title1.setText(object);
-        //탄소중립 레벨
         String level = mDBHelper.getLevel(object);
         String amount = mDBHelper.getCarbon(object);
         String company = mDBHelper.getCompanyResult(object);

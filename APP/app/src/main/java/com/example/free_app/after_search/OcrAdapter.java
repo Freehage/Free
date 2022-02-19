@@ -44,10 +44,8 @@ public class OcrAdapter extends RecyclerView.Adapter<OcrAdapter.ViewHolder>{
         String object = productArrayList.get(position).toString();
         Log.e("OBJET",object);
         holder.recom_Title1.setText(object);
-        //탄소중립 레벨
         String level = mDBHelper.getLevel(object);
         holder.recom_detail1.setText("탄소 중립 LEVEL: " + level);
-        //탄소 배출량 : getOBOUTC
         String amount = mDBHelper.getCarbon(object);
         holder.recom_detail2.setText("탄소 배출량: " + amount);
         holder.recom_img1.setImageResource(R.drawable.main);

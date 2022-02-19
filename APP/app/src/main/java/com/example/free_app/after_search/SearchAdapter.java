@@ -66,14 +66,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         }
         else if(((MainActivity)MainActivity.main_context).num == 0){
             holder.recycle1.setText("탄소 LEVEL: " + level);
-            holder.level1.setText("가격: " + money);
+            holder.level1.setText("가격: " + money + "원");
         }
         else if(((MainActivity)MainActivity.main_context).num == 1){
             holder.recycle1.setText("탄소 LEVEL: " + level);
             holder.level1.setText("탄소 배출량 " + amount);
         }
         else if(((MainActivity)MainActivity.main_context).num == 2){
-            holder.level1.setText("가격: " + money);
+            holder.level1.setText("가격: " + money + "원");
         }
         else if(((MainActivity)MainActivity.main_context).num == 3){
             holder.level1.setText("평점 " + score);

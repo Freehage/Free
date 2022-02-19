@@ -21,7 +21,7 @@ public class AfterRecycleSearch extends AppCompatActivity {
         Intent intent = getIntent();
         String recycle_category = intent.getStringExtra("recycle_category");
 
-        if (recycle_category == "종이"){
+        if (recycle_category.equals("종이")){
             setContentView(R.layout.paper);
         }else if(recycle_category.equals("종이팩")){
             setContentView(R.layout.paper2);

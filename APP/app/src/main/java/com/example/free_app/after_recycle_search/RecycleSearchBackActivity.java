@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.free_app.after_search.MainSearchActivity;
 
 public class RecycleSearchBackActivity extends AppCompatActivity {
 

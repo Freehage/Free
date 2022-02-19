@@ -20,7 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.free_app.after_search.SearchRecycle;
 
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.common.FileUtil;
@@ -39,34 +38,27 @@ import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class RecycleCamera extends AppCompatActivity {
 
     public String MODEL_NAME = "final.tflite";
     public int LAVEL_NUM = 6;
     protected Interpreter tflite;
-    private MappedByteBuffer tfliteModel;
     private TensorImage inputImageBuffer;
     private int imageSizeX;
     private int imageSizeY;
     private TensorBuffer outputProbabilityBuffer;
-    private Integer output;
     private TensorProcessor probabilityProcessor;
     private static final float IMAGE_MEAN = 0.0f;
     private static final float IMAGE_STD = 1.0f;
     private static final float PROBABILITY_MEAN = 0.0f;
     private static final float PROBABILITY_STD = 255.0f;
-    public float conf;
     public float CONF = 0.0f;
-    public org.tensorflow.lite.DataType probabilityDataType;
     private Bitmap bitmap;
     private List<String> labels;
     ImageView imageView;
     Uri imageuri;
-    Button buclassify;
     TextView classitext;
     public float center_x,center_y;
 
@@ -111,11 +103,7 @@ public class RecycleCamera extends AppCompatActivity {
 
         // yolo model
         imageView = (ImageView) findViewById(R.id.image);
-//        buclassify = (Button) findViewById(R.id.classify);
         classitext = (TextView) findViewById(R.id.classifytext);
-
-        // camera
-        //imageView_ = findViewById(R.id.imageView); -> 갤러리 연동 안할꺼면 삭제.
 
         // 재활용 방법 알아보기 btn
         btn_picture = findViewById(R.id.btn_picture);
@@ -143,10 +131,6 @@ public class RecycleCamera extends AppCompatActivity {
         btn_picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 재활용 방법 안내 페이지로 intent
-                /*Intent intent = new Intent(getApplicationContext(), RecycleResult_bottle.class);
-                startActivity(intent);*/
-
                 // detect class result
                 String result_recycle_detect = (String) classitext.getText();
                 // 각 class 별 재활용 결과 페이지로 이동
@@ -167,7 +151,6 @@ public class RecycleCamera extends AppCompatActivity {
                     Intent intents = new Intent(getApplicationContext(), Recycle1Activity.class);
                     startActivity(intents);
                 }
-                Log.e("...............", result_recycle_detect);
             }
         });
     }
@@ -235,15 +218,10 @@ public class RecycleCamera extends AppCompatActivity {
                     max_bbox_conf = bbox_conf;
                     count_arr[class_label] += 1;
                     result = labels.get(class_label);
-                    Log.e("class", String.valueOf(class_score[i][class_label])+' '+String.valueOf(class_label)+' '+String.valueOf(max_bbox_conf));
                 }
             }
-            Log.e("정답", String.valueOf(count_arr[0])+' '+String.valueOf(count_arr[1])+
-                    ' '+String.valueOf(count_arr[2])+' '+String.valueOf(count_arr[3])+' '+
-                    String.valueOf(count_arr[4])+' '+String.valueOf(count_arr[5])+
-                    ' ');
             if(result == ""){
-                Toast.makeText(getApplicationContext(),"다시 시도해 주세요!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"다시 시도해 주세요",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), Recycle1Activity.class);
                 startActivity(intent);
             }
@@ -251,7 +229,7 @@ public class RecycleCamera extends AppCompatActivity {
 
         } catch (Exception e) {
             e.printStackTrace();
-            classitext.setText("아직...");
+            classitext.setText("아직 준비되지 않은 제품입니다");
         }
     }
 
@@ -375,7 +353,6 @@ public class RecycleCamera extends AppCompatActivity {
         if (requestcode == REQUEST_IMAGE_CODE && resultcode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            //imageView_.setImageBitmap(imageBitmap);
             imageView.setImageBitmap(imageBitmap);
             // * classify 수행.
             bitmap = imageBitmap;

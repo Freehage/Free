@@ -43,7 +43,6 @@ public class Recycle1Activity extends AppCompatActivity {
             case R.id.home_button:
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
-                //Toast.makeText(getApplicationContext(), "Search Action", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

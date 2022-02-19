@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,8 +34,6 @@ public class SearchResultActivity  extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     public static Context context_search_recycle;
     public String company,objects,end_date,level,recycle_category,amount,url_gonghome;
-
-    //hs
     private DatabaseHelper3 mDBHelper;
 
     //홈버튼 추가
@@ -94,7 +91,7 @@ public class SearchResultActivity  extends AppCompatActivity {
             txt.setTextColor(Color.BLACK);
             txt_end.setText("재활용 분류: "+recycle_category);
         }else{
-            txt_end.setText(end_date);
+            txt_end.setText(end_date +"원");
             txt_rec.setText("재활용 분류: "+ recycle_category);
         }
 

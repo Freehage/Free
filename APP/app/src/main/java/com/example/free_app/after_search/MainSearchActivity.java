@@ -24,8 +24,6 @@ import com.example.free_app.after_search.recommend.Recommend_Frag;
 import com.example.free_app.after_search.recommend.Score_Frag;
 import com.example.free_app.model.Product;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class MainSearchActivity extends AppCompatActivity {

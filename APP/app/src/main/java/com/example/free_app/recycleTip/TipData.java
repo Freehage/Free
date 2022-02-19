@@ -1,11 +1,5 @@
 package com.example.free_app.recycleTip;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class TipData {
     private String Title;

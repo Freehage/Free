@@ -1,6 +1,5 @@
 package com.example.free_app.database;
 
-import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,8 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-
-import com.example.free_app.ServerActivity;
 import com.example.free_app.model.Product;
 
 import java.io.File;
@@ -177,12 +174,8 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
 
 
     public String getCompanyResult(String search) {
-        // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
         String company = "";
-        //String result = "";
-        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력 "UPDATE TodoList SET title='"+_search+"'
-        //Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
         Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             company = cursor.getString(2);
@@ -191,14 +184,12 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     }
 
 
-    //추천알고리즘
     public String getCategory(String search) {
         SQLiteDatabase db = getReadableDatabase();
         String category = "";
-        //이름이 ! 일 떄 해당 상품의 카테고리 얻음
         Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%" + search + "%\"", null);
         while (cursor.moveToNext()) {
-            category = cursor.getString(3); //OBLINE얻음
+            category = cursor.getString(3);
         }
         return category;
     }
@@ -206,7 +197,6 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     public ArrayList getObjectsResult(String search) {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
-        //OBLINE이 ~인 상품 중에 탄소배출량이 적은 제품 순서대로 3개 나열 + 같은 제품은 제외
         Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBLINE = '" + search + "' AND OBJECT != '" + search + "'" +
                 "ORDER BY OBLEVEL DESC, OBOUTC ASC LIMIT 3 ", null);
         while (cursor.moveToNext()) {
@@ -335,9 +325,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
 
         // 비교함수 Comparator를 사용하여 오름차순으로 정렬
         Collections.sort(list_entries, new Comparator<Map.Entry<String,Float>>() {
-            // compare로 값을 비교
             public int compare(Map.Entry<String,Float> obj1, Map.Entry<String,Float> obj2) {
-                // 오름 차순 정렬
                 return obj1.getValue().compareTo(obj2.getValue());
             }
         });

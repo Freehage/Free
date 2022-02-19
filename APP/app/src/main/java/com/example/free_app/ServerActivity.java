@@ -18,7 +18,7 @@ import org.json.JSONObject;
 public class ServerActivity extends AppCompatActivity {
     private Double carbon, score, price;
     @Override
-    protected void onCreate(Bundle savedInstanceState) { // 액티비티 시작시 처음으로 실행되는 생명주기!
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         carbon = ((MainActivity)MainActivity.main_context).Carbon;
         score = ((MainActivity)MainActivity.main_context).Score;
@@ -43,7 +43,7 @@ public class ServerActivity extends AppCompatActivity {
 
             }
         };
-        // 서버로 Volley를 이용해서 요청
+
         ServerRequest serverRequest = new ServerRequest(carbon,score,price,responseListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(serverRequest);
