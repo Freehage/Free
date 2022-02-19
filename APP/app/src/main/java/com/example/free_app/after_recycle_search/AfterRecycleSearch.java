@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.free_app.R;
 import com.example.free_app.Recycle1Activity;
 
+
 public class AfterRecycleSearch extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
