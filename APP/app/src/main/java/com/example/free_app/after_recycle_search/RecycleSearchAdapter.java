@@ -50,7 +50,7 @@ public class RecycleSearchAdapter extends RecyclerView.Adapter<RecycleSearchAdap
         String recycle_category = productArrayList.get(position).getObrecy();
 
         holder.object1.setText(object);
-        holder.img1.setImageResource(R.mipmap.ic_launcher);
+        holder.img1.setImageResource(R.drawable.main);
         holder.recycle1.setText(recycle_category);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

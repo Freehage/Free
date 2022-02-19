@@ -12,14 +12,14 @@
         android:id="@+id/img1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/ic_launcher2"
         android:layout_centerHorizontal="true"/>
 
     <TextView
         android:id="@+id/txt_objname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="left"
         android:layout_marginTop="10dp"
         android:text="object name" />
 

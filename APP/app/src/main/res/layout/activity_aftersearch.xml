@@ -18,7 +18,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         android:layout_below="@id/after_search_bar"
         android:layout_marginStart="30dp"
@@ -28,34 +28,38 @@
         <Button
             android:id="@+id/btn_recommend"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="추천순"
-            android:textSize="9sp"
-            android:layout_marginTop="5dp"/>
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/btn_money"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="가격순"
-            android:textSize="9sp"
-            android:layout_marginTop="5dp"/>
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/btn_carbon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="탄소배출량순"
-            android:textSize="9sp"
-            android:layout_marginTop="5dp"/>
+            android:layout_height="match_parent"
+            android:text="탄소\n배출량순"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/btn_score"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="평점순"
-            android:textSize="9sp"
-            android:layout_marginTop="5dp"/>
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"/>
 
 
     </LinearLayout>

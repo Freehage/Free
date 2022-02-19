@@ -250,7 +250,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
         Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT LIKE \"%" + search + "%\"" +
-                "ORDER BY OBOUTC ASC ", null);
+                "ORDER BY OBOUTC ASC, OBLEVEL DESC", null);
         while (cursor.moveToNext()) {
 
             arrayList_OB.add(cursor.getString(1)); // 상품명 Append
