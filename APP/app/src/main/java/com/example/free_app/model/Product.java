@@ -8,7 +8,7 @@ public class Product {
     private String obline;  //3
     private String obrecy;  //4
     private int oblevel;    //5
-    private String oboutC;  //6
+    private int oboutC;  //6
 
 
     private double unitoboutC; //7
@@ -82,11 +82,11 @@ public class Product {
         this.oblevel = oblevel;
     }
 
-    public String getOboutC() {
+    public int getOboutC() {
         return oboutC;
     }
 
-    public void setOboutC(String oboutC) {
+    public void setOboutC(int oboutC) {
         this.oboutC = oboutC;
     }
 

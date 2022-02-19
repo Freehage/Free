@@ -9,7 +9,6 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.example.free_app.MainActivity;
 import com.example.free_app.model.Product;
 
 import java.io.File;
@@ -17,9 +16,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseHelper3 extends SQLiteOpenHelper {
     private static String TAG = "데이터 베이스 helper";
@@ -30,6 +33,8 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     private SQLiteDatabase mDatabase;
     private final Context mContext;
     public Cursor cursor_for_object;
+    public float point = 0;
+    public Map<String,Float> return_value = new HashMap<String,Float>();
 
     public DatabaseHelper3(@Nullable Context context) {
         super(context, DB_NAME, null, 1);
@@ -129,7 +134,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
                     product.setObline(cursor.getString(3));
                     product.setObrecy(cursor.getString(4));
                     product.setOblevel(cursor.getInt(5));
-                    product.setOboutC(cursor.getString(6));
+                    product.setOboutC(cursor.getInt(6));
 
                     product.setUnitoboutC(cursor.getDouble(7));
                     product.setPrice(cursor.getDouble(8));
@@ -222,18 +227,6 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         return arrayList_OB;
     }
 
-    public ArrayList getObjectsResult_for_recommend(String search) {
-        SQLiteDatabase db = getReadableDatabase();
-        ArrayList arrayList_OB = new ArrayList();
-        //OBLINE이 ~인 상품 중에 탄소배출량이 적은 제품 순서대로 3개 나열 + 같은 제품은 제외
-        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE \"%" + search + "%\"" +
-                "ORDER BY OBLEVEL DESC, OBOUTC ASC", null);
-        while (cursor.moveToNext()) {
-
-            arrayList_OB.add(cursor.getString(1)); // 상품명 Append
-        }
-        return arrayList_OB;
-    }
 
     public ArrayList getObjectsResult_for_money(String search) {
         SQLiteDatabase db = getReadableDatabase();
@@ -250,9 +243,8 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
         Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE \"%" + search + "%\"" +
-                "ORDER BY OBOUTC ASC, OBLEVEL DESC", null);
+                "ORDER BY OBOUTC ASC ", null);
         while (cursor.moveToNext()) {
-
             arrayList_OB.add(cursor.getString(1)); // 상품명 Append
         }
         return arrayList_OB;
@@ -262,7 +254,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
         Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE \"%" + search + "%\"" +
-                "ORDER BY SCORE ASC ", null);
+                "ORDER BY SCORE DESC ", null);
         while (cursor.moveToNext()) {
 
             arrayList_OB.add(cursor.getString(1)); // 상품명 Append
@@ -309,7 +301,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         String amount = "";
         Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
-            amount = Double.toString(cursor.getDouble(7)); //탄소배출량
+            amount = Double.toString(cursor.getDouble(6)); //탄소배출량
         }
         return amount;
     }
@@ -334,17 +326,37 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         return Score;
     }
 
-    public ArrayList<Cursor> getproductObject(String search) {
+    public ArrayList<String> getproductObject(String search, double carbon_point, double score_point, double price_point, Context context) {
         // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
-        ArrayList arrayList_OB = new ArrayList();
+        ArrayList<String> real = new ArrayList<String>();
         if(search.length() != 0){
             cursor_for_object = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE \"%" + search + "%\"", null);
         }
-        while (cursor_for_object.moveToNext()) {
-            arrayList_OB.add(cursor_for_object);
+        while (cursor_for_object.moveToNext()){
+            double carbon = cursor_for_object.getDouble(13);
+            double score = cursor_for_object.getDouble(15);
+            double price = cursor_for_object.getDouble(14);
+            point = (float) (carbon_point * carbon + score_point * score + price_point * price);
+            return_value.put(cursor_for_object.getString(1),point);
         }
-        return arrayList_OB;
+        Log.e("RETURN", String.valueOf(return_value));
+
+        List<Map.Entry<String,Float>> list_entries = new ArrayList<Map.Entry<String,Float>>(return_value.entrySet());
+
+        // 비교함수 Comparator를 사용하여 오름차순으로 정렬
+        Collections.sort(list_entries, new Comparator<Map.Entry<String,Float>>() {
+            // compare로 값을 비교
+            public int compare(Map.Entry<String,Float> obj1, Map.Entry<String,Float> obj2) {
+                // 오름 차순 정렬
+                return obj1.getValue().compareTo(obj2.getValue());
+            }
+        });
+        for(Map.Entry<String,Float> entry : list_entries) {
+            real.add(entry.getKey());
+        }
+
+        return real;
     }
 
 
