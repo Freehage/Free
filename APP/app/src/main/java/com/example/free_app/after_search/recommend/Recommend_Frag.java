@@ -2,6 +2,7 @@ package com.example.free_app.after_search.recommend;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.example.free_app.model.Product;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Recommend_Frag extends Fragment {
@@ -34,7 +36,6 @@ public class Recommend_Frag extends Fragment {
     double Carbon = ((MainActivity)MainActivity.main_context).Carbon;
     double Price = ((MainActivity)MainActivity.main_context).Price;
     double Score = ((MainActivity)MainActivity.main_context).Score;
-    public float point = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -57,8 +58,7 @@ public class Recommend_Frag extends Fragment {
         Log.e("RECOMMEND","!");
 
         mDBHelper = new DatabaseHelper3(getActivity().getApplicationContext());
-        ArrayList<String> item_list = userselectpoint(search_name,Carbon,Score,Price,getContext());
-
+        ArrayList<String> item_list = mDBHelper.getproductObject(search_name,Carbon,Score,Price,getContext());
 
         if(item_list.size() != 0){
             RecyclerView recyclerView = (RecyclerView) container.findViewById(R.id.recyclerView_forsearch);
@@ -74,27 +74,5 @@ public class Recommend_Frag extends Fragment {
 
         return viewGroup;
     }
-    public ArrayList<String> userselectpoint(String search, double carbon_point, double score_point, double price_point, Context context){
-        DatabaseHelper3 mDBHelper = new DatabaseHelper3(context);
-        ArrayList<Product> products = mDBHelper.getproductObject(search);
-        Map<Float,String> return_value = null;
-        ArrayList<String> real = null;
-        for(int i = 0; i < products.size(); i++){
-            double carbon = products.get(i).getReCarbon();
-            double score = products.get(i).getReScore();
-            double price = products.get(i).getRePrice();
 
-            point = (float) (carbon_point * carbon + score_point * score + price_point * price);
-            return_value.put(point,products.get(i).getObject());
-
-        }
-
-        Object[] mapkey = return_value.keySet().toArray();
-        Arrays.sort(mapkey);
-
-        for(Float nkey : return_value.keySet()){
-            real.add(return_value.get(nkey));
-        }
-        return real;
-    }
 }
