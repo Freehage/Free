@@ -11,11 +11,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp">
+
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="71dp"
-            android:layout_height="57dp"
-            app:srcCompat="@drawable/icon"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            app:srcCompat="@drawable/icontext"
             tools:layout_editor_absoluteX="106dp"
             tools:layout_editor_absoluteY="16dp" />
 
@@ -24,7 +25,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="ReBon"
             tools:layout_editor_absoluteX="185dp"
             tools:layout_editor_absoluteY="40dp" />
 
@@ -36,7 +36,7 @@
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_toEndOf = "@+id/icon"
         android:background="@drawable/background"
         app:iconifiedByDefault="false"
