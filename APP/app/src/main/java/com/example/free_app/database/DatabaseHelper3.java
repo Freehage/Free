@@ -1,5 +1,7 @@
 package com.example.free_app.database;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -9,6 +11,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.free_app.ServerActivity;
 import com.example.free_app.model.Product;
 
 import java.io.File;

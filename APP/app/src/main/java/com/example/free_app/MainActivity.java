@@ -238,7 +238,11 @@ public class MainActivity extends AppCompatActivity {
         Button Check = dilaog01.findViewById(R.id.btn_done);
         Check.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {  dilaog01.dismiss();  }  });
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),ServerActivity.class);
+                dilaog01.dismiss();
+                startActivity(intent);
+            }  });
 
     }
 
