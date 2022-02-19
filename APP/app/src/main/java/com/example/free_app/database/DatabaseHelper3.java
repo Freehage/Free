@@ -24,8 +24,8 @@ import java.util.List;
 public class DatabaseHelper3 extends SQLiteOpenHelper {
     private static String TAG = "데이터 베이스 helper";
     private static String DB_PATH = "";
-    private static String DB_NAME = "FreeDB.db";
-    public static String tableName = "Free";
+    private static String DB_NAME = "FreeProductDB.db";
+    public static String tableName = "Product";
 
     private SQLiteDatabase mDatabase;
     private final Context mContext;
@@ -160,7 +160,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
         if(search.length() != 0){
-            cursor_for_object = db.rawQuery("SELECT * FROM Free WHERE OBJECT LIKE \"%" + search + "%\"", null);
+            cursor_for_object = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE \"%" + search + "%\"", null);
         }
         while (cursor_for_object.moveToNext()) {
             arrayList_OB.add(cursor_for_object.getString(1));
@@ -174,7 +174,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
         for(int i=0; i<list.size();i++ ){
-            Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT = '" + list.get(i).toString() + "' ", null);
+            Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT = '" + list.get(i).toString() + "' ", null);
             while (cursor.moveToNext()) {
                 arrayList_OB.add(cursor.getString(1));
             }
@@ -189,7 +189,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         //String result = "";
         // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력 "UPDATE TodoList SET title='"+_search+"'
         //Cursor cursor = db.rawQuery("SELECT * FROM User WHERE OBJECT LIKE \"%"+search+"%\"", null);
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT = '" + search + "' ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             company = cursor.getString(2);
         }
@@ -202,7 +202,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String category = "";
         //이름이 ! 일 떄 해당 상품의 카테고리 얻음
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT LIKE \"%" + search + "%\"", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE \"%" + search + "%\"", null);
         while (cursor.moveToNext()) {
             category = cursor.getString(3); //OBLINE얻음
         }
@@ -213,8 +213,8 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
         //OBLINE이 ~인 상품 중에 탄소배출량이 적은 제품 순서대로 3개 나열 + 같은 제품은 제외
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBLINE = '" + search + "' AND OBJECT != '" + search + "'" +
-                "ORDER BY OBOUTC ASC LIMIT 3 ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBLINE = '" + search + "' AND OBJECT != '" + search + "'" +
+                "ORDER BY OBLEVEL DESC, OBOUTC ASC LIMIT 3 ", null);
         while (cursor.moveToNext()) {
 
             arrayList_OB.add(cursor.getString(1)); // 상품명 Append
@@ -226,8 +226,8 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
         //OBLINE이 ~인 상품 중에 탄소배출량이 적은 제품 순서대로 3개 나열 + 같은 제품은 제외
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT LIKE \"%" + search + "%\"" +
-                "ORDER BY OBOUTC ASC ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE \"%" + search + "%\"" +
+                "ORDER BY OBLEVEL DESC, OBOUTC ASC", null);
         while (cursor.moveToNext()) {
 
             arrayList_OB.add(cursor.getString(1)); // 상품명 Append
@@ -238,7 +238,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     public ArrayList getObjectsResult_for_money(String search) {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT LIKE \"%" + search + "%\"" +
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE \"%" + search + "%\"" +
                 "ORDER BY PRICE ASC ", null);
         while (cursor.moveToNext()) {
 
@@ -249,7 +249,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     public ArrayList getObjectsResult_for_carbon(String search) {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT LIKE \"%" + search + "%\"" +
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE \"%" + search + "%\"" +
                 "ORDER BY OBOUTC ASC, OBLEVEL DESC", null);
         while (cursor.moveToNext()) {
 
@@ -261,7 +261,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     public ArrayList getObjectsResult_for_score(String search) {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList arrayList_OB = new ArrayList();
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT LIKE \"%" + search + "%\"" +
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT LIKE \"%" + search + "%\"" +
                 "ORDER BY SCORE ASC ", null);
         while (cursor.moveToNext()) {
 
@@ -274,7 +274,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     public String getRecycle(String search) {
         SQLiteDatabase db = getReadableDatabase();
         String recycle = "";
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT = '" + search + "' ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             recycle = cursor.getString(4);
         }
@@ -285,7 +285,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     public String getLevel(String search) {
         SQLiteDatabase db = getReadableDatabase();
         String level = "";
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT = '" + search + "' ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             level = Integer.toString(cursor.getInt(5));
         }
@@ -296,7 +296,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     public String getEndDate(String search) {
         SQLiteDatabase db = getReadableDatabase();
         String end_date = "";
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT = '" + search + "' ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             end_date = Integer.toString(cursor.getInt(8));
         }
@@ -307,7 +307,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     public String getCarbon(String search) {
         SQLiteDatabase db = getReadableDatabase();
         String amount = "";
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT = '" + search + "' ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             amount = Double.toString(cursor.getDouble(7)); //탄소배출량
         }
@@ -317,7 +317,7 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     public String getMoney(String search) {
         SQLiteDatabase db = getReadableDatabase();
         String Money = "";
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT = '" + search + "' ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             Money = Double.toString(cursor.getDouble(8)); //가격
         }
@@ -327,13 +327,13 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
     public String getScore(String search) {
         SQLiteDatabase db = getReadableDatabase();
         String Score = "";
-        Cursor cursor = db.rawQuery("SELECT * FROM Free WHERE OBJECT = '" + search + "' ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT = '" + search + "' ", null);
         while (cursor.moveToNext()) {
             Score = Double.toString(cursor.getDouble(9)); //점수
         }
         return Score;
     }
-    
+
     public ArrayList<Product> getproductObject(String search) {
         // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
