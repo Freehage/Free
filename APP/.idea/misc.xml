@@ -13,9 +13,19 @@
         <entry key="..\:/Project/Free/APP/app/src/main/res/layout/frame1.xml" value="0.16354166666666667" />
         <entry key="..\:/Project/Free/APP/app/src/main/res/layout/recommend_obj.xml" value="0.16354166666666667" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/back_space.xml" value="0.248" />
+        <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/imagecamera.xml" value="0.1" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/main.xml" value="0.248" />
+        <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/recamera.xml" value="0.1" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/recycle2button.xml" value="0.2275" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/recycle_can.xml" value="0.2275" />
+        <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/recycle_can2.xml" value="0.1535" />
+        <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/recycle_glass.xml" value="0.1535" />
+        <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/recycle_paper.xml" value="0.1535" />
+        <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/recycle_paper2.xml" value="0.1535" />
+        <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/recycle_pet.xml" value="0.1535" />
+        <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/recycle_plastic.xml" value="0.1535" />
+        <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/recycle_sign.xml" value="0.1535" />
+        <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/recycle_vinyl.xml" value="0.1535" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/drawable/shopbutton.xml" value="0.2275" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/layout/activity_after_recommend.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/layout/activity_afterdetect.xml" value="0.24947916666666667" />
@@ -30,7 +40,7 @@
         <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/layout/activity_recommend.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/layout/activity_recommend2.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/layout/activity_recycle.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/layout/activity_recycle1.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/layout/activity_recycle1.xml" value="0.264" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/layout/activity_recycle3.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/layout/activity_recyclecamera.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/82106/AndroidStudioProjects/Free/APP/app/src/main/res/layout/activity_recycleresult_bottle.xml" value="0.24947916666666667" />

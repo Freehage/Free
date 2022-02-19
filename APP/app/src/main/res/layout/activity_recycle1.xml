@@ -27,8 +27,9 @@
             android:id="@+id/recycle_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#CCCBCB"
-            android:text="@string/camera"
+            android:background="#FFFFFF"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/recamera"
             android:textColor="@color/black" />
 
 
@@ -54,11 +55,11 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="140dp"
                 android:text="@string/paper"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
-                android:drawableLeft="@drawable/recycle_paper"
+                android:drawableTop="@drawable/recycle_paper"
                 style="?android:attr/borderlessButtonStyle"
                 />
 
@@ -66,12 +67,12 @@
                 android:id="@+id/paper2"
                 android:layout_margin="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="140dp"
                 android:text="@string/paper2"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
-                android:drawableLeft="@drawable/recycle_paper2"
+                android:drawableTop="@drawable/recycle_paper2"
                 style="?android:attr/borderlessButtonStyle"
                 />
 
@@ -89,11 +90,11 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:layout_width="180dp"
-                android:layout_height="100dp"
+                android:layout_height="140dp"
                 android:text="@string/glass"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
-                android:drawableLeft="@drawable/recycle_glass"
+                android:drawableTop="@drawable/recycle_glass"
                 style="?android:attr/borderlessButtonStyle"
                 />
 
@@ -102,11 +103,11 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:layout_width="180dp"
-                android:layout_height="100dp"
+                android:layout_height="140dp"
                 android:text="@string/pet_plastic"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
-                android:drawableLeft="@drawable/recycle_pet"
+                android:drawableTop="@drawable/recycle_pet"
                 style="?android:attr/borderlessButtonStyle"/>
 
         </LinearLayout>
@@ -123,23 +124,23 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:layout_width="180dp"
-                android:layout_height="100dp"
+                android:layout_height="140dp"
                 android:text="@string/can"
                 android:textSize="13sp"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
-                android:drawableLeft="@drawable/recycle_can"
+                android:drawableTop="@drawable/recycle_can"
                 style="?android:attr/borderlessButtonStyle"
                 />
             <Button
                 android:id="@+id/vinyl"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="180dp"
-                android:layout_height="100dp"
+                android:layout_height="140dp"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
-                android:drawableLeft="@drawable/recycle_vinyl"
+                android:drawableTop="@drawable/recycle_vinyl"
                 android:text="@string/vinyl"
                 android:textColor="@color/black" />
 
