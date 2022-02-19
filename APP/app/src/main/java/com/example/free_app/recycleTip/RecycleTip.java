@@ -65,7 +65,7 @@ public class RecycleTip extends AppCompatActivity {
     private void Initialize() {
         arrayList = new ArrayList<>();
         arrayList.add(new TipData("빨갛게 물든 엽떡 통, 어떻게 버릴까?",
-                "떡볶이 국물이 묻은 엽떡 통 잘 버리는 방법",
+                "떡볶이 국물이 뭍은 엽떡 통 잘 버리는 방법",
                 "https://cdn.pixabay.com/photo/2016/08/20/13/06/toppokki-1607479_1280.jpg",
                 "https://www.youtube.com/watch?v=P6gqk-1u9SQ"));
         arrayList.add(new TipData("물티슈 뚜껑 활용 방법에 대해 알아보자!",
