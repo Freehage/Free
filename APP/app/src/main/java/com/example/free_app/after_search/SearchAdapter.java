@@ -60,9 +60,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.object1.setText(object);
         holder.recycle1.setText(recycle);
         if(((MainActivity)MainActivity.main_context).num == 0){
-            holder.level1.setText("탄소 중립 LEVEL: " + level);
+            holder.recycle1.setText("탄소 LEVEL: " + level);
+            holder.level1.setText("가격: " + money);
         }
         else if(((MainActivity)MainActivity.main_context).num == 1){
+            holder.recycle1.setText("탄소 LEVEL: " + level);
             holder.level1.setText("탄소 배출량 " + amount);
         }
         else if(((MainActivity)MainActivity.main_context).num == 2){
