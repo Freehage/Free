@@ -64,6 +64,7 @@ public class OcrAdapter extends RecyclerView.Adapter<OcrAdapter.ViewHolder>{
                 intent.putExtra("level",level);
                 intent.putExtra("end_date",end_date);
                 intent.putExtra("recycle_category",recycle);
+                intent.putExtra("carbon_amount",amount);
                 mcontext.startActivity(intent);
             }
         });
