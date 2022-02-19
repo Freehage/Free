@@ -142,19 +142,19 @@ public class RecycleCamera extends AppCompatActivity {
                 // detect class result
                 String result_recycle_detect = (String) classitext.getText();
                 // 각 class 별 재활용 결과 페이지로 이동
-                if (result_recycle_detect.equals("paper")){
+                if (result_recycle_detect.equals("paper")) {
                     setContentView(R.layout.paper);
-                }else if(result_recycle_detect.equals("paperpack")){
+                } else if(result_recycle_detect.equals("paperpack")) {
                     setContentView(R.layout.paper2);
-                }else if(result_recycle_detect.equals("glass")){
+                } else if(result_recycle_detect.equals("glass")) {
                     setContentView(R.layout.glass);
-                }else if(result_recycle_detect.equals("vinyl")){
-                    setContentView(R.layout.can);
-                }else if(result_recycle_detect.equals("can")){
+                } else if(result_recycle_detect.equals("vinyl")) {
                     setContentView(R.layout.vinyl);
-                }else if(result_recycle_detect.equals("pet")){
+                } else if(result_recycle_detect.equals("can")) {
+                    setContentView(R.layout.can);
+                } else if(result_recycle_detect.equals("pet")) {
                     setContentView(R.layout.plastic);
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(),"다시 한번 시도해 주세요",Toast.LENGTH_SHORT).show();
                     Intent intents = new Intent(getApplicationContext(), Recycle1Activity.class);
                     startActivity(intents);
