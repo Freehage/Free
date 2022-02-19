@@ -173,19 +173,6 @@ public class DatabaseHelper3 extends SQLiteOpenHelper {
         return arrayList_OB;
     }
 
-    //
-    public ArrayList ChageforAdapter(ArrayList list) {
-        // 읽기가 가능하게 DB 열기
-        SQLiteDatabase db = getReadableDatabase();
-        ArrayList arrayList_OB = new ArrayList();
-        for(int i=0; i<list.size();i++ ){
-            Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE OBJECT = '" + list.get(i).toString() + "' ", null);
-            while (cursor.moveToNext()) {
-                arrayList_OB.add(cursor.getString(1));
-            }
-        }
-        return arrayList_OB;
-    }
 
     public String getCompanyResult(String search) {
         // 읽기가 가능하게 DB 열기
