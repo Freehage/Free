@@ -1,6 +1,10 @@
 # RE⧖BON
 Project for KPMG Ideathon 2022, RE⧖BON | Carbon Neutral Practice Helper Application from Consumption to Emission.
 
+✔ https://github.com/Freehage/Free
+![image](https://user-images.githubusercontent.com/98610112/154824337-8ab8933b-afd7-4593-9d1c-b9c6fc320866.png)
+
+
 <!--소비부터 배출까지 탄소중립 실천 도우미 어플리케이션, RE⧖BORN.-->
 
 # Introduction
@@ -36,3 +40,19 @@ Moreover, Re⧖Bon can help you with recycling wastes. There are pages that show
 
 # Business Analysis
 ![image](https://user-images.githubusercontent.com/98610112/154820610-e34b650d-048b-43dc-a593-ad4cf5bd803a.png)
+
+
+<!--
+**Freehage/Freehage** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+
+Here are some ideas to get you started:
+
+- 🔭 I’m currently working on ...
+- 🌱 I’m currently learning ...
+- 👯 I’m looking to collaborate on ...
+- 🤔 I’m looking for help with ...
+- 💬 Ask me about ...
+- 📫 How to reach me: ...
+- 😄 Pronouns: ...
+- ⚡ Fun fact: ...
+-->
